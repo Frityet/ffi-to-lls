@@ -151,7 +151,7 @@ out_f:write "---@meta\n\n"
 if aux_types then
     out_f:write [[
 ---You may remove this to supress redefinition warnings
----@class c.pointer<T> : { [integer] : T }, ffi.ctype*
+---@class c.pointer<T> : { [integer] : T }, ffi.cdata*
 ]]
 end
 

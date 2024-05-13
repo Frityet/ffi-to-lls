@@ -57,7 +57,7 @@ A file like this would be generated:
 ---@meta
 
 ---You may remove this, or generate this file again with --no-auxiliary-types, to supress redefinition warnings
----@class c.pointer<T> : { [integer] : T }, ffi.ctype*
+---@class c.pointer<T> : { [integer] : T }, ffi.cdata*
 ---@class mylib
 local mylib = {}
 

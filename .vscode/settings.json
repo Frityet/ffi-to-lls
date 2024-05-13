@@ -1,0 +1,6 @@
+{
+    "clangd.fallbackFlags": [
+        "-std=c99",
+        "-I."
+    ]
+}

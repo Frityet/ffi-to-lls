@@ -17,7 +17,7 @@ cc $(llvm-config --cflags) utilities.c -shared -o utilities.so -L$(llvm-config -
 
 Then, run the script:
 ```bash
-luajit ffi-to-lls.lua <input defs.h> [-o <output file>] [--remove-prefix <prefix>] [--no-auxiliary-types]
+luajit ffi-to-lls.lua <input defs.h> [-o <output file>] [--remove-prefix <prefix>] [--no-auxiliary-types] [--module-name <name>]
 ```
 
 ### Options
@@ -26,6 +26,7 @@ luajit ffi-to-lls.lua <input defs.h> [-o <output file>] [--remove-prefix <prefix
 - `-o <output file>`: The output file to write the LLS meta file to. If not specified, the output will be written to stdout.
 - `--remove-prefix <prefix>`: Remove the specified prefix from the function names in the output. This is useful when the FFI declarations are prefixed with a common string, such as `lua_` or `lj_`.
 - `--no-auxiliary-types`: Do not generate auxiliary types such as `c.pointer<T>`. This is useful when the generated file is used with another file that already defines these types.
+- `--module-name <name>`: The name of the module to be usede in generation
 
 ## Example
 
@@ -54,7 +55,7 @@ A file like this would be generated:
 ---You can edit this file!
 ---The following prefix was removed: `mylib_`
 ---Lua language server will autocomplete both with and without the prefix.
----@meta
+---@meta mylib
 
 ---You may remove this, or generate this file again with --no-auxiliary-types, to supress redefinition warnings
 ---@class c.pointer<T> : { [integer] : T }, ffi.cdata*

@@ -100,18 +100,21 @@ ffi.metatype("CXString", {
     __gc = clang.disposeString
 })
 
-local USAGE_STR = "Usage: ffi-to-lls.lua <input header> [-o <output file>] [--remove-prefix <prefix>] [--no-auxiliary-types]"
+local USAGE_STR = "Usage: ffi-to-lls.lua <input header> [-o <output file>] [--remove-prefix <prefix>] [--no-auxiliary-types] [--module-name <module name>]"
 
 ---@type string?, string?
 local in_path, out_path = arg[1], nil
 ---@type string?
 local rm_prefix
-
 local aux_types = true
+---@type string?
+local mod_name
+
 for i = 1, #arg do
     if arg[i] == "-o" or arg[i] == "--output" then out_path = assert(arg[i + 1], "Error: -o requires an argument") end
     if arg[i] == "--remove-prefix" then rm_prefix = assert(arg[i + 1], "Error: --remove-prefix requires an argument") end
     if arg[i] == "--no-auxiliary-types" then aux_types = false end
+    if arg[i] == "--module-name" then mod_name = assert(arg[i + 1], "Error: --module-name requires an argument, and it must be a valid Lua identifier") end
 
     if arg[i] == "-h" or arg[i] == "--help" then
         print(USAGE_STR)
@@ -131,7 +134,7 @@ end
 local out_f = out_path and assert(io.open(out_path, "w")) or io.stdout
 
 --match anything before the last dot
-local mod_name = in_path:match("(.+)%..+"):gsub("/", "_"):gsub("-", "_")
+mod_name = mod_name or in_path:match("(.+)%..+"):gsub("/", "_"):gsub("-", "_")
 
 ---@class c.pointer<T> : { [0] : T }, ffi.ctype*
 
@@ -146,7 +149,7 @@ if rm_prefix then
 ]], rm_prefix))
 end
 
-out_f:write "---@meta\n\n"
+out_f:write(string.format("---@meta %s\n\n", mod_name))
 
 if aux_types then
     out_f:write [[

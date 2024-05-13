@@ -25,3 +25,25 @@ luajit ffi-to-lls.lua <input defs.h> [-o <output file>] [--remove-prefix <prefix
 - `<input defs.h>`: The header file containing the FFI declarations.
 - `-o <output file>`: The output file to write the LLS meta file to. If not specified, the output will be written to stdout.
 - `--remove-prefix <prefix>`: Remove the specified prefix from the function names in the output. This is useful when the FFI declarations are prefixed with a common string, such as `lua_` or `lj_`.
+
+## Example
+
+Given the definitions present in [libclang-def.lua](./libclang-def.lua) extracted to its own file, we can generate the LLS meta file for it:
+
+```bash
+luajit ffi-to-lls.lua clang.h -o clang.lua --remove-prefix clang_
+```
+
+A file like this would be generated:
+
+```lua
+---@meta
+
+---@class clang
+local clang = {}
+
+---@enum CXErrorCode
+local CXErrorCode = {
+
+...
+```

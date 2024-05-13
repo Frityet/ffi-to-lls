@@ -19,8 +19,6 @@
 
 local ffi = require("ffi")
 local utilities = require("utilities")
-utilities.c = ffi.load("utilities")
-
 ---@param msg string
 local function warn(msg) return io.stderr:write(msg.."\n") end
 

@@ -152,6 +152,8 @@ function export.address_of(T)
     end
 end
 
+export.c = ffi.load("utilities")
+
 return export
 
 

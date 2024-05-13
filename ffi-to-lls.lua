@@ -22,7 +22,6 @@ local utilities = require("utilities")
 ---@param msg string
 local function warn(msg) return io.stderr:write(msg.."\n") end
 
----@module "clang"
 local clang do
     local ok, lcdef = pcall(require, "libclang-def")
     if ok then
@@ -101,17 +100,27 @@ ffi.metatype("CXString", {
     __gc = clang.disposeString
 })
 
+local USAGE_STR = "Usage: ffi-to-lls.lua <input header> [-o <output file>] [--remove-prefix <prefix>] [--no-auxiliary-types]"
+
 ---@type string?, string?
 local in_path, out_path = arg[1], nil
 ---@type string?
 local rm_prefix
+
+local aux_types = true
 for i = 1, #arg do
-    if arg[i] == "-o" then out_path = assert(arg[i + 1], "Error: -o requires an argument") end
+    if arg[i] == "-o" or arg[i] == "--output" then out_path = assert(arg[i + 1], "Error: -o requires an argument") end
     if arg[i] == "--remove-prefix" then rm_prefix = assert(arg[i + 1], "Error: --remove-prefix requires an argument") end
+    if arg[i] == "--no-auxiliary-types" then aux_types = false end
+
+    if arg[i] == "-h" or arg[i] == "--help" then
+        print(USAGE_STR)
+        os.exit(0)
+    end
 end
 
 if not in_path then
-    print("Usage: ffi-to-lls.lua <input header> [-o <output file>] [--remove-prefix <prefix>]")
+    print(USAGE_STR)
     os.exit(1)
 end
 
@@ -138,6 +147,14 @@ if rm_prefix then
 end
 
 out_f:write "---@meta\n\n"
+
+if aux_types then
+    out_f:write [[
+---You may remove this to supress redefinition warnings
+---@class c.pointer<T> : { [integer] : T }, ffi.ctype*
+]]
+end
+
 out_f:write(string.format("---@class %s\n", mod_name))
 out_f:write(string.format("local %s = {}\n\n", mod_name))
 

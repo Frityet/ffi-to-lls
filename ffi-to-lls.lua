@@ -20,8 +20,9 @@
 local ffi = require("ffi")
 local utilities = require("utilities")
 ---@param msg string
-local function warn(msg) return io.stderr:write(msg.."\n") end
+local function warn(msg) return io.stderr:write("WARNING: "..msg.."\n") end
 
+---@module "clang"
 local clang do
     local ok, lcdef = pcall(require, "libclang-def")
     if ok then
@@ -82,6 +83,7 @@ local clang do
 
     clang = require("libclang-def")
 end
+--[[@cast clang clang]]
 
 --from utilities.c, because LuaJIT can't handle structs in params too well
 ffi.cdef [[
@@ -97,8 +99,27 @@ ffi.metatype("CXString", {
         return tostring(a)..tostring(b)
     end,
 
-    __gc = clang.disposeString
+    __gc = clang.disposeString,
+
+    __eq = function(a, b)
+        local bt = type(b)
+
+        if bt == "string" then
+            return tostring(a) == b
+        elseif bt == "cdata" then
+            if ffi.istype("CXString", b) then
+                return tostring(a) == tostring(b)
+            end
+        end
+
+        return false
+    end
 })
+
+---Checks if `str` is a valid lua identifier
+---@param str string
+---@return boolean
+local function is_valid_identifier(str) return (loadstring(string.format("local %s", str))) ~= nil end
 
 local USAGE_STR = "Usage: ffi-to-lls.lua <input header> [-o <output file>] [--remove-prefix <prefix>] [--no-auxiliary-types] [--module-name <module name>]"
 
@@ -111,10 +132,10 @@ local aux_types = true
 local mod_name
 
 for i = 1, #arg do
-    if arg[i] == "-o" or arg[i] == "--output" then out_path = assert(arg[i + 1], "Error: -o requires an argument") end
-    if arg[i] == "--remove-prefix" then rm_prefix = assert(arg[i + 1], "Error: --remove-prefix requires an argument") end
-    if arg[i] == "--no-auxiliary-types" then aux_types = false end
-    if arg[i] == "--module-name" then mod_name = assert(arg[i + 1], "Error: --module-name requires an argument, and it must be a valid Lua identifier") end
+    if arg[i] == "-o" or arg[i] == "--output"   then out_path = assert(arg[i+1], "Error: -o requires an argument") end
+    if arg[i] == "--remove-prefix"              then rm_prefix = assert(arg[i+1], "Error: --remove-prefix requires an argument") end
+    if arg[i] == "--no-auxiliary-types"         then aux_types = false end
+    if arg[i] == "--module-name"                then mod_name = assert((arg[i+1] ~= nil and is_valid_identifier(arg[i+1]) and arg[i+1] or nil), "Error: --module-name requires an argument, and it must be a valid Lua identifier") end
 
     if arg[i] == "-h" or arg[i] == "--help" then
         print(USAGE_STR)
@@ -210,8 +231,9 @@ local LLS_TYPES = {
     [cxtype "NullPtr"] = "nil",
 }
 
----@param x { [0] : ffi.cdata* }
----@return ffi.cdata*
+---@generic T: ffi.cdata*
+---@param x { [0] : T }
+---@return T
 local function deref(x) return x[0] end
 
 local functype_to_lls
@@ -230,22 +252,22 @@ local function type_to_lls_type(type)
         elseif  backing_type.kind == cxtype "Char_S" and is_const   then return "string"
         elseif  backing_type.kind == cxtype "Void"                  then return "ffi.cdata*" end
 
-        return string.format("c.pointer<%s>", type_to_lls_type(backing_type))
+        return string.format("c.pointer<%s>?", type_to_lls_type(backing_type))
     elseif type.kind == cxtype "Elaborated" then
         return type_to_lls_type(clang.Type_getNamedType(type))
     elseif type.kind == cxtype "Record" then
-        return clang.getCursorSpelling(clang.getTypeDeclaration(type))
+        return tostring(clang.getCursorSpelling(clang.getTypeDeclaration(type)))
     elseif type.kind == cxtype "Typedef" then
-        return clang.getTypeSpelling(type)
+        return tostring(clang.getTypeSpelling(type))
     elseif type.kind == cxtype "ConstantArray" then
         local backing_type = clang.getArrayElementType(type)
         return string.format("%s[]", type_to_lls_type(backing_type))
     elseif type.kind == cxtype "Enum" then
-        return clang.getCursorSpelling(clang.getTypeDeclaration(type))
+        return tostring(clang.getCursorSpelling(clang.getTypeDeclaration(type)))
     end
 
     warn("Unknown type: "..clang.getTypeSpelling(type).." (kind: "..clang.getTypeKindSpelling(type.kind).." - `"..tostring(type.kind).."`)")
-    return clang.getTypeSpelling(type)
+    return tostring(clang.getTypeSpelling(type))
 end
 
 ---@param type CXType
@@ -256,7 +278,7 @@ functype_to_lls = function(type)
 
     for i = 0, clang.getNumArgTypes(type) - 1 do
         -- table.insert(params, type_to_lls_type(clang.getArgType(type, i)))
-        params[i + 1] = "arg_"..i..": "..type_to_lls_type(clang.getArgType(type, i))
+        params[i+1] = "arg_"..i..": "..type_to_lls_type(clang.getArgType(type, i))
     end
 
     return string.format("fun(%s): %s", table.concat(params, ", "), ret_type)
@@ -302,7 +324,7 @@ visitor[cursortype "EnumDecl"] = function (cursor, parent)
             local name = clang.getCursorSpelling(cursor)
             local value = assert(tonumber(clang.getEnumConstantDeclValue(cursor)))
             out_f:write(string.format("    %s = %d,\n", name, value))
-            enum_names[#enum_names+1] = name
+            enum_names[#enum_names+1] = tostring(name)
         end
 
         return clang.CXChildVisit_Continue
@@ -362,13 +384,13 @@ visitor[cursortype "FunctionDecl"] = function (cursor, parent)
         ---@type CXCursor
         local arg = clang.Cursor_getArgument(cursor, i)
         local name = KW_REPLACE_MAP[tostring(clang.getCursorSpelling(arg))]
-        if name == nil or name == "" or #name == 0 then name = "arg_"..i end
+        if name == nil or name == "" or #name == 0 then name = "arg_"..i+1 end
         local type = clang.getCursorType(arg)
-        params[i + 1] = { name = name, type = type_to_lls_type(type) }
+        params[i+1] = { name = name, type = type_to_lls_type(type) }
     end
 
     if varadict then
-        params[#params + 1] = { name = "...", type = "any" }
+        params[#params+1] = { name = "...", type = "any" }
     end
 
     for param in pairs(params) do
@@ -392,12 +414,17 @@ end
 
 visitor[cursortype "TypedefDecl"] = function (cursor, parent)
     local name = clang.getCursorSpelling(cursor)
-    local type = type_to_lls_type(clang.getTypedefDeclUnderlyingType(cursor))
-    if not name == type then out_f:write(string.format("---@alias %s %s\n", name, type)) end
+    local undertype = clang.getTypedefDeclUnderlyingType(cursor)
+    local type = type_to_lls_type(undertype)
+
+    -- if not name == (tostring(clang.getTypeSpelling(undertype)):gsub("enum ", ""):gsub("struct ", ""):gsub("union ", "")) then
+        out_f:write(string.format("---@alias %s %s\n\n", name, type))
+    -- end
 end
 
 local cursor = clang.getTranslationUnitCursor(tu)
 utilities.c.visit_cursor(cursor, function (cursor_ptr, parent_ptr)
+    ---@type CXCursor, CXCursor
     local cursor, parent = deref(cursor_ptr), deref(parent_ptr)
     local kind = assert(tonumber(clang.getCursorKind(cursor)))
 

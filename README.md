@@ -17,7 +17,7 @@ cc $(llvm-config --cflags) utilities.c -shared -o utilities.so -L$(llvm-config -
 
 Then, run the script:
 ```bash
-luajit ffi-to-lls.lua <input defs.h> [-o <output file>] [--remove-prefix <prefix>] [--no-auxiliary-types] [--module-name <name>]
+luajit ffi-to-lls.lua <input defs.h> [-o <output file>] [--remove-prefix <prefix>] [--module-name <name>]
 ```
 
 ### Options
@@ -25,8 +25,8 @@ luajit ffi-to-lls.lua <input defs.h> [-o <output file>] [--remove-prefix <prefix
 - `<input defs.h>`: The header file containing the FFI declarations.
 - `-o <output file>`: The output file to write the LLS meta file to. If not specified, the output will be written to stdout.
 - `--remove-prefix <prefix>`: Remove the specified prefix from the function names in the output. This is useful when the FFI declarations are prefixed with a common string, such as `lua_` or `lj_`.
-- `--no-auxiliary-types`: Do not generate auxiliary types such as `c.pointer<T>`. This is useful when the generated file is used with another file that already defines these types.
 - `--module-name <name>`: The name of the module to be usede in generation
+- `--pointer-generation-depth <count>`: The depth of pointer-classes to be generated. Default: 1
 
 ## Example
 
@@ -57,8 +57,6 @@ A file like this would be generated:
 ---Lua language server will autocomplete both with and without the prefix.
 ---@meta mylib
 
----You may remove this, or generate this file again with --no-auxiliary-types, to supress redefinition warnings
----@class c.pointer<T> : { [integer] : T }, ffi.cdata*
 ---@class mylib
 local mylib = {}
 
@@ -66,16 +64,19 @@ local mylib = {}
 ---@field a integer
 ---@field b integer
 
+---@class MyStruct*
+---@field [integer] MyStruct
+
 ---@param a integer
 ---@param b integer
----@return c.pointer<MyStruct>
-function mylib.mylib_MyStruct_create(a, b) end
-mylib.MyStruct_create = mylib.mylib_MyStruct_create
+---@return MyStruct*
+function mylib.MyStruct_create(a, b) end
+mylib.mylib_MyStruct_create = mylib.MyStruct_create
 
----@param s c.pointer<MyStruct>
+---@param s MyStruct*
 ---@return nil
-function mylib.mylib_MyStruct_free(s) end
-mylib.MyStruct_free = mylib.mylib_MyStruct_free
+function mylib.MyStruct_free(s) end
+mylib.mylib_MyStruct_free = mylib.MyStruct_free
 
 return mylib
 ```

@@ -4,8 +4,6 @@
 ---Lua language server will autocomplete both with and without the prefix.
 ---@meta clang
 
----You may remove this to supress redefinition warnings
----@class c.pointer<T> : { [integer] : T }, ffi.cdata*
 ---@class clang
 local clang = {}
 
@@ -30,259 +28,295 @@ clang.CXError_ASTReadError = CXErrorCode.CXError_ASTReadError
 ---@field data ffi.cdata*
 ---@field private_flags integer
 
----@alias CXString CXString
+---@class CXString*
+---@field [integer] CXString
+
+---@class CXString**
+---@field [integer] CXString*
 
 ---@class CXStringSet
----@field Strings c.pointer<CXString>?
+---@field Strings CXString*?
 ---@field Count integer
 
----@alias CXStringSet CXStringSet
+---@class CXStringSet*
+---@field [integer] CXStringSet
+
+---@class CXStringSet**
+---@field [integer] CXStringSet*
 
 ---@param string CXString
 ---@return string
-function clang.clang_getCString(string) end
-clang.getCString = clang.clang_getCString
+function clang.getCString(string) end
+clang.clang_getCString = clang.getCString
 
 ---@param string CXString
 ---@return nil
-function clang.clang_disposeString(string) end
-clang.disposeString = clang.clang_disposeString
+function clang.disposeString(string) end
+clang.clang_disposeString = clang.disposeString
 
----@param set c.pointer<CXStringSet>?
+---@param set CXStringSet*?
 ---@return nil
-function clang.clang_disposeStringSet(set) end
-clang.disposeStringSet = clang.clang_disposeStringSet
+function clang.disposeStringSet(set) end
+clang.clang_disposeStringSet = clang.disposeStringSet
 
 ---@return integer
-function clang.clang_getBuildSessionTimestamp() end
-clang.getBuildSessionTimestamp = clang.clang_getBuildSessionTimestamp
+function clang.getBuildSessionTimestamp() end
+clang.clang_getBuildSessionTimestamp = clang.getBuildSessionTimestamp
 
 ---@class CXVirtualFileOverlayImpl
 
----@alias CXVirtualFileOverlay c.pointer<CXVirtualFileOverlayImpl>?
+---@class CXVirtualFileOverlayImpl*
+---@field [integer] CXVirtualFileOverlayImpl
+
+---@class CXVirtualFileOverlayImpl**
+---@field [integer] CXVirtualFileOverlayImpl*
+
+---@alias CXVirtualFileOverlay CXVirtualFileOverlayImpl*?
 
 ---@param options integer
 ---@return CXVirtualFileOverlay
-function clang.clang_VirtualFileOverlay_create(options) end
-clang.VirtualFileOverlay_create = clang.clang_VirtualFileOverlay_create
+function clang.VirtualFileOverlay_create(options) end
+clang.clang_VirtualFileOverlay_create = clang.VirtualFileOverlay_create
 
 ---@param arg_1 CXVirtualFileOverlay
 ---@param virtualPath string
 ---@param realPath string
 ---@return CXErrorCode
-function clang.clang_VirtualFileOverlay_addFileMapping(arg_1, virtualPath, realPath) end
-clang.VirtualFileOverlay_addFileMapping = clang.clang_VirtualFileOverlay_addFileMapping
+function clang.VirtualFileOverlay_addFileMapping(arg_1, virtualPath, realPath) end
+clang.clang_VirtualFileOverlay_addFileMapping = clang.VirtualFileOverlay_addFileMapping
 
 ---@param arg_1 CXVirtualFileOverlay
 ---@param caseSensitive integer
 ---@return CXErrorCode
-function clang.clang_VirtualFileOverlay_setCaseSensitivity(arg_1, caseSensitive) end
-clang.VirtualFileOverlay_setCaseSensitivity = clang.clang_VirtualFileOverlay_setCaseSensitivity
+function clang.VirtualFileOverlay_setCaseSensitivity(arg_1, caseSensitive) end
+clang.clang_VirtualFileOverlay_setCaseSensitivity = clang.VirtualFileOverlay_setCaseSensitivity
 
 ---@param arg_1 CXVirtualFileOverlay
 ---@param options integer
----@param out_buffer_ptr c.pointer<string>?
----@param out_buffer_size c.pointer<integer>?
+---@param out_buffer_ptr string*?
+---@param out_buffer_size integer*?
 ---@return CXErrorCode
-function clang.clang_VirtualFileOverlay_writeToBuffer(arg_1, options, out_buffer_ptr, out_buffer_size) end
-clang.VirtualFileOverlay_writeToBuffer = clang.clang_VirtualFileOverlay_writeToBuffer
+function clang.VirtualFileOverlay_writeToBuffer(arg_1, options, out_buffer_ptr, out_buffer_size) end
+clang.clang_VirtualFileOverlay_writeToBuffer = clang.VirtualFileOverlay_writeToBuffer
 
 ---@param buffer ffi.cdata*
 ---@return nil
-function clang.clang_free(buffer) end
-clang.free = clang.clang_free
+function clang.free(buffer) end
+clang.clang_free = clang.free
 
 ---@param arg_1 CXVirtualFileOverlay
 ---@return nil
-function clang.clang_VirtualFileOverlay_dispose(arg_1) end
-clang.VirtualFileOverlay_dispose = clang.clang_VirtualFileOverlay_dispose
+function clang.VirtualFileOverlay_dispose(arg_1) end
+clang.clang_VirtualFileOverlay_dispose = clang.VirtualFileOverlay_dispose
 
 ---@class CXModuleMapDescriptorImpl
 
----@alias CXModuleMapDescriptor c.pointer<CXModuleMapDescriptorImpl>?
+---@class CXModuleMapDescriptorImpl*
+---@field [integer] CXModuleMapDescriptorImpl
+
+---@class CXModuleMapDescriptorImpl**
+---@field [integer] CXModuleMapDescriptorImpl*
+
+---@alias CXModuleMapDescriptor CXModuleMapDescriptorImpl*?
 
 ---@param options integer
 ---@return CXModuleMapDescriptor
-function clang.clang_ModuleMapDescriptor_create(options) end
-clang.ModuleMapDescriptor_create = clang.clang_ModuleMapDescriptor_create
+function clang.ModuleMapDescriptor_create(options) end
+clang.clang_ModuleMapDescriptor_create = clang.ModuleMapDescriptor_create
 
 ---@param arg_1 CXModuleMapDescriptor
 ---@param name string
 ---@return CXErrorCode
-function clang.clang_ModuleMapDescriptor_setFrameworkModuleName(arg_1, name) end
-clang.ModuleMapDescriptor_setFrameworkModuleName = clang.clang_ModuleMapDescriptor_setFrameworkModuleName
+function clang.ModuleMapDescriptor_setFrameworkModuleName(arg_1, name) end
+clang.clang_ModuleMapDescriptor_setFrameworkModuleName = clang.ModuleMapDescriptor_setFrameworkModuleName
 
 ---@param arg_1 CXModuleMapDescriptor
 ---@param name string
 ---@return CXErrorCode
-function clang.clang_ModuleMapDescriptor_setUmbrellaHeader(arg_1, name) end
-clang.ModuleMapDescriptor_setUmbrellaHeader = clang.clang_ModuleMapDescriptor_setUmbrellaHeader
+function clang.ModuleMapDescriptor_setUmbrellaHeader(arg_1, name) end
+clang.clang_ModuleMapDescriptor_setUmbrellaHeader = clang.ModuleMapDescriptor_setUmbrellaHeader
 
 ---@param arg_1 CXModuleMapDescriptor
 ---@param options integer
----@param out_buffer_ptr c.pointer<string>?
----@param out_buffer_size c.pointer<integer>?
+---@param out_buffer_ptr string*?
+---@param out_buffer_size integer*?
 ---@return CXErrorCode
-function clang.clang_ModuleMapDescriptor_writeToBuffer(arg_1, options, out_buffer_ptr, out_buffer_size) end
-clang.ModuleMapDescriptor_writeToBuffer = clang.clang_ModuleMapDescriptor_writeToBuffer
+function clang.ModuleMapDescriptor_writeToBuffer(arg_1, options, out_buffer_ptr, out_buffer_size) end
+clang.clang_ModuleMapDescriptor_writeToBuffer = clang.ModuleMapDescriptor_writeToBuffer
 
 ---@param arg_1 CXModuleMapDescriptor
 ---@return nil
-function clang.clang_ModuleMapDescriptor_dispose(arg_1) end
-clang.ModuleMapDescriptor_dispose = clang.clang_ModuleMapDescriptor_dispose
+function clang.ModuleMapDescriptor_dispose(arg_1) end
+clang.clang_ModuleMapDescriptor_dispose = clang.ModuleMapDescriptor_dispose
 
 ---@alias CXFile ffi.cdata*
 
 ---@param SFile CXFile
 ---@return CXString
-function clang.clang_getFileName(SFile) end
-clang.getFileName = clang.clang_getFileName
+function clang.getFileName(SFile) end
+clang.clang_getFileName = clang.getFileName
 
 ---@param SFile CXFile
 ---@return time_t
-function clang.clang_getFileTime(SFile) end
-clang.getFileTime = clang.clang_getFileTime
+function clang.getFileTime(SFile) end
+clang.clang_getFileTime = clang.getFileTime
 
 ---@class CXFileUniqueID
 ---@field data integer[]
 
----@alias CXFileUniqueID CXFileUniqueID
+---@class CXFileUniqueID*
+---@field [integer] CXFileUniqueID
+
+---@class CXFileUniqueID**
+---@field [integer] CXFileUniqueID*
 
 ---@param file CXFile
----@param outID c.pointer<CXFileUniqueID>?
+---@param outID CXFileUniqueID*?
 ---@return integer
-function clang.clang_getFileUniqueID(file, outID) end
-clang.getFileUniqueID = clang.clang_getFileUniqueID
+function clang.getFileUniqueID(file, outID) end
+clang.clang_getFileUniqueID = clang.getFileUniqueID
 
 ---@param file1 CXFile
 ---@param file2 CXFile
 ---@return integer
-function clang.clang_File_isEqual(file1, file2) end
-clang.File_isEqual = clang.clang_File_isEqual
+function clang.File_isEqual(file1, file2) end
+clang.clang_File_isEqual = clang.File_isEqual
 
 ---@param file CXFile
 ---@return CXString
-function clang.clang_File_tryGetRealPathName(file) end
-clang.File_tryGetRealPathName = clang.clang_File_tryGetRealPathName
+function clang.File_tryGetRealPathName(file) end
+clang.clang_File_tryGetRealPathName = clang.File_tryGetRealPathName
 
 ---@class CXSourceLocation
 ---@field ptr_data ffi.cdata*[]
 ---@field int_data integer
 
----@alias CXSourceLocation CXSourceLocation
+---@class CXSourceLocation*
+---@field [integer] CXSourceLocation
+
+---@class CXSourceLocation**
+---@field [integer] CXSourceLocation*
 
 ---@class CXSourceRange
 ---@field ptr_data ffi.cdata*[]
 ---@field begin_int_data integer
 ---@field end_int_data integer
 
----@alias CXSourceRange CXSourceRange
+---@class CXSourceRange*
+---@field [integer] CXSourceRange
+
+---@class CXSourceRange**
+---@field [integer] CXSourceRange*
 
 ---@return CXSourceLocation
-function clang.clang_getNullLocation() end
-clang.getNullLocation = clang.clang_getNullLocation
+function clang.getNullLocation() end
+clang.clang_getNullLocation = clang.getNullLocation
 
 ---@param loc1 CXSourceLocation
 ---@param loc2 CXSourceLocation
 ---@return integer
-function clang.clang_equalLocations(loc1, loc2) end
-clang.equalLocations = clang.clang_equalLocations
+function clang.equalLocations(loc1, loc2) end
+clang.clang_equalLocations = clang.equalLocations
 
 ---@param location CXSourceLocation
 ---@return integer
-function clang.clang_Location_isInSystemHeader(location) end
-clang.Location_isInSystemHeader = clang.clang_Location_isInSystemHeader
+function clang.Location_isInSystemHeader(location) end
+clang.clang_Location_isInSystemHeader = clang.Location_isInSystemHeader
 
 ---@param location CXSourceLocation
 ---@return integer
-function clang.clang_Location_isFromMainFile(location) end
-clang.Location_isFromMainFile = clang.clang_Location_isFromMainFile
+function clang.Location_isFromMainFile(location) end
+clang.clang_Location_isFromMainFile = clang.Location_isFromMainFile
 
 ---@return CXSourceRange
-function clang.clang_getNullRange() end
-clang.getNullRange = clang.clang_getNullRange
+function clang.getNullRange() end
+clang.clang_getNullRange = clang.getNullRange
 
 ---@param begin CXSourceLocation
 ---@param _end CXSourceLocation
 ---@return CXSourceRange
-function clang.clang_getRange(begin, _end) end
-clang.getRange = clang.clang_getRange
+function clang.getRange(begin, _end) end
+clang.clang_getRange = clang.getRange
 
 ---@param range1 CXSourceRange
 ---@param range2 CXSourceRange
 ---@return integer
-function clang.clang_equalRanges(range1, range2) end
-clang.equalRanges = clang.clang_equalRanges
+function clang.equalRanges(range1, range2) end
+clang.clang_equalRanges = clang.equalRanges
 
 ---@param range CXSourceRange
 ---@return integer
-function clang.clang_Range_isNull(range) end
-clang.Range_isNull = clang.clang_Range_isNull
+function clang.Range_isNull(range) end
+clang.clang_Range_isNull = clang.Range_isNull
 
 ---@param location CXSourceLocation
----@param file c.pointer<CXFile>?
----@param line c.pointer<integer>?
----@param column c.pointer<integer>?
----@param offset c.pointer<integer>?
+---@param file CXFile*?
+---@param line integer*?
+---@param column integer*?
+---@param offset integer*?
 ---@return nil
-function clang.clang_getExpansionLocation(location, file, line, column, offset) end
-clang.getExpansionLocation = clang.clang_getExpansionLocation
+function clang.getExpansionLocation(location, file, line, column, offset) end
+clang.clang_getExpansionLocation = clang.getExpansionLocation
 
 ---@param location CXSourceLocation
----@param filename c.pointer<CXString>?
----@param line c.pointer<integer>?
----@param column c.pointer<integer>?
+---@param filename CXString*?
+---@param line integer*?
+---@param column integer*?
 ---@return nil
-function clang.clang_getPresumedLocation(location, filename, line, column) end
-clang.getPresumedLocation = clang.clang_getPresumedLocation
+function clang.getPresumedLocation(location, filename, line, column) end
+clang.clang_getPresumedLocation = clang.getPresumedLocation
 
 ---@param location CXSourceLocation
----@param file c.pointer<CXFile>?
----@param line c.pointer<integer>?
----@param column c.pointer<integer>?
----@param offset c.pointer<integer>?
+---@param file CXFile*?
+---@param line integer*?
+---@param column integer*?
+---@param offset integer*?
 ---@return nil
-function clang.clang_getInstantiationLocation(location, file, line, column, offset) end
-clang.getInstantiationLocation = clang.clang_getInstantiationLocation
+function clang.getInstantiationLocation(location, file, line, column, offset) end
+clang.clang_getInstantiationLocation = clang.getInstantiationLocation
 
 ---@param location CXSourceLocation
----@param file c.pointer<CXFile>?
----@param line c.pointer<integer>?
----@param column c.pointer<integer>?
----@param offset c.pointer<integer>?
+---@param file CXFile*?
+---@param line integer*?
+---@param column integer*?
+---@param offset integer*?
 ---@return nil
-function clang.clang_getSpellingLocation(location, file, line, column, offset) end
-clang.getSpellingLocation = clang.clang_getSpellingLocation
+function clang.getSpellingLocation(location, file, line, column, offset) end
+clang.clang_getSpellingLocation = clang.getSpellingLocation
 
 ---@param location CXSourceLocation
----@param file c.pointer<CXFile>?
----@param line c.pointer<integer>?
----@param column c.pointer<integer>?
----@param offset c.pointer<integer>?
+---@param file CXFile*?
+---@param line integer*?
+---@param column integer*?
+---@param offset integer*?
 ---@return nil
-function clang.clang_getFileLocation(location, file, line, column, offset) end
-clang.getFileLocation = clang.clang_getFileLocation
+function clang.getFileLocation(location, file, line, column, offset) end
+clang.clang_getFileLocation = clang.getFileLocation
 
 ---@param range CXSourceRange
 ---@return CXSourceLocation
-function clang.clang_getRangeStart(range) end
-clang.getRangeStart = clang.clang_getRangeStart
+function clang.getRangeStart(range) end
+clang.clang_getRangeStart = clang.getRangeStart
 
 ---@param range CXSourceRange
 ---@return CXSourceLocation
-function clang.clang_getRangeEnd(range) end
-clang.getRangeEnd = clang.clang_getRangeEnd
+function clang.getRangeEnd(range) end
+clang.clang_getRangeEnd = clang.getRangeEnd
 
 ---@class CXSourceRangeList
 ---@field count integer
----@field ranges c.pointer<CXSourceRange>?
+---@field ranges CXSourceRange*?
 
----@alias CXSourceRangeList CXSourceRangeList
+---@class CXSourceRangeList*
+---@field [integer] CXSourceRangeList
 
----@param ranges c.pointer<CXSourceRangeList>?
+---@class CXSourceRangeList**
+---@field [integer] CXSourceRangeList*
+
+---@param ranges CXSourceRangeList*?
 ---@return nil
-function clang.clang_disposeSourceRangeList(ranges) end
-clang.disposeSourceRangeList = clang.clang_disposeSourceRangeList
+function clang.disposeSourceRangeList(ranges) end
+clang.clang_disposeSourceRangeList = clang.disposeSourceRangeList
 
 ---@enum CXDiagnosticSeverity
 local CXDiagnosticSeverity = {
@@ -305,14 +339,14 @@ clang.CXDiagnostic_Fatal = CXDiagnosticSeverity.CXDiagnostic_Fatal
 
 ---@param Diags CXDiagnosticSet
 ---@return integer
-function clang.clang_getNumDiagnosticsInSet(Diags) end
-clang.getNumDiagnosticsInSet = clang.clang_getNumDiagnosticsInSet
+function clang.getNumDiagnosticsInSet(Diags) end
+clang.clang_getNumDiagnosticsInSet = clang.getNumDiagnosticsInSet
 
 ---@param Diags CXDiagnosticSet
 ---@param Index integer
 ---@return CXDiagnostic
-function clang.clang_getDiagnosticInSet(Diags, Index) end
-clang.getDiagnosticInSet = clang.clang_getDiagnosticInSet
+function clang.getDiagnosticInSet(Diags, Index) end
+clang.clang_getDiagnosticInSet = clang.getDiagnosticInSet
 
 ---@enum CXLoadDiag_Error
 local CXLoadDiag_Error = {
@@ -328,26 +362,26 @@ clang.CXLoadDiag_CannotLoad = CXLoadDiag_Error.CXLoadDiag_CannotLoad
 clang.CXLoadDiag_InvalidFile = CXLoadDiag_Error.CXLoadDiag_InvalidFile
 
 ---@param file string
----@param error c.pointer<CXLoadDiag_Error>?
----@param errorString c.pointer<CXString>?
+---@param error CXLoadDiag_Error*?
+---@param errorString CXString*?
 ---@return CXDiagnosticSet
-function clang.clang_loadDiagnostics(file, error, errorString) end
-clang.loadDiagnostics = clang.clang_loadDiagnostics
+function clang.loadDiagnostics(file, error, errorString) end
+clang.clang_loadDiagnostics = clang.loadDiagnostics
 
 ---@param Diags CXDiagnosticSet
 ---@return nil
-function clang.clang_disposeDiagnosticSet(Diags) end
-clang.disposeDiagnosticSet = clang.clang_disposeDiagnosticSet
+function clang.disposeDiagnosticSet(Diags) end
+clang.clang_disposeDiagnosticSet = clang.disposeDiagnosticSet
 
 ---@param D CXDiagnostic
 ---@return CXDiagnosticSet
-function clang.clang_getChildDiagnostics(D) end
-clang.getChildDiagnostics = clang.clang_getChildDiagnostics
+function clang.getChildDiagnostics(D) end
+clang.clang_getChildDiagnostics = clang.getChildDiagnostics
 
 ---@param Diagnostic CXDiagnostic
 ---@return nil
-function clang.clang_disposeDiagnostic(Diagnostic) end
-clang.disposeDiagnostic = clang.clang_disposeDiagnostic
+function clang.disposeDiagnostic(Diagnostic) end
+clang.clang_disposeDiagnostic = clang.disposeDiagnostic
 
 ---@enum CXDiagnosticDisplayOptions
 local CXDiagnosticDisplayOptions = {
@@ -369,81 +403,93 @@ clang.CXDiagnostic_DisplayCategoryName = CXDiagnosticDisplayOptions.CXDiagnostic
 ---@param Diagnostic CXDiagnostic
 ---@param Options integer
 ---@return CXString
-function clang.clang_formatDiagnostic(Diagnostic, Options) end
-clang.formatDiagnostic = clang.clang_formatDiagnostic
+function clang.formatDiagnostic(Diagnostic, Options) end
+clang.clang_formatDiagnostic = clang.formatDiagnostic
 
 ---@return integer
-function clang.clang_defaultDiagnosticDisplayOptions() end
-clang.defaultDiagnosticDisplayOptions = clang.clang_defaultDiagnosticDisplayOptions
+function clang.defaultDiagnosticDisplayOptions() end
+clang.clang_defaultDiagnosticDisplayOptions = clang.defaultDiagnosticDisplayOptions
 
 ---@param arg_1 CXDiagnostic
 ---@return CXDiagnosticSeverity
-function clang.clang_getDiagnosticSeverity(arg_1) end
-clang.getDiagnosticSeverity = clang.clang_getDiagnosticSeverity
+function clang.getDiagnosticSeverity(arg_1) end
+clang.clang_getDiagnosticSeverity = clang.getDiagnosticSeverity
 
 ---@param arg_1 CXDiagnostic
 ---@return CXSourceLocation
-function clang.clang_getDiagnosticLocation(arg_1) end
-clang.getDiagnosticLocation = clang.clang_getDiagnosticLocation
+function clang.getDiagnosticLocation(arg_1) end
+clang.clang_getDiagnosticLocation = clang.getDiagnosticLocation
 
 ---@param arg_1 CXDiagnostic
 ---@return CXString
-function clang.clang_getDiagnosticSpelling(arg_1) end
-clang.getDiagnosticSpelling = clang.clang_getDiagnosticSpelling
+function clang.getDiagnosticSpelling(arg_1) end
+clang.clang_getDiagnosticSpelling = clang.getDiagnosticSpelling
 
 ---@param Diag CXDiagnostic
----@param Disable c.pointer<CXString>?
+---@param Disable CXString*?
 ---@return CXString
-function clang.clang_getDiagnosticOption(Diag, Disable) end
-clang.getDiagnosticOption = clang.clang_getDiagnosticOption
+function clang.getDiagnosticOption(Diag, Disable) end
+clang.clang_getDiagnosticOption = clang.getDiagnosticOption
 
 ---@param arg_1 CXDiagnostic
 ---@return integer
-function clang.clang_getDiagnosticCategory(arg_1) end
-clang.getDiagnosticCategory = clang.clang_getDiagnosticCategory
+function clang.getDiagnosticCategory(arg_1) end
+clang.clang_getDiagnosticCategory = clang.getDiagnosticCategory
 
 ---@param Category integer
 ---@return CXString
-function clang.clang_getDiagnosticCategoryName(Category) end
-clang.getDiagnosticCategoryName = clang.clang_getDiagnosticCategoryName
+function clang.getDiagnosticCategoryName(Category) end
+clang.clang_getDiagnosticCategoryName = clang.getDiagnosticCategoryName
 
 ---@param arg_1 CXDiagnostic
 ---@return CXString
-function clang.clang_getDiagnosticCategoryText(arg_1) end
-clang.getDiagnosticCategoryText = clang.clang_getDiagnosticCategoryText
+function clang.getDiagnosticCategoryText(arg_1) end
+clang.clang_getDiagnosticCategoryText = clang.getDiagnosticCategoryText
 
 ---@param arg_1 CXDiagnostic
 ---@return integer
-function clang.clang_getDiagnosticNumRanges(arg_1) end
-clang.getDiagnosticNumRanges = clang.clang_getDiagnosticNumRanges
+function clang.getDiagnosticNumRanges(arg_1) end
+clang.clang_getDiagnosticNumRanges = clang.getDiagnosticNumRanges
 
 ---@param Diagnostic CXDiagnostic
 ---@param Range integer
 ---@return CXSourceRange
-function clang.clang_getDiagnosticRange(Diagnostic, Range) end
-clang.getDiagnosticRange = clang.clang_getDiagnosticRange
+function clang.getDiagnosticRange(Diagnostic, Range) end
+clang.clang_getDiagnosticRange = clang.getDiagnosticRange
 
 ---@param Diagnostic CXDiagnostic
 ---@return integer
-function clang.clang_getDiagnosticNumFixIts(Diagnostic) end
-clang.getDiagnosticNumFixIts = clang.clang_getDiagnosticNumFixIts
+function clang.getDiagnosticNumFixIts(Diagnostic) end
+clang.clang_getDiagnosticNumFixIts = clang.getDiagnosticNumFixIts
 
 ---@param Diagnostic CXDiagnostic
 ---@param FixIt integer
----@param ReplacementRange c.pointer<CXSourceRange>?
+---@param ReplacementRange CXSourceRange*?
 ---@return CXString
-function clang.clang_getDiagnosticFixIt(Diagnostic, FixIt, ReplacementRange) end
-clang.getDiagnosticFixIt = clang.clang_getDiagnosticFixIt
+function clang.getDiagnosticFixIt(Diagnostic, FixIt, ReplacementRange) end
+clang.clang_getDiagnosticFixIt = clang.getDiagnosticFixIt
 
 ---@alias CXIndex ffi.cdata*
 
 ---@class CXTargetInfoImpl
 
----@alias CXTargetInfo c.pointer<CXTargetInfoImpl>?
+---@class CXTargetInfoImpl*
+---@field [integer] CXTargetInfoImpl
+
+---@class CXTargetInfoImpl**
+---@field [integer] CXTargetInfoImpl*
+
+---@alias CXTargetInfo CXTargetInfoImpl*?
 
 ---@class CXTranslationUnitImpl
 
----@alias CXTranslationUnit c.pointer<CXTranslationUnitImpl>?
+---@class CXTranslationUnitImpl*
+---@field [integer] CXTranslationUnitImpl
+
+---@class CXTranslationUnitImpl**
+---@field [integer] CXTranslationUnitImpl*
+
+---@alias CXTranslationUnit CXTranslationUnitImpl*?
 
 ---@alias CXClientData ffi.cdata*
 
@@ -451,6 +497,12 @@ clang.getDiagnosticFixIt = clang.clang_getDiagnosticFixIt
 ---@field Filename string
 ---@field Contents string
 ---@field Length integer
+
+---@class CXUnsavedFile*
+---@field [integer] CXUnsavedFile
+
+---@class CXUnsavedFile**
+---@field [integer] CXUnsavedFile*
 
 ---@enum CXAvailabilityKind
 local CXAvailabilityKind = {
@@ -470,7 +522,11 @@ clang.CXAvailability_NotAccessible = CXAvailabilityKind.CXAvailability_NotAccess
 ---@field Minor integer
 ---@field Subminor integer
 
----@alias CXVersion CXVersion
+---@class CXVersion*
+---@field [integer] CXVersion
+
+---@class CXVersion**
+---@field [integer] CXVersion*
 
 ---@enum CXCursor_ExceptionSpecificationKind
 local CXCursor_ExceptionSpecificationKind = {
@@ -500,13 +556,13 @@ clang.CXCursor_ExceptionSpecificationKind_NoThrow = CXCursor_ExceptionSpecificat
 ---@param excludeDeclarationsFromPCH integer
 ---@param displayDiagnostics integer
 ---@return CXIndex
-function clang.clang_createIndex(excludeDeclarationsFromPCH, displayDiagnostics) end
-clang.createIndex = clang.clang_createIndex
+function clang.createIndex(excludeDeclarationsFromPCH, displayDiagnostics) end
+clang.clang_createIndex = clang.createIndex
 
 ---@param index CXIndex
 ---@return nil
-function clang.clang_disposeIndex(index) end
-clang.disposeIndex = clang.clang_disposeIndex
+function clang.disposeIndex(index) end
+clang.clang_disposeIndex = clang.disposeIndex
 
 ---@enum CXChoice
 local CXChoice = {
@@ -518,8 +574,6 @@ local CXChoice = {
 clang.CXChoice_Default = CXChoice.CXChoice_Default
 clang.CXChoice_Enabled = CXChoice.CXChoice_Enabled
 clang.CXChoice_Disabled = CXChoice.CXChoice_Disabled
-
----@alias CXChoice CXChoice
 
 ---@enum CXGlobalOptFlags
 local CXGlobalOptFlags = {
@@ -534,8 +588,6 @@ clang.CXGlobalOpt_ThreadBackgroundPriorityForIndexing = CXGlobalOptFlags.CXGloba
 clang.CXGlobalOpt_ThreadBackgroundPriorityForEditing = CXGlobalOptFlags.CXGlobalOpt_ThreadBackgroundPriorityForEditing
 clang.CXGlobalOpt_ThreadBackgroundPriorityForAll = CXGlobalOptFlags.CXGlobalOpt_ThreadBackgroundPriorityForAll
 
----@alias CXGlobalOptFlags CXGlobalOptFlags
-
 ---@class CXIndexOptions
 ---@field Size integer
 ---@field ThreadBackgroundPriorityForIndexing integer
@@ -547,118 +599,122 @@ clang.CXGlobalOpt_ThreadBackgroundPriorityForAll = CXGlobalOptFlags.CXGlobalOpt_
 ---@field PreambleStoragePath string
 ---@field InvocationEmissionPath string
 
----@alias CXIndexOptions CXIndexOptions
+---@class CXIndexOptions*
+---@field [integer] CXIndexOptions
 
----@param options c.pointer<CXIndexOptions>?
+---@class CXIndexOptions**
+---@field [integer] CXIndexOptions*
+
+---@param options CXIndexOptions*?
 ---@return CXIndex
-function clang.clang_createIndexWithOptions(options) end
-clang.createIndexWithOptions = clang.clang_createIndexWithOptions
+function clang.createIndexWithOptions(options) end
+clang.clang_createIndexWithOptions = clang.createIndexWithOptions
 
 ---@param arg_1 CXIndex
 ---@param options integer
 ---@return nil
-function clang.clang_CXIndex_setGlobalOptions(arg_1, options) end
-clang.CXIndex_setGlobalOptions = clang.clang_CXIndex_setGlobalOptions
+function clang.CXIndex_setGlobalOptions(arg_1, options) end
+clang.clang_CXIndex_setGlobalOptions = clang.CXIndex_setGlobalOptions
 
 ---@param arg_1 CXIndex
 ---@return integer
-function clang.clang_CXIndex_getGlobalOptions(arg_1) end
-clang.CXIndex_getGlobalOptions = clang.clang_CXIndex_getGlobalOptions
+function clang.CXIndex_getGlobalOptions(arg_1) end
+clang.clang_CXIndex_getGlobalOptions = clang.CXIndex_getGlobalOptions
 
 ---@param arg_1 CXIndex
 ---@param Path string
 ---@return nil
-function clang.clang_CXIndex_setInvocationEmissionPathOption(arg_1, Path) end
-clang.CXIndex_setInvocationEmissionPathOption = clang.clang_CXIndex_setInvocationEmissionPathOption
+function clang.CXIndex_setInvocationEmissionPathOption(arg_1, Path) end
+clang.clang_CXIndex_setInvocationEmissionPathOption = clang.CXIndex_setInvocationEmissionPathOption
 
 ---@param tu CXTranslationUnit
 ---@param file CXFile
 ---@return integer
-function clang.clang_isFileMultipleIncludeGuarded(tu, file) end
-clang.isFileMultipleIncludeGuarded = clang.clang_isFileMultipleIncludeGuarded
+function clang.isFileMultipleIncludeGuarded(tu, file) end
+clang.clang_isFileMultipleIncludeGuarded = clang.isFileMultipleIncludeGuarded
 
 ---@param tu CXTranslationUnit
 ---@param file_name string
 ---@return CXFile
-function clang.clang_getFile(tu, file_name) end
-clang.getFile = clang.clang_getFile
+function clang.getFile(tu, file_name) end
+clang.clang_getFile = clang.getFile
 
 ---@param tu CXTranslationUnit
 ---@param file CXFile
----@param size c.pointer<integer>?
+---@param size integer*?
 ---@return string
-function clang.clang_getFileContents(tu, file, size) end
-clang.getFileContents = clang.clang_getFileContents
+function clang.getFileContents(tu, file, size) end
+clang.clang_getFileContents = clang.getFileContents
 
 ---@param tu CXTranslationUnit
 ---@param file CXFile
 ---@param line integer
 ---@param column integer
 ---@return CXSourceLocation
-function clang.clang_getLocation(tu, file, line, column) end
-clang.getLocation = clang.clang_getLocation
+function clang.getLocation(tu, file, line, column) end
+clang.clang_getLocation = clang.getLocation
 
 ---@param tu CXTranslationUnit
 ---@param file CXFile
 ---@param offset integer
 ---@return CXSourceLocation
-function clang.clang_getLocationForOffset(tu, file, offset) end
-clang.getLocationForOffset = clang.clang_getLocationForOffset
+function clang.getLocationForOffset(tu, file, offset) end
+clang.clang_getLocationForOffset = clang.getLocationForOffset
 
 ---@param tu CXTranslationUnit
 ---@param file CXFile
----@return c.pointer<CXSourceRangeList>?
-function clang.clang_getSkippedRanges(tu, file) end
-clang.getSkippedRanges = clang.clang_getSkippedRanges
+---@return CXSourceRangeList*?
+function clang.getSkippedRanges(tu, file) end
+clang.clang_getSkippedRanges = clang.getSkippedRanges
 
 ---@param tu CXTranslationUnit
----@return c.pointer<CXSourceRangeList>?
-function clang.clang_getAllSkippedRanges(tu) end
-clang.getAllSkippedRanges = clang.clang_getAllSkippedRanges
+---@return CXSourceRangeList*?
+function clang.getAllSkippedRanges(tu) end
+clang.clang_getAllSkippedRanges = clang.getAllSkippedRanges
 
 ---@param Unit CXTranslationUnit
 ---@return integer
-function clang.clang_getNumDiagnostics(Unit) end
-clang.getNumDiagnostics = clang.clang_getNumDiagnostics
+function clang.getNumDiagnostics(Unit) end
+clang.clang_getNumDiagnostics = clang.getNumDiagnostics
 
 ---@param Unit CXTranslationUnit
 ---@param Index integer
 ---@return CXDiagnostic
-function clang.clang_getDiagnostic(Unit, Index) end
-clang.getDiagnostic = clang.clang_getDiagnostic
+function clang.getDiagnostic(Unit, Index) end
+clang.clang_getDiagnostic = clang.getDiagnostic
 
 ---@param Unit CXTranslationUnit
 ---@return CXDiagnosticSet
-function clang.clang_getDiagnosticSetFromTU(Unit) end
-clang.getDiagnosticSetFromTU = clang.clang_getDiagnosticSetFromTU
+function clang.getDiagnosticSetFromTU(Unit) end
+clang.clang_getDiagnosticSetFromTU = clang.getDiagnosticSetFromTU
 
 ---@param CTUnit CXTranslationUnit
 ---@return CXString
-function clang.clang_getTranslationUnitSpelling(CTUnit) end
-clang.getTranslationUnitSpelling = clang.clang_getTranslationUnitSpelling
+function clang.getTranslationUnitSpelling(CTUnit) end
+clang.clang_getTranslationUnitSpelling = clang.getTranslationUnitSpelling
 
 ---@param CIdx CXIndex
 ---@param source_filename string
 ---@param num_clang_command_line_args integer
----@param clang_command_line_args c.pointer<string>?
+---@param clang_command_line_args string*?
 ---@param num_unsaved_files integer
----@param unsaved_files c.pointer<CXUnsavedFile>?
+---@param unsaved_files CXUnsavedFile*?
 ---@return CXTranslationUnit
-function clang.clang_createTranslationUnitFromSourceFile(CIdx, source_filename, num_clang_command_line_args, clang_command_line_args, num_unsaved_files, unsaved_files) end
-clang.createTranslationUnitFromSourceFile = clang.clang_createTranslationUnitFromSourceFile
+function clang.createTranslationUnitFromSourceFile(CIdx, source_filename, num_clang_command_line_args, clang_command_line_args, num_unsaved_files, unsaved_files) end
+clang.clang_createTranslationUnitFromSourceFile = clang.createTranslationUnitFromSourceFile
 
 ---@param CIdx CXIndex
 ---@param ast_filename string
 ---@return CXTranslationUnit
-function clang.clang_createTranslationUnit(CIdx, ast_filename) end
-clang.createTranslationUnit = clang.clang_createTranslationUnit
+function clang.createTranslationUnit(CIdx, ast_filename) end
+clang.clang_createTranslationUnit = clang.createTranslationUnit
 
 ---@param CIdx CXIndex
 ---@param ast_filename string
----@param out_TU c.pointer<CXTranslationUnit>?
+---@param out_TU CXTranslationUnit*?
 ---@return CXErrorCode
-function clang.clang_createTranslationUnit2(CIdx, ast_filename, out_TU) end
-clang.createTranslationUnit2 = clang.clang_createTranslationUnit2
+function clang.createTranslationUnit2(CIdx, ast_filename, out_TU) end
+clang.clang_createTranslationUnit2 = clang.createTranslationUnit2
 
 ---@enum CXTranslationUnit_Flags
 local CXTranslationUnit_Flags = {
@@ -700,43 +756,43 @@ clang.CXTranslationUnit_IgnoreNonErrorsFromIncludedFiles = CXTranslationUnit_Fla
 clang.CXTranslationUnit_RetainExcludedConditionalBlocks = CXTranslationUnit_Flags.CXTranslationUnit_RetainExcludedConditionalBlocks
 
 ---@return integer
-function clang.clang_defaultEditingTranslationUnitOptions() end
-clang.defaultEditingTranslationUnitOptions = clang.clang_defaultEditingTranslationUnitOptions
+function clang.defaultEditingTranslationUnitOptions() end
+clang.clang_defaultEditingTranslationUnitOptions = clang.defaultEditingTranslationUnitOptions
 
 ---@param CIdx CXIndex
 ---@param source_filename string
----@param command_line_args c.pointer<string>?
+---@param command_line_args string*?
 ---@param num_command_line_args integer
----@param unsaved_files c.pointer<CXUnsavedFile>?
+---@param unsaved_files CXUnsavedFile*?
 ---@param num_unsaved_files integer
 ---@param options integer
 ---@return CXTranslationUnit
-function clang.clang_parseTranslationUnit(CIdx, source_filename, command_line_args, num_command_line_args, unsaved_files, num_unsaved_files, options) end
-clang.parseTranslationUnit = clang.clang_parseTranslationUnit
+function clang.parseTranslationUnit(CIdx, source_filename, command_line_args, num_command_line_args, unsaved_files, num_unsaved_files, options) end
+clang.clang_parseTranslationUnit = clang.parseTranslationUnit
 
 ---@param CIdx CXIndex
 ---@param source_filename string
----@param command_line_args c.pointer<string>?
+---@param command_line_args string*?
 ---@param num_command_line_args integer
----@param unsaved_files c.pointer<CXUnsavedFile>?
+---@param unsaved_files CXUnsavedFile*?
 ---@param num_unsaved_files integer
 ---@param options integer
----@param out_TU c.pointer<CXTranslationUnit>?
+---@param out_TU CXTranslationUnit*?
 ---@return CXErrorCode
-function clang.clang_parseTranslationUnit2(CIdx, source_filename, command_line_args, num_command_line_args, unsaved_files, num_unsaved_files, options, out_TU) end
-clang.parseTranslationUnit2 = clang.clang_parseTranslationUnit2
+function clang.parseTranslationUnit2(CIdx, source_filename, command_line_args, num_command_line_args, unsaved_files, num_unsaved_files, options, out_TU) end
+clang.clang_parseTranslationUnit2 = clang.parseTranslationUnit2
 
 ---@param CIdx CXIndex
 ---@param source_filename string
----@param command_line_args c.pointer<string>?
+---@param command_line_args string*?
 ---@param num_command_line_args integer
----@param unsaved_files c.pointer<CXUnsavedFile>?
+---@param unsaved_files CXUnsavedFile*?
 ---@param num_unsaved_files integer
 ---@param options integer
----@param out_TU c.pointer<CXTranslationUnit>?
+---@param out_TU CXTranslationUnit*?
 ---@return CXErrorCode
-function clang.clang_parseTranslationUnit2FullArgv(CIdx, source_filename, command_line_args, num_command_line_args, unsaved_files, num_unsaved_files, options, out_TU) end
-clang.parseTranslationUnit2FullArgv = clang.clang_parseTranslationUnit2FullArgv
+function clang.parseTranslationUnit2FullArgv(CIdx, source_filename, command_line_args, num_command_line_args, unsaved_files, num_unsaved_files, options, out_TU) end
+clang.clang_parseTranslationUnit2FullArgv = clang.parseTranslationUnit2FullArgv
 
 ---@enum CXSaveTranslationUnit_Flags
 local CXSaveTranslationUnit_Flags = {
@@ -747,8 +803,8 @@ clang.CXSaveTranslationUnit_None = CXSaveTranslationUnit_Flags.CXSaveTranslation
 
 ---@param TU CXTranslationUnit
 ---@return integer
-function clang.clang_defaultSaveOptions(TU) end
-clang.defaultSaveOptions = clang.clang_defaultSaveOptions
+function clang.defaultSaveOptions(TU) end
+clang.clang_defaultSaveOptions = clang.defaultSaveOptions
 
 ---@enum CXSaveError
 local CXSaveError = {
@@ -767,18 +823,18 @@ clang.CXSaveError_InvalidTU = CXSaveError.CXSaveError_InvalidTU
 ---@param FileName string
 ---@param options integer
 ---@return integer
-function clang.clang_saveTranslationUnit(TU, FileName, options) end
-clang.saveTranslationUnit = clang.clang_saveTranslationUnit
+function clang.saveTranslationUnit(TU, FileName, options) end
+clang.clang_saveTranslationUnit = clang.saveTranslationUnit
 
 ---@param arg_1 CXTranslationUnit
 ---@return integer
-function clang.clang_suspendTranslationUnit(arg_1) end
-clang.suspendTranslationUnit = clang.clang_suspendTranslationUnit
+function clang.suspendTranslationUnit(arg_1) end
+clang.clang_suspendTranslationUnit = clang.suspendTranslationUnit
 
 ---@param arg_1 CXTranslationUnit
 ---@return nil
-function clang.clang_disposeTranslationUnit(arg_1) end
-clang.disposeTranslationUnit = clang.clang_disposeTranslationUnit
+function clang.disposeTranslationUnit(arg_1) end
+clang.clang_disposeTranslationUnit = clang.disposeTranslationUnit
 
 ---@enum CXReparse_Flags
 local CXReparse_Flags = {
@@ -789,16 +845,16 @@ clang.CXReparse_None = CXReparse_Flags.CXReparse_None
 
 ---@param TU CXTranslationUnit
 ---@return integer
-function clang.clang_defaultReparseOptions(TU) end
-clang.defaultReparseOptions = clang.clang_defaultReparseOptions
+function clang.defaultReparseOptions(TU) end
+clang.clang_defaultReparseOptions = clang.defaultReparseOptions
 
 ---@param TU CXTranslationUnit
 ---@param num_unsaved_files integer
----@param unsaved_files c.pointer<CXUnsavedFile>?
+---@param unsaved_files CXUnsavedFile*?
 ---@param options integer
 ---@return integer
-function clang.clang_reparseTranslationUnit(TU, num_unsaved_files, unsaved_files, options) end
-clang.reparseTranslationUnit = clang.clang_reparseTranslationUnit
+function clang.reparseTranslationUnit(TU, num_unsaved_files, unsaved_files, options) end
+clang.clang_reparseTranslationUnit = clang.reparseTranslationUnit
 
 ---@enum CXTUResourceUsageKind
 local CXTUResourceUsageKind = {
@@ -843,51 +899,59 @@ clang.CXTUResourceUsage_Last = CXTUResourceUsageKind.CXTUResourceUsage_Last
 
 ---@param kind CXTUResourceUsageKind
 ---@return string
-function clang.clang_getTUResourceUsageName(kind) end
-clang.getTUResourceUsageName = clang.clang_getTUResourceUsageName
+function clang.getTUResourceUsageName(kind) end
+clang.clang_getTUResourceUsageName = clang.getTUResourceUsageName
 
 ---@class CXTUResourceUsageEntry
 ---@field kind CXTUResourceUsageKind
 ---@field amount integer
 
----@alias CXTUResourceUsageEntry CXTUResourceUsageEntry
+---@class CXTUResourceUsageEntry*
+---@field [integer] CXTUResourceUsageEntry
+
+---@class CXTUResourceUsageEntry**
+---@field [integer] CXTUResourceUsageEntry*
 
 ---@class CXTUResourceUsage
 ---@field data ffi.cdata*
 ---@field numEntries integer
----@field entries c.pointer<CXTUResourceUsageEntry>?
+---@field entries CXTUResourceUsageEntry*?
 
----@alias CXTUResourceUsage CXTUResourceUsage
+---@class CXTUResourceUsage*
+---@field [integer] CXTUResourceUsage
+
+---@class CXTUResourceUsage**
+---@field [integer] CXTUResourceUsage*
 
 ---@param TU CXTranslationUnit
 ---@return CXTUResourceUsage
-function clang.clang_getCXTUResourceUsage(TU) end
-clang.getCXTUResourceUsage = clang.clang_getCXTUResourceUsage
+function clang.getCXTUResourceUsage(TU) end
+clang.clang_getCXTUResourceUsage = clang.getCXTUResourceUsage
 
 ---@param usage CXTUResourceUsage
 ---@return nil
-function clang.clang_disposeCXTUResourceUsage(usage) end
-clang.disposeCXTUResourceUsage = clang.clang_disposeCXTUResourceUsage
+function clang.disposeCXTUResourceUsage(usage) end
+clang.clang_disposeCXTUResourceUsage = clang.disposeCXTUResourceUsage
 
 ---@param CTUnit CXTranslationUnit
 ---@return CXTargetInfo
-function clang.clang_getTranslationUnitTargetInfo(CTUnit) end
-clang.getTranslationUnitTargetInfo = clang.clang_getTranslationUnitTargetInfo
+function clang.getTranslationUnitTargetInfo(CTUnit) end
+clang.clang_getTranslationUnitTargetInfo = clang.getTranslationUnitTargetInfo
 
 ---@param Info CXTargetInfo
 ---@return nil
-function clang.clang_TargetInfo_dispose(Info) end
-clang.TargetInfo_dispose = clang.clang_TargetInfo_dispose
+function clang.TargetInfo_dispose(Info) end
+clang.clang_TargetInfo_dispose = clang.TargetInfo_dispose
 
 ---@param Info CXTargetInfo
 ---@return CXString
-function clang.clang_TargetInfo_getTriple(Info) end
-clang.TargetInfo_getTriple = clang.clang_TargetInfo_getTriple
+function clang.TargetInfo_getTriple(Info) end
+clang.clang_TargetInfo_getTriple = clang.TargetInfo_getTriple
 
 ---@param Info CXTargetInfo
 ---@return integer
-function clang.clang_TargetInfo_getPointerWidth(Info) end
-clang.TargetInfo_getPointerWidth = clang.clang_TargetInfo_getPointerWidth
+function clang.TargetInfo_getPointerWidth(Info) end
+clang.clang_TargetInfo_getPointerWidth = clang.TargetInfo_getPointerWidth
 
 ---@enum CXCursorKind
 local CXCursorKind = {
@@ -1475,92 +1539,96 @@ clang.CXCursor_OverloadCandidate = CXCursorKind.CXCursor_OverloadCandidate
 ---@field xdata integer
 ---@field data ffi.cdata*[]
 
----@alias CXCursor CXCursor
+---@class CXCursor*
+---@field [integer] CXCursor
+
+---@class CXCursor**
+---@field [integer] CXCursor*
 
 ---@return CXCursor
-function clang.clang_getNullCursor() end
-clang.getNullCursor = clang.clang_getNullCursor
+function clang.getNullCursor() end
+clang.clang_getNullCursor = clang.getNullCursor
 
 ---@param arg_1 CXTranslationUnit
 ---@return CXCursor
-function clang.clang_getTranslationUnitCursor(arg_1) end
-clang.getTranslationUnitCursor = clang.clang_getTranslationUnitCursor
+function clang.getTranslationUnitCursor(arg_1) end
+clang.clang_getTranslationUnitCursor = clang.getTranslationUnitCursor
 
 ---@param arg_1 CXCursor
 ---@param arg_2 CXCursor
 ---@return integer
-function clang.clang_equalCursors(arg_1, arg_2) end
-clang.equalCursors = clang.clang_equalCursors
+function clang.equalCursors(arg_1, arg_2) end
+clang.clang_equalCursors = clang.equalCursors
 
 ---@param cursor CXCursor
 ---@return integer
-function clang.clang_Cursor_isNull(cursor) end
-clang.Cursor_isNull = clang.clang_Cursor_isNull
+function clang.Cursor_isNull(cursor) end
+clang.clang_Cursor_isNull = clang.Cursor_isNull
 
 ---@param arg_1 CXCursor
 ---@return integer
-function clang.clang_hashCursor(arg_1) end
-clang.hashCursor = clang.clang_hashCursor
+function clang.hashCursor(arg_1) end
+clang.clang_hashCursor = clang.hashCursor
 
 ---@param arg_1 CXCursor
 ---@return CXCursorKind
-function clang.clang_getCursorKind(arg_1) end
-clang.getCursorKind = clang.clang_getCursorKind
+function clang.getCursorKind(arg_1) end
+clang.clang_getCursorKind = clang.getCursorKind
 
 ---@param arg_1 CXCursorKind
 ---@return integer
-function clang.clang_isDeclaration(arg_1) end
-clang.isDeclaration = clang.clang_isDeclaration
+function clang.isDeclaration(arg_1) end
+clang.clang_isDeclaration = clang.isDeclaration
 
 ---@param arg_1 CXCursor
 ---@return integer
-function clang.clang_isInvalidDeclaration(arg_1) end
-clang.isInvalidDeclaration = clang.clang_isInvalidDeclaration
+function clang.isInvalidDeclaration(arg_1) end
+clang.clang_isInvalidDeclaration = clang.isInvalidDeclaration
 
 ---@param arg_1 CXCursorKind
 ---@return integer
-function clang.clang_isReference(arg_1) end
-clang.isReference = clang.clang_isReference
+function clang.isReference(arg_1) end
+clang.clang_isReference = clang.isReference
 
 ---@param arg_1 CXCursorKind
 ---@return integer
-function clang.clang_isExpression(arg_1) end
-clang.isExpression = clang.clang_isExpression
+function clang.isExpression(arg_1) end
+clang.clang_isExpression = clang.isExpression
 
 ---@param arg_1 CXCursorKind
 ---@return integer
-function clang.clang_isStatement(arg_1) end
-clang.isStatement = clang.clang_isStatement
+function clang.isStatement(arg_1) end
+clang.clang_isStatement = clang.isStatement
 
 ---@param arg_1 CXCursorKind
 ---@return integer
-function clang.clang_isAttribute(arg_1) end
-clang.isAttribute = clang.clang_isAttribute
+function clang.isAttribute(arg_1) end
+clang.clang_isAttribute = clang.isAttribute
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_Cursor_hasAttrs(C) end
-clang.Cursor_hasAttrs = clang.clang_Cursor_hasAttrs
+function clang.Cursor_hasAttrs(C) end
+clang.clang_Cursor_hasAttrs = clang.Cursor_hasAttrs
 
 ---@param arg_1 CXCursorKind
 ---@return integer
-function clang.clang_isInvalid(arg_1) end
-clang.isInvalid = clang.clang_isInvalid
+function clang.isInvalid(arg_1) end
+clang.clang_isInvalid = clang.isInvalid
 
 ---@param arg_1 CXCursorKind
 ---@return integer
-function clang.clang_isTranslationUnit(arg_1) end
-clang.isTranslationUnit = clang.clang_isTranslationUnit
+function clang.isTranslationUnit(arg_1) end
+clang.clang_isTranslationUnit = clang.isTranslationUnit
 
 ---@param arg_1 CXCursorKind
 ---@return integer
-function clang.clang_isPreprocessing(arg_1) end
-clang.isPreprocessing = clang.clang_isPreprocessing
+function clang.isPreprocessing(arg_1) end
+clang.clang_isPreprocessing = clang.isPreprocessing
 
 ---@param arg_1 CXCursorKind
 ---@return integer
-function clang.clang_isUnexposed(arg_1) end
-clang.isUnexposed = clang.clang_isUnexposed
+function clang.isUnexposed(arg_1) end
+clang.clang_isUnexposed = clang.isUnexposed
 
 ---@enum CXLinkageKind
 local CXLinkageKind = {
@@ -1579,8 +1647,8 @@ clang.CXLinkage_External = CXLinkageKind.CXLinkage_External
 
 ---@param cursor CXCursor
 ---@return CXLinkageKind
-function clang.clang_getCursorLinkage(cursor) end
-clang.getCursorLinkage = clang.clang_getCursorLinkage
+function clang.getCursorLinkage(cursor) end
+clang.clang_getCursorLinkage = clang.getCursorLinkage
 
 ---@enum CXVisibilityKind
 local CXVisibilityKind = {
@@ -1597,13 +1665,13 @@ clang.CXVisibility_Default = CXVisibilityKind.CXVisibility_Default
 
 ---@param cursor CXCursor
 ---@return CXVisibilityKind
-function clang.clang_getCursorVisibility(cursor) end
-clang.getCursorVisibility = clang.clang_getCursorVisibility
+function clang.getCursorVisibility(cursor) end
+clang.clang_getCursorVisibility = clang.getCursorVisibility
 
 ---@param cursor CXCursor
 ---@return CXAvailabilityKind
-function clang.clang_getCursorAvailability(cursor) end
-clang.getCursorAvailability = clang.clang_getCursorAvailability
+function clang.getCursorAvailability(cursor) end
+clang.clang_getCursorAvailability = clang.getCursorAvailability
 
 ---@class CXPlatformAvailability
 ---@field Platform CXString
@@ -1613,38 +1681,42 @@ clang.getCursorAvailability = clang.clang_getCursorAvailability
 ---@field Unavailable integer
 ---@field Message CXString
 
----@alias CXPlatformAvailability CXPlatformAvailability
+---@class CXPlatformAvailability*
+---@field [integer] CXPlatformAvailability
+
+---@class CXPlatformAvailability**
+---@field [integer] CXPlatformAvailability*
 
 ---@param cursor CXCursor
----@param always_deprecated c.pointer<integer>?
----@param deprecated_message c.pointer<CXString>?
----@param always_unavailable c.pointer<integer>?
----@param unavailable_message c.pointer<CXString>?
----@param availability c.pointer<CXPlatformAvailability>?
+---@param always_deprecated integer*?
+---@param deprecated_message CXString*?
+---@param always_unavailable integer*?
+---@param unavailable_message CXString*?
+---@param availability CXPlatformAvailability*?
 ---@param availability_size integer
 ---@return integer
-function clang.clang_getCursorPlatformAvailability(cursor, always_deprecated, deprecated_message, always_unavailable, unavailable_message, availability, availability_size) end
-clang.getCursorPlatformAvailability = clang.clang_getCursorPlatformAvailability
+function clang.getCursorPlatformAvailability(cursor, always_deprecated, deprecated_message, always_unavailable, unavailable_message, availability, availability_size) end
+clang.clang_getCursorPlatformAvailability = clang.getCursorPlatformAvailability
 
----@param availability c.pointer<CXPlatformAvailability>?
+---@param availability CXPlatformAvailability*?
 ---@return nil
-function clang.clang_disposeCXPlatformAvailability(availability) end
-clang.disposeCXPlatformAvailability = clang.clang_disposeCXPlatformAvailability
+function clang.disposeCXPlatformAvailability(availability) end
+clang.clang_disposeCXPlatformAvailability = clang.disposeCXPlatformAvailability
 
 ---@param cursor CXCursor
 ---@return CXCursor
-function clang.clang_Cursor_getVarDeclInitializer(cursor) end
-clang.Cursor_getVarDeclInitializer = clang.clang_Cursor_getVarDeclInitializer
+function clang.Cursor_getVarDeclInitializer(cursor) end
+clang.clang_Cursor_getVarDeclInitializer = clang.Cursor_getVarDeclInitializer
 
 ---@param cursor CXCursor
 ---@return integer
-function clang.clang_Cursor_hasVarDeclGlobalStorage(cursor) end
-clang.Cursor_hasVarDeclGlobalStorage = clang.clang_Cursor_hasVarDeclGlobalStorage
+function clang.Cursor_hasVarDeclGlobalStorage(cursor) end
+clang.clang_Cursor_hasVarDeclGlobalStorage = clang.Cursor_hasVarDeclGlobalStorage
 
 ---@param cursor CXCursor
 ---@return integer
-function clang.clang_Cursor_hasVarDeclExternalStorage(cursor) end
-clang.Cursor_hasVarDeclExternalStorage = clang.clang_Cursor_hasVarDeclExternalStorage
+function clang.Cursor_hasVarDeclExternalStorage(cursor) end
+clang.clang_Cursor_hasVarDeclExternalStorage = clang.Cursor_hasVarDeclExternalStorage
 
 ---@enum CXLanguageKind
 local CXLanguageKind = {
@@ -1661,8 +1733,8 @@ clang.CXLanguage_CPlusPlus = CXLanguageKind.CXLanguage_CPlusPlus
 
 ---@param cursor CXCursor
 ---@return CXLanguageKind
-function clang.clang_getCursorLanguage(cursor) end
-clang.getCursorLanguage = clang.clang_getCursorLanguage
+function clang.getCursorLanguage(cursor) end
+clang.clang_getCursorLanguage = clang.getCursorLanguage
 
 ---@enum CXTLSKind
 local CXTLSKind = {
@@ -1677,81 +1749,87 @@ clang.CXTLS_Static = CXTLSKind.CXTLS_Static
 
 ---@param cursor CXCursor
 ---@return CXTLSKind
-function clang.clang_getCursorTLSKind(cursor) end
-clang.getCursorTLSKind = clang.clang_getCursorTLSKind
+function clang.getCursorTLSKind(cursor) end
+clang.clang_getCursorTLSKind = clang.getCursorTLSKind
 
 ---@param arg_1 CXCursor
 ---@return CXTranslationUnit
-function clang.clang_Cursor_getTranslationUnit(arg_1) end
-clang.Cursor_getTranslationUnit = clang.clang_Cursor_getTranslationUnit
+function clang.Cursor_getTranslationUnit(arg_1) end
+clang.clang_Cursor_getTranslationUnit = clang.Cursor_getTranslationUnit
 
 ---@class CXCursorSetImpl
 
----@alias CXCursorSet c.pointer<CXCursorSetImpl>?
+---@class CXCursorSetImpl*
+---@field [integer] CXCursorSetImpl
+
+---@class CXCursorSetImpl**
+---@field [integer] CXCursorSetImpl*
+
+---@alias CXCursorSet CXCursorSetImpl*?
 
 ---@return CXCursorSet
-function clang.clang_createCXCursorSet() end
-clang.createCXCursorSet = clang.clang_createCXCursorSet
+function clang.createCXCursorSet() end
+clang.clang_createCXCursorSet = clang.createCXCursorSet
 
 ---@param cset CXCursorSet
 ---@return nil
-function clang.clang_disposeCXCursorSet(cset) end
-clang.disposeCXCursorSet = clang.clang_disposeCXCursorSet
-
----@param cset CXCursorSet
----@param cursor CXCursor
----@return integer
-function clang.clang_CXCursorSet_contains(cset, cursor) end
-clang.CXCursorSet_contains = clang.clang_CXCursorSet_contains
+function clang.disposeCXCursorSet(cset) end
+clang.clang_disposeCXCursorSet = clang.disposeCXCursorSet
 
 ---@param cset CXCursorSet
 ---@param cursor CXCursor
 ---@return integer
-function clang.clang_CXCursorSet_insert(cset, cursor) end
-clang.CXCursorSet_insert = clang.clang_CXCursorSet_insert
+function clang.CXCursorSet_contains(cset, cursor) end
+clang.clang_CXCursorSet_contains = clang.CXCursorSet_contains
+
+---@param cset CXCursorSet
+---@param cursor CXCursor
+---@return integer
+function clang.CXCursorSet_insert(cset, cursor) end
+clang.clang_CXCursorSet_insert = clang.CXCursorSet_insert
 
 ---@param cursor CXCursor
 ---@return CXCursor
-function clang.clang_getCursorSemanticParent(cursor) end
-clang.getCursorSemanticParent = clang.clang_getCursorSemanticParent
+function clang.getCursorSemanticParent(cursor) end
+clang.clang_getCursorSemanticParent = clang.getCursorSemanticParent
 
 ---@param cursor CXCursor
 ---@return CXCursor
-function clang.clang_getCursorLexicalParent(cursor) end
-clang.getCursorLexicalParent = clang.clang_getCursorLexicalParent
+function clang.getCursorLexicalParent(cursor) end
+clang.clang_getCursorLexicalParent = clang.getCursorLexicalParent
 
 ---@param cursor CXCursor
----@param overridden c.pointer<c.pointer<CXCursor>?>?
----@param num_overridden c.pointer<integer>?
+---@param overridden CXCursor*?*?
+---@param num_overridden integer*?
 ---@return nil
-function clang.clang_getOverriddenCursors(cursor, overridden, num_overridden) end
-clang.getOverriddenCursors = clang.clang_getOverriddenCursors
+function clang.getOverriddenCursors(cursor, overridden, num_overridden) end
+clang.clang_getOverriddenCursors = clang.getOverriddenCursors
 
----@param overridden c.pointer<CXCursor>?
+---@param overridden CXCursor*?
 ---@return nil
-function clang.clang_disposeOverriddenCursors(overridden) end
-clang.disposeOverriddenCursors = clang.clang_disposeOverriddenCursors
+function clang.disposeOverriddenCursors(overridden) end
+clang.clang_disposeOverriddenCursors = clang.disposeOverriddenCursors
 
 ---@param cursor CXCursor
 ---@return CXFile
-function clang.clang_getIncludedFile(cursor) end
-clang.getIncludedFile = clang.clang_getIncludedFile
+function clang.getIncludedFile(cursor) end
+clang.clang_getIncludedFile = clang.getIncludedFile
 
 ---@param arg_1 CXTranslationUnit
 ---@param arg_2 CXSourceLocation
 ---@return CXCursor
-function clang.clang_getCursor(arg_1, arg_2) end
-clang.getCursor = clang.clang_getCursor
+function clang.getCursor(arg_1, arg_2) end
+clang.clang_getCursor = clang.getCursor
 
 ---@param arg_1 CXCursor
 ---@return CXSourceLocation
-function clang.clang_getCursorLocation(arg_1) end
-clang.getCursorLocation = clang.clang_getCursorLocation
+function clang.getCursorLocation(arg_1) end
+clang.clang_getCursorLocation = clang.getCursorLocation
 
 ---@param arg_1 CXCursor
 ---@return CXSourceRange
-function clang.clang_getCursorExtent(arg_1) end
-clang.getCursorExtent = clang.clang_getCursorExtent
+function clang.getCursorExtent(arg_1) end
+clang.clang_getCursorExtent = clang.getCursorExtent
 
 ---@enum CXTypeKind
 local CXTypeKind = {
@@ -2065,58 +2143,62 @@ clang.CXCallingConv_Unexposed = CXCallingConv.CXCallingConv_Unexposed
 ---@field kind CXTypeKind
 ---@field data ffi.cdata*[]
 
----@alias CXType CXType
+---@class CXType*
+---@field [integer] CXType
+
+---@class CXType**
+---@field [integer] CXType*
 
 ---@param C CXCursor
 ---@return CXType
-function clang.clang_getCursorType(C) end
-clang.getCursorType = clang.clang_getCursorType
+function clang.getCursorType(C) end
+clang.clang_getCursorType = clang.getCursorType
 
 ---@param CT CXType
 ---@return CXString
-function clang.clang_getTypeSpelling(CT) end
-clang.getTypeSpelling = clang.clang_getTypeSpelling
+function clang.getTypeSpelling(CT) end
+clang.clang_getTypeSpelling = clang.getTypeSpelling
 
 ---@param C CXCursor
 ---@return CXType
-function clang.clang_getTypedefDeclUnderlyingType(C) end
-clang.getTypedefDeclUnderlyingType = clang.clang_getTypedefDeclUnderlyingType
+function clang.getTypedefDeclUnderlyingType(C) end
+clang.clang_getTypedefDeclUnderlyingType = clang.getTypedefDeclUnderlyingType
 
 ---@param C CXCursor
 ---@return CXType
-function clang.clang_getEnumDeclIntegerType(C) end
-clang.getEnumDeclIntegerType = clang.clang_getEnumDeclIntegerType
+function clang.getEnumDeclIntegerType(C) end
+clang.clang_getEnumDeclIntegerType = clang.getEnumDeclIntegerType
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_getEnumConstantDeclValue(C) end
-clang.getEnumConstantDeclValue = clang.clang_getEnumConstantDeclValue
+function clang.getEnumConstantDeclValue(C) end
+clang.clang_getEnumConstantDeclValue = clang.getEnumConstantDeclValue
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_getEnumConstantDeclUnsignedValue(C) end
-clang.getEnumConstantDeclUnsignedValue = clang.clang_getEnumConstantDeclUnsignedValue
+function clang.getEnumConstantDeclUnsignedValue(C) end
+clang.clang_getEnumConstantDeclUnsignedValue = clang.getEnumConstantDeclUnsignedValue
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_Cursor_isBitField(C) end
-clang.Cursor_isBitField = clang.clang_Cursor_isBitField
+function clang.Cursor_isBitField(C) end
+clang.clang_Cursor_isBitField = clang.Cursor_isBitField
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_getFieldDeclBitWidth(C) end
-clang.getFieldDeclBitWidth = clang.clang_getFieldDeclBitWidth
+function clang.getFieldDeclBitWidth(C) end
+clang.clang_getFieldDeclBitWidth = clang.getFieldDeclBitWidth
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_Cursor_getNumArguments(C) end
-clang.Cursor_getNumArguments = clang.clang_Cursor_getNumArguments
+function clang.Cursor_getNumArguments(C) end
+clang.clang_Cursor_getNumArguments = clang.Cursor_getNumArguments
 
 ---@param C CXCursor
 ---@param i integer
 ---@return CXCursor
-function clang.clang_Cursor_getArgument(C, i) end
-clang.Cursor_getArgument = clang.clang_Cursor_getArgument
+function clang.Cursor_getArgument(C, i) end
+clang.clang_Cursor_getArgument = clang.Cursor_getArgument
 
 ---@enum CXTemplateArgumentKind
 local CXTemplateArgumentKind = {
@@ -2145,221 +2227,221 @@ clang.CXTemplateArgumentKind_Invalid = CXTemplateArgumentKind.CXTemplateArgument
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_Cursor_getNumTemplateArguments(C) end
-clang.Cursor_getNumTemplateArguments = clang.clang_Cursor_getNumTemplateArguments
+function clang.Cursor_getNumTemplateArguments(C) end
+clang.clang_Cursor_getNumTemplateArguments = clang.Cursor_getNumTemplateArguments
 
 ---@param C CXCursor
 ---@param I integer
 ---@return CXTemplateArgumentKind
-function clang.clang_Cursor_getTemplateArgumentKind(C, I) end
-clang.Cursor_getTemplateArgumentKind = clang.clang_Cursor_getTemplateArgumentKind
+function clang.Cursor_getTemplateArgumentKind(C, I) end
+clang.clang_Cursor_getTemplateArgumentKind = clang.Cursor_getTemplateArgumentKind
 
 ---@param C CXCursor
 ---@param I integer
 ---@return CXType
-function clang.clang_Cursor_getTemplateArgumentType(C, I) end
-clang.Cursor_getTemplateArgumentType = clang.clang_Cursor_getTemplateArgumentType
+function clang.Cursor_getTemplateArgumentType(C, I) end
+clang.clang_Cursor_getTemplateArgumentType = clang.Cursor_getTemplateArgumentType
 
 ---@param C CXCursor
 ---@param I integer
 ---@return integer
-function clang.clang_Cursor_getTemplateArgumentValue(C, I) end
-clang.Cursor_getTemplateArgumentValue = clang.clang_Cursor_getTemplateArgumentValue
+function clang.Cursor_getTemplateArgumentValue(C, I) end
+clang.clang_Cursor_getTemplateArgumentValue = clang.Cursor_getTemplateArgumentValue
 
 ---@param C CXCursor
 ---@param I integer
 ---@return integer
-function clang.clang_Cursor_getTemplateArgumentUnsignedValue(C, I) end
-clang.Cursor_getTemplateArgumentUnsignedValue = clang.clang_Cursor_getTemplateArgumentUnsignedValue
+function clang.Cursor_getTemplateArgumentUnsignedValue(C, I) end
+clang.clang_Cursor_getTemplateArgumentUnsignedValue = clang.Cursor_getTemplateArgumentUnsignedValue
 
 ---@param A CXType
 ---@param B CXType
 ---@return integer
-function clang.clang_equalTypes(A, B) end
-clang.equalTypes = clang.clang_equalTypes
+function clang.equalTypes(A, B) end
+clang.clang_equalTypes = clang.equalTypes
 
 ---@param T CXType
 ---@return CXType
-function clang.clang_getCanonicalType(T) end
-clang.getCanonicalType = clang.clang_getCanonicalType
+function clang.getCanonicalType(T) end
+clang.clang_getCanonicalType = clang.getCanonicalType
 
 ---@param T CXType
 ---@return integer
-function clang.clang_isConstQualifiedType(T) end
-clang.isConstQualifiedType = clang.clang_isConstQualifiedType
+function clang.isConstQualifiedType(T) end
+clang.clang_isConstQualifiedType = clang.isConstQualifiedType
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_Cursor_isMacroFunctionLike(C) end
-clang.Cursor_isMacroFunctionLike = clang.clang_Cursor_isMacroFunctionLike
+function clang.Cursor_isMacroFunctionLike(C) end
+clang.clang_Cursor_isMacroFunctionLike = clang.Cursor_isMacroFunctionLike
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_Cursor_isMacroBuiltin(C) end
-clang.Cursor_isMacroBuiltin = clang.clang_Cursor_isMacroBuiltin
+function clang.Cursor_isMacroBuiltin(C) end
+clang.clang_Cursor_isMacroBuiltin = clang.Cursor_isMacroBuiltin
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_Cursor_isFunctionInlined(C) end
-clang.Cursor_isFunctionInlined = clang.clang_Cursor_isFunctionInlined
+function clang.Cursor_isFunctionInlined(C) end
+clang.clang_Cursor_isFunctionInlined = clang.Cursor_isFunctionInlined
 
 ---@param T CXType
 ---@return integer
-function clang.clang_isVolatileQualifiedType(T) end
-clang.isVolatileQualifiedType = clang.clang_isVolatileQualifiedType
+function clang.isVolatileQualifiedType(T) end
+clang.clang_isVolatileQualifiedType = clang.isVolatileQualifiedType
 
 ---@param T CXType
 ---@return integer
-function clang.clang_isRestrictQualifiedType(T) end
-clang.isRestrictQualifiedType = clang.clang_isRestrictQualifiedType
+function clang.isRestrictQualifiedType(T) end
+clang.clang_isRestrictQualifiedType = clang.isRestrictQualifiedType
 
 ---@param T CXType
 ---@return integer
-function clang.clang_getAddressSpace(T) end
-clang.getAddressSpace = clang.clang_getAddressSpace
+function clang.getAddressSpace(T) end
+clang.clang_getAddressSpace = clang.getAddressSpace
 
 ---@param CT CXType
 ---@return CXString
-function clang.clang_getTypedefName(CT) end
-clang.getTypedefName = clang.clang_getTypedefName
+function clang.getTypedefName(CT) end
+clang.clang_getTypedefName = clang.getTypedefName
 
 ---@param T CXType
 ---@return CXType
-function clang.clang_getPointeeType(T) end
-clang.getPointeeType = clang.clang_getPointeeType
+function clang.getPointeeType(T) end
+clang.clang_getPointeeType = clang.getPointeeType
 
 ---@param CT CXType
 ---@return CXType
-function clang.clang_getUnqualifiedType(CT) end
-clang.getUnqualifiedType = clang.clang_getUnqualifiedType
+function clang.getUnqualifiedType(CT) end
+clang.clang_getUnqualifiedType = clang.getUnqualifiedType
 
 ---@param CT CXType
 ---@return CXType
-function clang.clang_getNonReferenceType(CT) end
-clang.getNonReferenceType = clang.clang_getNonReferenceType
+function clang.getNonReferenceType(CT) end
+clang.clang_getNonReferenceType = clang.getNonReferenceType
 
 ---@param T CXType
 ---@return CXCursor
-function clang.clang_getTypeDeclaration(T) end
-clang.getTypeDeclaration = clang.clang_getTypeDeclaration
+function clang.getTypeDeclaration(T) end
+clang.clang_getTypeDeclaration = clang.getTypeDeclaration
 
 ---@param C CXCursor
 ---@return CXString
-function clang.clang_getDeclObjCTypeEncoding(C) end
-clang.getDeclObjCTypeEncoding = clang.clang_getDeclObjCTypeEncoding
+function clang.getDeclObjCTypeEncoding(C) end
+clang.clang_getDeclObjCTypeEncoding = clang.getDeclObjCTypeEncoding
 
 ---@param type CXType
 ---@return CXString
-function clang.clang_Type_getObjCEncoding(type) end
-clang.Type_getObjCEncoding = clang.clang_Type_getObjCEncoding
+function clang.Type_getObjCEncoding(type) end
+clang.clang_Type_getObjCEncoding = clang.Type_getObjCEncoding
 
 ---@param K CXTypeKind
 ---@return CXString
-function clang.clang_getTypeKindSpelling(K) end
-clang.getTypeKindSpelling = clang.clang_getTypeKindSpelling
+function clang.getTypeKindSpelling(K) end
+clang.clang_getTypeKindSpelling = clang.getTypeKindSpelling
 
 ---@param T CXType
 ---@return CXCallingConv
-function clang.clang_getFunctionTypeCallingConv(T) end
-clang.getFunctionTypeCallingConv = clang.clang_getFunctionTypeCallingConv
+function clang.getFunctionTypeCallingConv(T) end
+clang.clang_getFunctionTypeCallingConv = clang.getFunctionTypeCallingConv
 
 ---@param T CXType
 ---@return CXType
-function clang.clang_getResultType(T) end
-clang.getResultType = clang.clang_getResultType
+function clang.getResultType(T) end
+clang.clang_getResultType = clang.getResultType
 
 ---@param T CXType
 ---@return integer
-function clang.clang_getExceptionSpecificationType(T) end
-clang.getExceptionSpecificationType = clang.clang_getExceptionSpecificationType
+function clang.getExceptionSpecificationType(T) end
+clang.clang_getExceptionSpecificationType = clang.getExceptionSpecificationType
 
 ---@param T CXType
 ---@return integer
-function clang.clang_getNumArgTypes(T) end
-clang.getNumArgTypes = clang.clang_getNumArgTypes
+function clang.getNumArgTypes(T) end
+clang.clang_getNumArgTypes = clang.getNumArgTypes
 
 ---@param T CXType
 ---@param i integer
 ---@return CXType
-function clang.clang_getArgType(T, i) end
-clang.getArgType = clang.clang_getArgType
+function clang.getArgType(T, i) end
+clang.clang_getArgType = clang.getArgType
 
 ---@param T CXType
 ---@return CXType
-function clang.clang_Type_getObjCObjectBaseType(T) end
-clang.Type_getObjCObjectBaseType = clang.clang_Type_getObjCObjectBaseType
+function clang.Type_getObjCObjectBaseType(T) end
+clang.clang_Type_getObjCObjectBaseType = clang.Type_getObjCObjectBaseType
 
 ---@param T CXType
 ---@return integer
-function clang.clang_Type_getNumObjCProtocolRefs(T) end
-clang.Type_getNumObjCProtocolRefs = clang.clang_Type_getNumObjCProtocolRefs
+function clang.Type_getNumObjCProtocolRefs(T) end
+clang.clang_Type_getNumObjCProtocolRefs = clang.Type_getNumObjCProtocolRefs
 
 ---@param T CXType
 ---@param i integer
 ---@return CXCursor
-function clang.clang_Type_getObjCProtocolDecl(T, i) end
-clang.Type_getObjCProtocolDecl = clang.clang_Type_getObjCProtocolDecl
+function clang.Type_getObjCProtocolDecl(T, i) end
+clang.clang_Type_getObjCProtocolDecl = clang.Type_getObjCProtocolDecl
 
 ---@param T CXType
 ---@return integer
-function clang.clang_Type_getNumObjCTypeArgs(T) end
-clang.Type_getNumObjCTypeArgs = clang.clang_Type_getNumObjCTypeArgs
+function clang.Type_getNumObjCTypeArgs(T) end
+clang.clang_Type_getNumObjCTypeArgs = clang.Type_getNumObjCTypeArgs
 
 ---@param T CXType
 ---@param i integer
 ---@return CXType
-function clang.clang_Type_getObjCTypeArg(T, i) end
-clang.Type_getObjCTypeArg = clang.clang_Type_getObjCTypeArg
+function clang.Type_getObjCTypeArg(T, i) end
+clang.clang_Type_getObjCTypeArg = clang.Type_getObjCTypeArg
 
 ---@param T CXType
 ---@return integer
-function clang.clang_isFunctionTypeVariadic(T) end
-clang.isFunctionTypeVariadic = clang.clang_isFunctionTypeVariadic
+function clang.isFunctionTypeVariadic(T) end
+clang.clang_isFunctionTypeVariadic = clang.isFunctionTypeVariadic
 
 ---@param C CXCursor
 ---@return CXType
-function clang.clang_getCursorResultType(C) end
-clang.getCursorResultType = clang.clang_getCursorResultType
+function clang.getCursorResultType(C) end
+clang.clang_getCursorResultType = clang.getCursorResultType
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_getCursorExceptionSpecificationType(C) end
-clang.getCursorExceptionSpecificationType = clang.clang_getCursorExceptionSpecificationType
+function clang.getCursorExceptionSpecificationType(C) end
+clang.clang_getCursorExceptionSpecificationType = clang.getCursorExceptionSpecificationType
 
 ---@param T CXType
 ---@return integer
-function clang.clang_isPODType(T) end
-clang.isPODType = clang.clang_isPODType
+function clang.isPODType(T) end
+clang.clang_isPODType = clang.isPODType
 
 ---@param T CXType
 ---@return CXType
-function clang.clang_getElementType(T) end
-clang.getElementType = clang.clang_getElementType
+function clang.getElementType(T) end
+clang.clang_getElementType = clang.getElementType
 
 ---@param T CXType
 ---@return integer
-function clang.clang_getNumElements(T) end
-clang.getNumElements = clang.clang_getNumElements
+function clang.getNumElements(T) end
+clang.clang_getNumElements = clang.getNumElements
 
 ---@param T CXType
 ---@return CXType
-function clang.clang_getArrayElementType(T) end
-clang.getArrayElementType = clang.clang_getArrayElementType
+function clang.getArrayElementType(T) end
+clang.clang_getArrayElementType = clang.getArrayElementType
 
 ---@param T CXType
 ---@return integer
-function clang.clang_getArraySize(T) end
-clang.getArraySize = clang.clang_getArraySize
+function clang.getArraySize(T) end
+clang.clang_getArraySize = clang.getArraySize
 
 ---@param T CXType
 ---@return CXType
-function clang.clang_Type_getNamedType(T) end
-clang.Type_getNamedType = clang.clang_Type_getNamedType
+function clang.Type_getNamedType(T) end
+clang.clang_Type_getNamedType = clang.Type_getNamedType
 
 ---@param T CXType
 ---@return integer
-function clang.clang_Type_isTransparentTagTypedef(T) end
-clang.Type_isTransparentTagTypedef = clang.clang_Type_isTransparentTagTypedef
+function clang.Type_isTransparentTagTypedef(T) end
+clang.clang_Type_isTransparentTagTypedef = clang.Type_isTransparentTagTypedef
 
 ---@enum CXTypeNullabilityKind
 local CXTypeNullabilityKind = {
@@ -2378,8 +2460,8 @@ clang.CXTypeNullability_NullableResult = CXTypeNullabilityKind.CXTypeNullability
 
 ---@param T CXType
 ---@return CXTypeNullabilityKind
-function clang.clang_Type_getNullability(T) end
-clang.Type_getNullability = clang.clang_Type_getNullability
+function clang.Type_getNullability(T) end
+clang.clang_Type_getNullability = clang.Type_getNullability
 
 ---@enum CXTypeLayoutError
 local CXTypeLayoutError = {
@@ -2400,54 +2482,54 @@ clang.CXTypeLayoutError_Undeduced = CXTypeLayoutError.CXTypeLayoutError_Undeduce
 
 ---@param T CXType
 ---@return integer
-function clang.clang_Type_getAlignOf(T) end
-clang.Type_getAlignOf = clang.clang_Type_getAlignOf
+function clang.Type_getAlignOf(T) end
+clang.clang_Type_getAlignOf = clang.Type_getAlignOf
 
 ---@param T CXType
 ---@return CXType
-function clang.clang_Type_getClassType(T) end
-clang.Type_getClassType = clang.clang_Type_getClassType
+function clang.Type_getClassType(T) end
+clang.clang_Type_getClassType = clang.Type_getClassType
 
 ---@param T CXType
 ---@return integer
-function clang.clang_Type_getSizeOf(T) end
-clang.Type_getSizeOf = clang.clang_Type_getSizeOf
+function clang.Type_getSizeOf(T) end
+clang.clang_Type_getSizeOf = clang.Type_getSizeOf
 
 ---@param T CXType
 ---@param S string
 ---@return integer
-function clang.clang_Type_getOffsetOf(T, S) end
-clang.Type_getOffsetOf = clang.clang_Type_getOffsetOf
+function clang.Type_getOffsetOf(T, S) end
+clang.clang_Type_getOffsetOf = clang.Type_getOffsetOf
 
 ---@param T CXType
 ---@return CXType
-function clang.clang_Type_getModifiedType(T) end
-clang.Type_getModifiedType = clang.clang_Type_getModifiedType
+function clang.Type_getModifiedType(T) end
+clang.clang_Type_getModifiedType = clang.Type_getModifiedType
 
 ---@param CT CXType
 ---@return CXType
-function clang.clang_Type_getValueType(CT) end
-clang.Type_getValueType = clang.clang_Type_getValueType
+function clang.Type_getValueType(CT) end
+clang.clang_Type_getValueType = clang.Type_getValueType
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_Cursor_getOffsetOfField(C) end
-clang.Cursor_getOffsetOfField = clang.clang_Cursor_getOffsetOfField
+function clang.Cursor_getOffsetOfField(C) end
+clang.clang_Cursor_getOffsetOfField = clang.Cursor_getOffsetOfField
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_Cursor_isAnonymous(C) end
-clang.Cursor_isAnonymous = clang.clang_Cursor_isAnonymous
+function clang.Cursor_isAnonymous(C) end
+clang.clang_Cursor_isAnonymous = clang.Cursor_isAnonymous
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_Cursor_isAnonymousRecordDecl(C) end
-clang.Cursor_isAnonymousRecordDecl = clang.clang_Cursor_isAnonymousRecordDecl
+function clang.Cursor_isAnonymousRecordDecl(C) end
+clang.clang_Cursor_isAnonymousRecordDecl = clang.Cursor_isAnonymousRecordDecl
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_Cursor_isInlineNamespace(C) end
-clang.Cursor_isInlineNamespace = clang.clang_Cursor_isInlineNamespace
+function clang.Cursor_isInlineNamespace(C) end
+clang.clang_Cursor_isInlineNamespace = clang.Cursor_isInlineNamespace
 
 ---@enum CXRefQualifierKind
 local CXRefQualifierKind = {
@@ -2462,24 +2544,24 @@ clang.CXRefQualifier_RValue = CXRefQualifierKind.CXRefQualifier_RValue
 
 ---@param T CXType
 ---@return integer
-function clang.clang_Type_getNumTemplateArguments(T) end
-clang.Type_getNumTemplateArguments = clang.clang_Type_getNumTemplateArguments
+function clang.Type_getNumTemplateArguments(T) end
+clang.clang_Type_getNumTemplateArguments = clang.Type_getNumTemplateArguments
 
 ---@param T CXType
 ---@param i integer
 ---@return CXType
-function clang.clang_Type_getTemplateArgumentAsType(T, i) end
-clang.Type_getTemplateArgumentAsType = clang.clang_Type_getTemplateArgumentAsType
+function clang.Type_getTemplateArgumentAsType(T, i) end
+clang.clang_Type_getTemplateArgumentAsType = clang.Type_getTemplateArgumentAsType
 
 ---@param T CXType
 ---@return CXRefQualifierKind
-function clang.clang_Type_getCXXRefQualifier(T) end
-clang.Type_getCXXRefQualifier = clang.clang_Type_getCXXRefQualifier
+function clang.Type_getCXXRefQualifier(T) end
+clang.clang_Type_getCXXRefQualifier = clang.Type_getCXXRefQualifier
 
 ---@param arg_1 CXCursor
 ---@return integer
-function clang.clang_isVirtualBase(arg_1) end
-clang.isVirtualBase = clang.clang_isVirtualBase
+function clang.isVirtualBase(arg_1) end
+clang.clang_isVirtualBase = clang.isVirtualBase
 
 ---@enum CX_CXXAccessSpecifier
 local CX_CXXAccessSpecifier = {
@@ -2496,8 +2578,8 @@ clang.CX_CXXPrivate = CX_CXXAccessSpecifier.CX_CXXPrivate
 
 ---@param arg_1 CXCursor
 ---@return CX_CXXAccessSpecifier
-function clang.clang_getCXXAccessSpecifier(arg_1) end
-clang.getCXXAccessSpecifier = clang.clang_getCXXAccessSpecifier
+function clang.getCXXAccessSpecifier(arg_1) end
+clang.clang_getCXXAccessSpecifier = clang.getCXXAccessSpecifier
 
 ---@enum CX_StorageClass
 local CX_StorageClass = {
@@ -2522,24 +2604,24 @@ clang.CX_SC_Register = CX_StorageClass.CX_SC_Register
 
 ---@param arg_1 CXCursor
 ---@return CX_StorageClass
-function clang.clang_Cursor_getStorageClass(arg_1) end
-clang.Cursor_getStorageClass = clang.clang_Cursor_getStorageClass
+function clang.Cursor_getStorageClass(arg_1) end
+clang.clang_Cursor_getStorageClass = clang.Cursor_getStorageClass
 
 ---@param cursor CXCursor
 ---@return integer
-function clang.clang_getNumOverloadedDecls(cursor) end
-clang.getNumOverloadedDecls = clang.clang_getNumOverloadedDecls
+function clang.getNumOverloadedDecls(cursor) end
+clang.clang_getNumOverloadedDecls = clang.getNumOverloadedDecls
 
 ---@param cursor CXCursor
 ---@param index integer
 ---@return CXCursor
-function clang.clang_getOverloadedDecl(cursor, index) end
-clang.getOverloadedDecl = clang.clang_getOverloadedDecl
+function clang.getOverloadedDecl(cursor, index) end
+clang.clang_getOverloadedDecl = clang.getOverloadedDecl
 
 ---@param arg_1 CXCursor
 ---@return CXType
-function clang.clang_getIBOutletCollectionType(arg_1) end
-clang.getIBOutletCollectionType = clang.clang_getIBOutletCollectionType
+function clang.getIBOutletCollectionType(arg_1) end
+clang.clang_getIBOutletCollectionType = clang.getIBOutletCollectionType
 
 ---@enum CXChildVisitResult
 local CXChildVisitResult = {
@@ -2558,70 +2640,76 @@ clang.CXChildVisit_Recurse = CXChildVisitResult.CXChildVisit_Recurse
 ---@param visitor CXCursorVisitor
 ---@param client_data CXClientData
 ---@return integer
-function clang.clang_visitChildren(parent, visitor, client_data) end
-clang.visitChildren = clang.clang_visitChildren
+function clang.visitChildren(parent, visitor, client_data) end
+clang.clang_visitChildren = clang.visitChildren
 
 ---@class _CXChildVisitResult
 
----@alias CXCursorVisitorBlock c.pointer<_CXChildVisitResult>?
+---@class _CXChildVisitResult*
+---@field [integer] _CXChildVisitResult
+
+---@class _CXChildVisitResult**
+---@field [integer] _CXChildVisitResult*
+
+---@alias CXCursorVisitorBlock _CXChildVisitResult*?
 
 ---@param parent CXCursor
 ---@param block CXCursorVisitorBlock
 ---@return integer
-function clang.clang_visitChildrenWithBlock(parent, block) end
-clang.visitChildrenWithBlock = clang.clang_visitChildrenWithBlock
+function clang.visitChildrenWithBlock(parent, block) end
+clang.clang_visitChildrenWithBlock = clang.visitChildrenWithBlock
 
 ---@param arg_1 CXCursor
 ---@return CXString
-function clang.clang_getCursorUSR(arg_1) end
-clang.getCursorUSR = clang.clang_getCursorUSR
+function clang.getCursorUSR(arg_1) end
+clang.clang_getCursorUSR = clang.getCursorUSR
 
 ---@param class_name string
 ---@return CXString
-function clang.clang_constructUSR_ObjCClass(class_name) end
-clang.constructUSR_ObjCClass = clang.clang_constructUSR_ObjCClass
+function clang.constructUSR_ObjCClass(class_name) end
+clang.clang_constructUSR_ObjCClass = clang.constructUSR_ObjCClass
 
 ---@param class_name string
 ---@param category_name string
 ---@return CXString
-function clang.clang_constructUSR_ObjCCategory(class_name, category_name) end
-clang.constructUSR_ObjCCategory = clang.clang_constructUSR_ObjCCategory
+function clang.constructUSR_ObjCCategory(class_name, category_name) end
+clang.clang_constructUSR_ObjCCategory = clang.constructUSR_ObjCCategory
 
 ---@param protocol_name string
 ---@return CXString
-function clang.clang_constructUSR_ObjCProtocol(protocol_name) end
-clang.constructUSR_ObjCProtocol = clang.clang_constructUSR_ObjCProtocol
+function clang.constructUSR_ObjCProtocol(protocol_name) end
+clang.clang_constructUSR_ObjCProtocol = clang.constructUSR_ObjCProtocol
 
 ---@param name string
 ---@param classUSR CXString
 ---@return CXString
-function clang.clang_constructUSR_ObjCIvar(name, classUSR) end
-clang.constructUSR_ObjCIvar = clang.clang_constructUSR_ObjCIvar
+function clang.constructUSR_ObjCIvar(name, classUSR) end
+clang.clang_constructUSR_ObjCIvar = clang.constructUSR_ObjCIvar
 
 ---@param name string
 ---@param isInstanceMethod integer
 ---@param classUSR CXString
 ---@return CXString
-function clang.clang_constructUSR_ObjCMethod(name, isInstanceMethod, classUSR) end
-clang.constructUSR_ObjCMethod = clang.clang_constructUSR_ObjCMethod
+function clang.constructUSR_ObjCMethod(name, isInstanceMethod, classUSR) end
+clang.clang_constructUSR_ObjCMethod = clang.constructUSR_ObjCMethod
 
 ---@param property string
 ---@param classUSR CXString
 ---@return CXString
-function clang.clang_constructUSR_ObjCProperty(property, classUSR) end
-clang.constructUSR_ObjCProperty = clang.clang_constructUSR_ObjCProperty
+function clang.constructUSR_ObjCProperty(property, classUSR) end
+clang.clang_constructUSR_ObjCProperty = clang.constructUSR_ObjCProperty
 
 ---@param arg_1 CXCursor
 ---@return CXString
-function clang.clang_getCursorSpelling(arg_1) end
-clang.getCursorSpelling = clang.clang_getCursorSpelling
+function clang.getCursorSpelling(arg_1) end
+clang.clang_getCursorSpelling = clang.getCursorSpelling
 
 ---@param arg_1 CXCursor
 ---@param pieceIndex integer
 ---@param options integer
 ---@return CXSourceRange
-function clang.clang_Cursor_getSpellingNameRange(arg_1, pieceIndex, options) end
-clang.Cursor_getSpellingNameRange = clang.clang_Cursor_getSpellingNameRange
+function clang.Cursor_getSpellingNameRange(arg_1, pieceIndex, options) end
+clang.clang_Cursor_getSpellingNameRange = clang.Cursor_getSpellingNameRange
 
 ---@alias CXPrintingPolicy ffi.cdata*
 
@@ -2687,71 +2775,71 @@ clang.CXPrintingPolicy_LastProperty = CXPrintingPolicyProperty.CXPrintingPolicy_
 ---@param Policy CXPrintingPolicy
 ---@param Property CXPrintingPolicyProperty
 ---@return integer
-function clang.clang_PrintingPolicy_getProperty(Policy, Property) end
-clang.PrintingPolicy_getProperty = clang.clang_PrintingPolicy_getProperty
+function clang.PrintingPolicy_getProperty(Policy, Property) end
+clang.clang_PrintingPolicy_getProperty = clang.PrintingPolicy_getProperty
 
 ---@param Policy CXPrintingPolicy
 ---@param Property CXPrintingPolicyProperty
 ---@param Value integer
 ---@return nil
-function clang.clang_PrintingPolicy_setProperty(Policy, Property, Value) end
-clang.PrintingPolicy_setProperty = clang.clang_PrintingPolicy_setProperty
+function clang.PrintingPolicy_setProperty(Policy, Property, Value) end
+clang.clang_PrintingPolicy_setProperty = clang.PrintingPolicy_setProperty
 
 ---@param arg_1 CXCursor
 ---@return CXPrintingPolicy
-function clang.clang_getCursorPrintingPolicy(arg_1) end
-clang.getCursorPrintingPolicy = clang.clang_getCursorPrintingPolicy
+function clang.getCursorPrintingPolicy(arg_1) end
+clang.clang_getCursorPrintingPolicy = clang.getCursorPrintingPolicy
 
 ---@param Policy CXPrintingPolicy
 ---@return nil
-function clang.clang_PrintingPolicy_dispose(Policy) end
-clang.PrintingPolicy_dispose = clang.clang_PrintingPolicy_dispose
+function clang.PrintingPolicy_dispose(Policy) end
+clang.clang_PrintingPolicy_dispose = clang.PrintingPolicy_dispose
 
 ---@param Cursor CXCursor
 ---@param Policy CXPrintingPolicy
 ---@return CXString
-function clang.clang_getCursorPrettyPrinted(Cursor, Policy) end
-clang.getCursorPrettyPrinted = clang.clang_getCursorPrettyPrinted
+function clang.getCursorPrettyPrinted(Cursor, Policy) end
+clang.clang_getCursorPrettyPrinted = clang.getCursorPrettyPrinted
 
 ---@param arg_1 CXCursor
 ---@return CXString
-function clang.clang_getCursorDisplayName(arg_1) end
-clang.getCursorDisplayName = clang.clang_getCursorDisplayName
+function clang.getCursorDisplayName(arg_1) end
+clang.clang_getCursorDisplayName = clang.getCursorDisplayName
 
 ---@param arg_1 CXCursor
 ---@return CXCursor
-function clang.clang_getCursorReferenced(arg_1) end
-clang.getCursorReferenced = clang.clang_getCursorReferenced
+function clang.getCursorReferenced(arg_1) end
+clang.clang_getCursorReferenced = clang.getCursorReferenced
 
 ---@param arg_1 CXCursor
 ---@return CXCursor
-function clang.clang_getCursorDefinition(arg_1) end
-clang.getCursorDefinition = clang.clang_getCursorDefinition
+function clang.getCursorDefinition(arg_1) end
+clang.clang_getCursorDefinition = clang.getCursorDefinition
 
 ---@param arg_1 CXCursor
 ---@return integer
-function clang.clang_isCursorDefinition(arg_1) end
-clang.isCursorDefinition = clang.clang_isCursorDefinition
+function clang.isCursorDefinition(arg_1) end
+clang.clang_isCursorDefinition = clang.isCursorDefinition
 
 ---@param arg_1 CXCursor
 ---@return CXCursor
-function clang.clang_getCanonicalCursor(arg_1) end
-clang.getCanonicalCursor = clang.clang_getCanonicalCursor
+function clang.getCanonicalCursor(arg_1) end
+clang.clang_getCanonicalCursor = clang.getCanonicalCursor
 
 ---@param arg_1 CXCursor
 ---@return integer
-function clang.clang_Cursor_getObjCSelectorIndex(arg_1) end
-clang.Cursor_getObjCSelectorIndex = clang.clang_Cursor_getObjCSelectorIndex
+function clang.Cursor_getObjCSelectorIndex(arg_1) end
+clang.clang_Cursor_getObjCSelectorIndex = clang.Cursor_getObjCSelectorIndex
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_Cursor_isDynamicCall(C) end
-clang.Cursor_isDynamicCall = clang.clang_Cursor_isDynamicCall
+function clang.Cursor_isDynamicCall(C) end
+clang.clang_Cursor_isDynamicCall = clang.Cursor_isDynamicCall
 
 ---@param C CXCursor
 ---@return CXType
-function clang.clang_Cursor_getReceiverType(C) end
-clang.Cursor_getReceiverType = clang.clang_Cursor_getReceiverType
+function clang.Cursor_getReceiverType(C) end
+clang.clang_Cursor_getReceiverType = clang.Cursor_getReceiverType
 
 ---@enum CXObjCPropertyAttrKind
 local CXObjCPropertyAttrKind = {
@@ -2786,23 +2874,21 @@ clang.CXObjCPropertyAttr_strong = CXObjCPropertyAttrKind.CXObjCPropertyAttr_stro
 clang.CXObjCPropertyAttr_unsafe_unretained = CXObjCPropertyAttrKind.CXObjCPropertyAttr_unsafe_unretained
 clang.CXObjCPropertyAttr_class = CXObjCPropertyAttrKind.CXObjCPropertyAttr_class
 
----@alias CXObjCPropertyAttrKind CXObjCPropertyAttrKind
-
 ---@param C CXCursor
 ---@param reserved integer
 ---@return integer
-function clang.clang_Cursor_getObjCPropertyAttributes(C, reserved) end
-clang.Cursor_getObjCPropertyAttributes = clang.clang_Cursor_getObjCPropertyAttributes
+function clang.Cursor_getObjCPropertyAttributes(C, reserved) end
+clang.clang_Cursor_getObjCPropertyAttributes = clang.Cursor_getObjCPropertyAttributes
 
 ---@param C CXCursor
 ---@return CXString
-function clang.clang_Cursor_getObjCPropertyGetterName(C) end
-clang.Cursor_getObjCPropertyGetterName = clang.clang_Cursor_getObjCPropertyGetterName
+function clang.Cursor_getObjCPropertyGetterName(C) end
+clang.clang_Cursor_getObjCPropertyGetterName = clang.Cursor_getObjCPropertyGetterName
 
 ---@param C CXCursor
 ---@return CXString
-function clang.clang_Cursor_getObjCPropertySetterName(C) end
-clang.Cursor_getObjCPropertySetterName = clang.clang_Cursor_getObjCPropertySetterName
+function clang.Cursor_getObjCPropertySetterName(C) end
+clang.clang_Cursor_getObjCPropertySetterName = clang.Cursor_getObjCPropertySetterName
 
 ---@enum CXObjCDeclQualifierKind
 local CXObjCDeclQualifierKind = {
@@ -2823,208 +2909,206 @@ clang.CXObjCDeclQualifier_Bycopy = CXObjCDeclQualifierKind.CXObjCDeclQualifier_B
 clang.CXObjCDeclQualifier_Byref = CXObjCDeclQualifierKind.CXObjCDeclQualifier_Byref
 clang.CXObjCDeclQualifier_Oneway = CXObjCDeclQualifierKind.CXObjCDeclQualifier_Oneway
 
----@alias CXObjCDeclQualifierKind CXObjCDeclQualifierKind
+---@param C CXCursor
+---@return integer
+function clang.Cursor_getObjCDeclQualifiers(C) end
+clang.clang_Cursor_getObjCDeclQualifiers = clang.Cursor_getObjCDeclQualifiers
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_Cursor_getObjCDeclQualifiers(C) end
-clang.Cursor_getObjCDeclQualifiers = clang.clang_Cursor_getObjCDeclQualifiers
+function clang.Cursor_isObjCOptional(C) end
+clang.clang_Cursor_isObjCOptional = clang.Cursor_isObjCOptional
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_Cursor_isObjCOptional(C) end
-clang.Cursor_isObjCOptional = clang.clang_Cursor_isObjCOptional
+function clang.Cursor_isVariadic(C) end
+clang.clang_Cursor_isVariadic = clang.Cursor_isVariadic
 
 ---@param C CXCursor
+---@param language CXString*?
+---@param definedIn CXString*?
+---@param isGenerated integer*?
 ---@return integer
-function clang.clang_Cursor_isVariadic(C) end
-clang.Cursor_isVariadic = clang.clang_Cursor_isVariadic
-
----@param C CXCursor
----@param language c.pointer<CXString>?
----@param definedIn c.pointer<CXString>?
----@param isGenerated c.pointer<integer>?
----@return integer
-function clang.clang_Cursor_isExternalSymbol(C, language, definedIn, isGenerated) end
-clang.Cursor_isExternalSymbol = clang.clang_Cursor_isExternalSymbol
+function clang.Cursor_isExternalSymbol(C, language, definedIn, isGenerated) end
+clang.clang_Cursor_isExternalSymbol = clang.Cursor_isExternalSymbol
 
 ---@param C CXCursor
 ---@return CXSourceRange
-function clang.clang_Cursor_getCommentRange(C) end
-clang.Cursor_getCommentRange = clang.clang_Cursor_getCommentRange
+function clang.Cursor_getCommentRange(C) end
+clang.clang_Cursor_getCommentRange = clang.Cursor_getCommentRange
 
 ---@param C CXCursor
 ---@return CXString
-function clang.clang_Cursor_getRawCommentText(C) end
-clang.Cursor_getRawCommentText = clang.clang_Cursor_getRawCommentText
+function clang.Cursor_getRawCommentText(C) end
+clang.clang_Cursor_getRawCommentText = clang.Cursor_getRawCommentText
 
 ---@param C CXCursor
 ---@return CXString
-function clang.clang_Cursor_getBriefCommentText(C) end
-clang.Cursor_getBriefCommentText = clang.clang_Cursor_getBriefCommentText
+function clang.Cursor_getBriefCommentText(C) end
+clang.clang_Cursor_getBriefCommentText = clang.Cursor_getBriefCommentText
 
 ---@param arg_1 CXCursor
 ---@return CXString
-function clang.clang_Cursor_getMangling(arg_1) end
-clang.Cursor_getMangling = clang.clang_Cursor_getMangling
+function clang.Cursor_getMangling(arg_1) end
+clang.clang_Cursor_getMangling = clang.Cursor_getMangling
 
 ---@param arg_1 CXCursor
----@return c.pointer<CXStringSet>?
-function clang.clang_Cursor_getCXXManglings(arg_1) end
-clang.Cursor_getCXXManglings = clang.clang_Cursor_getCXXManglings
+---@return CXStringSet*?
+function clang.Cursor_getCXXManglings(arg_1) end
+clang.clang_Cursor_getCXXManglings = clang.Cursor_getCXXManglings
 
 ---@param arg_1 CXCursor
----@return c.pointer<CXStringSet>?
-function clang.clang_Cursor_getObjCManglings(arg_1) end
-clang.Cursor_getObjCManglings = clang.clang_Cursor_getObjCManglings
+---@return CXStringSet*?
+function clang.Cursor_getObjCManglings(arg_1) end
+clang.clang_Cursor_getObjCManglings = clang.Cursor_getObjCManglings
 
 ---@alias CXModule ffi.cdata*
 
 ---@param C CXCursor
 ---@return CXModule
-function clang.clang_Cursor_getModule(C) end
-clang.Cursor_getModule = clang.clang_Cursor_getModule
+function clang.Cursor_getModule(C) end
+clang.clang_Cursor_getModule = clang.Cursor_getModule
 
 ---@param arg_1 CXTranslationUnit
 ---@param arg_2 CXFile
 ---@return CXModule
-function clang.clang_getModuleForFile(arg_1, arg_2) end
-clang.getModuleForFile = clang.clang_getModuleForFile
+function clang.getModuleForFile(arg_1, arg_2) end
+clang.clang_getModuleForFile = clang.getModuleForFile
 
 ---@param Module CXModule
 ---@return CXFile
-function clang.clang_Module_getASTFile(Module) end
-clang.Module_getASTFile = clang.clang_Module_getASTFile
+function clang.Module_getASTFile(Module) end
+clang.clang_Module_getASTFile = clang.Module_getASTFile
 
 ---@param Module CXModule
 ---@return CXModule
-function clang.clang_Module_getParent(Module) end
-clang.Module_getParent = clang.clang_Module_getParent
+function clang.Module_getParent(Module) end
+clang.clang_Module_getParent = clang.Module_getParent
 
 ---@param Module CXModule
 ---@return CXString
-function clang.clang_Module_getName(Module) end
-clang.Module_getName = clang.clang_Module_getName
+function clang.Module_getName(Module) end
+clang.clang_Module_getName = clang.Module_getName
 
 ---@param Module CXModule
 ---@return CXString
-function clang.clang_Module_getFullName(Module) end
-clang.Module_getFullName = clang.clang_Module_getFullName
+function clang.Module_getFullName(Module) end
+clang.clang_Module_getFullName = clang.Module_getFullName
 
 ---@param Module CXModule
 ---@return integer
-function clang.clang_Module_isSystem(Module) end
-clang.Module_isSystem = clang.clang_Module_isSystem
+function clang.Module_isSystem(Module) end
+clang.clang_Module_isSystem = clang.Module_isSystem
 
 ---@param arg_1 CXTranslationUnit
 ---@param Module CXModule
 ---@return integer
-function clang.clang_Module_getNumTopLevelHeaders(arg_1, Module) end
-clang.Module_getNumTopLevelHeaders = clang.clang_Module_getNumTopLevelHeaders
+function clang.Module_getNumTopLevelHeaders(arg_1, Module) end
+clang.clang_Module_getNumTopLevelHeaders = clang.Module_getNumTopLevelHeaders
 
 ---@param arg_1 CXTranslationUnit
 ---@param Module CXModule
 ---@param Index integer
 ---@return CXFile
-function clang.clang_Module_getTopLevelHeader(arg_1, Module, Index) end
-clang.Module_getTopLevelHeader = clang.clang_Module_getTopLevelHeader
+function clang.Module_getTopLevelHeader(arg_1, Module, Index) end
+clang.clang_Module_getTopLevelHeader = clang.Module_getTopLevelHeader
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_CXXConstructor_isConvertingConstructor(C) end
-clang.CXXConstructor_isConvertingConstructor = clang.clang_CXXConstructor_isConvertingConstructor
+function clang.CXXConstructor_isConvertingConstructor(C) end
+clang.clang_CXXConstructor_isConvertingConstructor = clang.CXXConstructor_isConvertingConstructor
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_CXXConstructor_isCopyConstructor(C) end
-clang.CXXConstructor_isCopyConstructor = clang.clang_CXXConstructor_isCopyConstructor
+function clang.CXXConstructor_isCopyConstructor(C) end
+clang.clang_CXXConstructor_isCopyConstructor = clang.CXXConstructor_isCopyConstructor
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_CXXConstructor_isDefaultConstructor(C) end
-clang.CXXConstructor_isDefaultConstructor = clang.clang_CXXConstructor_isDefaultConstructor
+function clang.CXXConstructor_isDefaultConstructor(C) end
+clang.clang_CXXConstructor_isDefaultConstructor = clang.CXXConstructor_isDefaultConstructor
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_CXXConstructor_isMoveConstructor(C) end
-clang.CXXConstructor_isMoveConstructor = clang.clang_CXXConstructor_isMoveConstructor
+function clang.CXXConstructor_isMoveConstructor(C) end
+clang.clang_CXXConstructor_isMoveConstructor = clang.CXXConstructor_isMoveConstructor
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_CXXField_isMutable(C) end
-clang.CXXField_isMutable = clang.clang_CXXField_isMutable
+function clang.CXXField_isMutable(C) end
+clang.clang_CXXField_isMutable = clang.CXXField_isMutable
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_CXXMethod_isDefaulted(C) end
-clang.CXXMethod_isDefaulted = clang.clang_CXXMethod_isDefaulted
+function clang.CXXMethod_isDefaulted(C) end
+clang.clang_CXXMethod_isDefaulted = clang.CXXMethod_isDefaulted
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_CXXMethod_isDeleted(C) end
-clang.CXXMethod_isDeleted = clang.clang_CXXMethod_isDeleted
+function clang.CXXMethod_isDeleted(C) end
+clang.clang_CXXMethod_isDeleted = clang.CXXMethod_isDeleted
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_CXXMethod_isPureVirtual(C) end
-clang.CXXMethod_isPureVirtual = clang.clang_CXXMethod_isPureVirtual
+function clang.CXXMethod_isPureVirtual(C) end
+clang.clang_CXXMethod_isPureVirtual = clang.CXXMethod_isPureVirtual
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_CXXMethod_isStatic(C) end
-clang.CXXMethod_isStatic = clang.clang_CXXMethod_isStatic
+function clang.CXXMethod_isStatic(C) end
+clang.clang_CXXMethod_isStatic = clang.CXXMethod_isStatic
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_CXXMethod_isVirtual(C) end
-clang.CXXMethod_isVirtual = clang.clang_CXXMethod_isVirtual
+function clang.CXXMethod_isVirtual(C) end
+clang.clang_CXXMethod_isVirtual = clang.CXXMethod_isVirtual
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_CXXMethod_isCopyAssignmentOperator(C) end
-clang.CXXMethod_isCopyAssignmentOperator = clang.clang_CXXMethod_isCopyAssignmentOperator
+function clang.CXXMethod_isCopyAssignmentOperator(C) end
+clang.clang_CXXMethod_isCopyAssignmentOperator = clang.CXXMethod_isCopyAssignmentOperator
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_CXXMethod_isMoveAssignmentOperator(C) end
-clang.CXXMethod_isMoveAssignmentOperator = clang.clang_CXXMethod_isMoveAssignmentOperator
+function clang.CXXMethod_isMoveAssignmentOperator(C) end
+clang.clang_CXXMethod_isMoveAssignmentOperator = clang.CXXMethod_isMoveAssignmentOperator
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_CXXMethod_isExplicit(C) end
-clang.CXXMethod_isExplicit = clang.clang_CXXMethod_isExplicit
+function clang.CXXMethod_isExplicit(C) end
+clang.clang_CXXMethod_isExplicit = clang.CXXMethod_isExplicit
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_CXXRecord_isAbstract(C) end
-clang.CXXRecord_isAbstract = clang.clang_CXXRecord_isAbstract
+function clang.CXXRecord_isAbstract(C) end
+clang.clang_CXXRecord_isAbstract = clang.CXXRecord_isAbstract
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_EnumDecl_isScoped(C) end
-clang.EnumDecl_isScoped = clang.clang_EnumDecl_isScoped
+function clang.EnumDecl_isScoped(C) end
+clang.clang_EnumDecl_isScoped = clang.EnumDecl_isScoped
 
 ---@param C CXCursor
 ---@return integer
-function clang.clang_CXXMethod_isConst(C) end
-clang.CXXMethod_isConst = clang.clang_CXXMethod_isConst
+function clang.CXXMethod_isConst(C) end
+clang.clang_CXXMethod_isConst = clang.CXXMethod_isConst
 
 ---@param C CXCursor
 ---@return CXCursorKind
-function clang.clang_getTemplateCursorKind(C) end
-clang.getTemplateCursorKind = clang.clang_getTemplateCursorKind
+function clang.getTemplateCursorKind(C) end
+clang.clang_getTemplateCursorKind = clang.getTemplateCursorKind
 
 ---@param C CXCursor
 ---@return CXCursor
-function clang.clang_getSpecializedCursorTemplate(C) end
-clang.getSpecializedCursorTemplate = clang.clang_getSpecializedCursorTemplate
+function clang.getSpecializedCursorTemplate(C) end
+clang.clang_getSpecializedCursorTemplate = clang.getSpecializedCursorTemplate
 
 ---@param C CXCursor
 ---@param NameFlags integer
 ---@param PieceIndex integer
 ---@return CXSourceRange
-function clang.clang_getCursorReferenceNameRange(C, NameFlags, PieceIndex) end
-clang.getCursorReferenceNameRange = clang.clang_getCursorReferenceNameRange
+function clang.getCursorReferenceNameRange(C, NameFlags, PieceIndex) end
+clang.clang_getCursorReferenceNameRange = clang.getCursorReferenceNameRange
 
 ---@enum CXNameRefFlags
 local CXNameRefFlags = {
@@ -3052,92 +3136,94 @@ clang.CXToken_Identifier = CXTokenKind.CXToken_Identifier
 clang.CXToken_Literal = CXTokenKind.CXToken_Literal
 clang.CXToken_Comment = CXTokenKind.CXToken_Comment
 
----@alias CXTokenKind CXTokenKind
-
 ---@class CXToken
 ---@field int_data integer[]
 ---@field ptr_data ffi.cdata*
 
----@alias CXToken CXToken
+---@class CXToken*
+---@field [integer] CXToken
+
+---@class CXToken**
+---@field [integer] CXToken*
 
 ---@param TU CXTranslationUnit
 ---@param Location CXSourceLocation
----@return c.pointer<CXToken>?
-function clang.clang_getToken(TU, Location) end
-clang.getToken = clang.clang_getToken
+---@return CXToken*?
+function clang.getToken(TU, Location) end
+clang.clang_getToken = clang.getToken
 
 ---@param arg_1 CXToken
 ---@return CXTokenKind
-function clang.clang_getTokenKind(arg_1) end
-clang.getTokenKind = clang.clang_getTokenKind
+function clang.getTokenKind(arg_1) end
+clang.clang_getTokenKind = clang.getTokenKind
 
 ---@param arg_1 CXTranslationUnit
 ---@param arg_2 CXToken
 ---@return CXString
-function clang.clang_getTokenSpelling(arg_1, arg_2) end
-clang.getTokenSpelling = clang.clang_getTokenSpelling
+function clang.getTokenSpelling(arg_1, arg_2) end
+clang.clang_getTokenSpelling = clang.getTokenSpelling
 
 ---@param arg_1 CXTranslationUnit
 ---@param arg_2 CXToken
 ---@return CXSourceLocation
-function clang.clang_getTokenLocation(arg_1, arg_2) end
-clang.getTokenLocation = clang.clang_getTokenLocation
+function clang.getTokenLocation(arg_1, arg_2) end
+clang.clang_getTokenLocation = clang.getTokenLocation
 
 ---@param arg_1 CXTranslationUnit
 ---@param arg_2 CXToken
 ---@return CXSourceRange
-function clang.clang_getTokenExtent(arg_1, arg_2) end
-clang.getTokenExtent = clang.clang_getTokenExtent
+function clang.getTokenExtent(arg_1, arg_2) end
+clang.clang_getTokenExtent = clang.getTokenExtent
 
 ---@param TU CXTranslationUnit
 ---@param Range CXSourceRange
----@param Tokens c.pointer<c.pointer<CXToken>?>?
----@param NumTokens c.pointer<integer>?
+---@param Tokens CXToken*?*?
+---@param NumTokens integer*?
 ---@return nil
-function clang.clang_tokenize(TU, Range, Tokens, NumTokens) end
-clang.tokenize = clang.clang_tokenize
+function clang.tokenize(TU, Range, Tokens, NumTokens) end
+clang.clang_tokenize = clang.tokenize
 
 ---@param TU CXTranslationUnit
----@param Tokens c.pointer<CXToken>?
+---@param Tokens CXToken*?
 ---@param NumTokens integer
----@param Cursors c.pointer<CXCursor>?
+---@param Cursors CXCursor*?
 ---@return nil
-function clang.clang_annotateTokens(TU, Tokens, NumTokens, Cursors) end
-clang.annotateTokens = clang.clang_annotateTokens
+function clang.annotateTokens(TU, Tokens, NumTokens, Cursors) end
+clang.clang_annotateTokens = clang.annotateTokens
 
 ---@param TU CXTranslationUnit
----@param Tokens c.pointer<CXToken>?
+---@param Tokens CXToken*?
 ---@param NumTokens integer
 ---@return nil
-function clang.clang_disposeTokens(TU, Tokens, NumTokens) end
-clang.disposeTokens = clang.clang_disposeTokens
+function clang.disposeTokens(TU, Tokens, NumTokens) end
+clang.clang_disposeTokens = clang.disposeTokens
 
 ---@param Kind CXCursorKind
 ---@return CXString
-function clang.clang_getCursorKindSpelling(Kind) end
-clang.getCursorKindSpelling = clang.clang_getCursorKindSpelling
+function clang.getCursorKindSpelling(Kind) end
+clang.clang_getCursorKindSpelling = clang.getCursorKindSpelling
 
 ---@param arg_1 CXCursor
----@param startBuf c.pointer<string>?
----@param endBuf c.pointer<string>?
----@param startLine c.pointer<integer>?
----@param startColumn c.pointer<integer>?
----@param endLine c.pointer<integer>?
----@param endColumn c.pointer<integer>?
+---@param startBuf string*?
+---@param endBuf string*?
+---@param startLine integer*?
+---@param startColumn integer*?
+---@param endLine integer*?
+---@param endColumn integer*?
 ---@return nil
-function clang.clang_getDefinitionSpellingAndExtent(arg_1, startBuf, endBuf, startLine, startColumn, endLine, endColumn) end
-clang.getDefinitionSpellingAndExtent = clang.clang_getDefinitionSpellingAndExtent
+function clang.getDefinitionSpellingAndExtent(arg_1, startBuf, endBuf, startLine, startColumn, endLine, endColumn) end
+clang.clang_getDefinitionSpellingAndExtent = clang.getDefinitionSpellingAndExtent
 
 ---@return nil
-function clang.clang_enableStackTraces() end
-clang.enableStackTraces = clang.clang_enableStackTraces
+function clang.enableStackTraces() end
+clang.clang_enableStackTraces = clang.enableStackTraces
 
 ---@param fn fun(arg_0: ffi.cdata*): nil
 ---@param user_data ffi.cdata*
 ---@param stack_size integer
 ---@return nil
-function clang.clang_executeOnThread(fn, user_data, stack_size) end
-clang.executeOnThread = clang.clang_executeOnThread
+function clang.executeOnThread(fn, user_data, stack_size) end
+clang.clang_executeOnThread = clang.executeOnThread
 
 ---@alias CXCompletionString ffi.cdata*
 
@@ -3145,7 +3231,11 @@ clang.executeOnThread = clang.clang_executeOnThread
 ---@field CursorKind CXCursorKind
 ---@field CompletionString CXCompletionString
 
----@alias CXCompletionResult CXCompletionResult
+---@class CXCompletionResult*
+---@field [integer] CXCompletionResult
+
+---@class CXCompletionResult**
+---@field [integer] CXCompletionResult*
 
 ---@enum CXCompletionChunkKind
 local CXCompletionChunkKind = {
@@ -3197,82 +3287,86 @@ clang.CXCompletionChunk_VerticalSpace = CXCompletionChunkKind.CXCompletionChunk_
 ---@param completion_string CXCompletionString
 ---@param chunk_number integer
 ---@return CXCompletionChunkKind
-function clang.clang_getCompletionChunkKind(completion_string, chunk_number) end
-clang.getCompletionChunkKind = clang.clang_getCompletionChunkKind
+function clang.getCompletionChunkKind(completion_string, chunk_number) end
+clang.clang_getCompletionChunkKind = clang.getCompletionChunkKind
 
 ---@param completion_string CXCompletionString
 ---@param chunk_number integer
 ---@return CXString
-function clang.clang_getCompletionChunkText(completion_string, chunk_number) end
-clang.getCompletionChunkText = clang.clang_getCompletionChunkText
+function clang.getCompletionChunkText(completion_string, chunk_number) end
+clang.clang_getCompletionChunkText = clang.getCompletionChunkText
 
 ---@param completion_string CXCompletionString
 ---@param chunk_number integer
 ---@return CXCompletionString
-function clang.clang_getCompletionChunkCompletionString(completion_string, chunk_number) end
-clang.getCompletionChunkCompletionString = clang.clang_getCompletionChunkCompletionString
+function clang.getCompletionChunkCompletionString(completion_string, chunk_number) end
+clang.clang_getCompletionChunkCompletionString = clang.getCompletionChunkCompletionString
 
 ---@param completion_string CXCompletionString
 ---@return integer
-function clang.clang_getNumCompletionChunks(completion_string) end
-clang.getNumCompletionChunks = clang.clang_getNumCompletionChunks
+function clang.getNumCompletionChunks(completion_string) end
+clang.clang_getNumCompletionChunks = clang.getNumCompletionChunks
 
 ---@param completion_string CXCompletionString
 ---@return integer
-function clang.clang_getCompletionPriority(completion_string) end
-clang.getCompletionPriority = clang.clang_getCompletionPriority
+function clang.getCompletionPriority(completion_string) end
+clang.clang_getCompletionPriority = clang.getCompletionPriority
 
 ---@param completion_string CXCompletionString
 ---@return CXAvailabilityKind
-function clang.clang_getCompletionAvailability(completion_string) end
-clang.getCompletionAvailability = clang.clang_getCompletionAvailability
+function clang.getCompletionAvailability(completion_string) end
+clang.clang_getCompletionAvailability = clang.getCompletionAvailability
 
 ---@param completion_string CXCompletionString
 ---@return integer
-function clang.clang_getCompletionNumAnnotations(completion_string) end
-clang.getCompletionNumAnnotations = clang.clang_getCompletionNumAnnotations
+function clang.getCompletionNumAnnotations(completion_string) end
+clang.clang_getCompletionNumAnnotations = clang.getCompletionNumAnnotations
 
 ---@param completion_string CXCompletionString
 ---@param annotation_number integer
 ---@return CXString
-function clang.clang_getCompletionAnnotation(completion_string, annotation_number) end
-clang.getCompletionAnnotation = clang.clang_getCompletionAnnotation
+function clang.getCompletionAnnotation(completion_string, annotation_number) end
+clang.clang_getCompletionAnnotation = clang.getCompletionAnnotation
 
 ---@param completion_string CXCompletionString
----@param kind c.pointer<CXCursorKind>?
+---@param kind CXCursorKind*?
 ---@return CXString
-function clang.clang_getCompletionParent(completion_string, kind) end
-clang.getCompletionParent = clang.clang_getCompletionParent
+function clang.getCompletionParent(completion_string, kind) end
+clang.clang_getCompletionParent = clang.getCompletionParent
 
 ---@param completion_string CXCompletionString
 ---@return CXString
-function clang.clang_getCompletionBriefComment(completion_string) end
-clang.getCompletionBriefComment = clang.clang_getCompletionBriefComment
+function clang.getCompletionBriefComment(completion_string) end
+clang.clang_getCompletionBriefComment = clang.getCompletionBriefComment
 
 ---@param cursor CXCursor
 ---@return CXCompletionString
-function clang.clang_getCursorCompletionString(cursor) end
-clang.getCursorCompletionString = clang.clang_getCursorCompletionString
+function clang.getCursorCompletionString(cursor) end
+clang.clang_getCursorCompletionString = clang.getCursorCompletionString
 
 ---@class CXCodeCompleteResults
----@field Results c.pointer<CXCompletionResult>?
+---@field Results CXCompletionResult*?
 ---@field NumResults integer
 
----@alias CXCodeCompleteResults CXCodeCompleteResults
+---@class CXCodeCompleteResults*
+---@field [integer] CXCodeCompleteResults
 
----@param results c.pointer<CXCodeCompleteResults>?
+---@class CXCodeCompleteResults**
+---@field [integer] CXCodeCompleteResults*
+
+---@param results CXCodeCompleteResults*?
 ---@param completion_index integer
 ---@return integer
-function clang.clang_getCompletionNumFixIts(results, completion_index) end
-clang.getCompletionNumFixIts = clang.clang_getCompletionNumFixIts
+function clang.getCompletionNumFixIts(results, completion_index) end
+clang.clang_getCompletionNumFixIts = clang.getCompletionNumFixIts
 
----@param results c.pointer<CXCodeCompleteResults>?
+---@param results CXCodeCompleteResults*?
 ---@param completion_index integer
 ---@param fixit_index integer
----@param replacement_range c.pointer<CXSourceRange>?
+---@param replacement_range CXSourceRange*?
 ---@return CXString
-function clang.clang_getCompletionFixIt(results, completion_index, fixit_index, replacement_range) end
-clang.getCompletionFixIt = clang.clang_getCompletionFixIt
+function clang.getCompletionFixIt(results, completion_index, fixit_index, replacement_range) end
+clang.clang_getCompletionFixIt = clang.getCompletionFixIt
 
 ---@enum CXCodeComplete_Flags
 local CXCodeComplete_Flags = {
@@ -3345,80 +3439,80 @@ clang.CXCompletionContext_IncludedFile = CXCompletionContext.CXCompletionContext
 clang.CXCompletionContext_Unknown = CXCompletionContext.CXCompletionContext_Unknown
 
 ---@return integer
-function clang.clang_defaultCodeCompleteOptions() end
-clang.defaultCodeCompleteOptions = clang.clang_defaultCodeCompleteOptions
+function clang.defaultCodeCompleteOptions() end
+clang.clang_defaultCodeCompleteOptions = clang.defaultCodeCompleteOptions
 
 ---@param TU CXTranslationUnit
 ---@param complete_filename string
 ---@param complete_line integer
 ---@param complete_column integer
----@param unsaved_files c.pointer<CXUnsavedFile>?
+---@param unsaved_files CXUnsavedFile*?
 ---@param num_unsaved_files integer
 ---@param options integer
----@return c.pointer<CXCodeCompleteResults>?
-function clang.clang_codeCompleteAt(TU, complete_filename, complete_line, complete_column, unsaved_files, num_unsaved_files, options) end
-clang.codeCompleteAt = clang.clang_codeCompleteAt
+---@return CXCodeCompleteResults*?
+function clang.codeCompleteAt(TU, complete_filename, complete_line, complete_column, unsaved_files, num_unsaved_files, options) end
+clang.clang_codeCompleteAt = clang.codeCompleteAt
 
----@param Results c.pointer<CXCompletionResult>?
+---@param Results CXCompletionResult*?
 ---@param NumResults integer
 ---@return nil
-function clang.clang_sortCodeCompletionResults(Results, NumResults) end
-clang.sortCodeCompletionResults = clang.clang_sortCodeCompletionResults
+function clang.sortCodeCompletionResults(Results, NumResults) end
+clang.clang_sortCodeCompletionResults = clang.sortCodeCompletionResults
 
----@param Results c.pointer<CXCodeCompleteResults>?
+---@param Results CXCodeCompleteResults*?
 ---@return nil
-function clang.clang_disposeCodeCompleteResults(Results) end
-clang.disposeCodeCompleteResults = clang.clang_disposeCodeCompleteResults
+function clang.disposeCodeCompleteResults(Results) end
+clang.clang_disposeCodeCompleteResults = clang.disposeCodeCompleteResults
 
----@param Results c.pointer<CXCodeCompleteResults>?
+---@param Results CXCodeCompleteResults*?
 ---@return integer
-function clang.clang_codeCompleteGetNumDiagnostics(Results) end
-clang.codeCompleteGetNumDiagnostics = clang.clang_codeCompleteGetNumDiagnostics
+function clang.codeCompleteGetNumDiagnostics(Results) end
+clang.clang_codeCompleteGetNumDiagnostics = clang.codeCompleteGetNumDiagnostics
 
----@param Results c.pointer<CXCodeCompleteResults>?
+---@param Results CXCodeCompleteResults*?
 ---@param Index integer
 ---@return CXDiagnostic
-function clang.clang_codeCompleteGetDiagnostic(Results, Index) end
-clang.codeCompleteGetDiagnostic = clang.clang_codeCompleteGetDiagnostic
+function clang.codeCompleteGetDiagnostic(Results, Index) end
+clang.clang_codeCompleteGetDiagnostic = clang.codeCompleteGetDiagnostic
 
----@param Results c.pointer<CXCodeCompleteResults>?
+---@param Results CXCodeCompleteResults*?
 ---@return integer
-function clang.clang_codeCompleteGetContexts(Results) end
-clang.codeCompleteGetContexts = clang.clang_codeCompleteGetContexts
+function clang.codeCompleteGetContexts(Results) end
+clang.clang_codeCompleteGetContexts = clang.codeCompleteGetContexts
 
----@param Results c.pointer<CXCodeCompleteResults>?
----@param IsIncomplete c.pointer<integer>?
+---@param Results CXCodeCompleteResults*?
+---@param IsIncomplete integer*?
 ---@return CXCursorKind
-function clang.clang_codeCompleteGetContainerKind(Results, IsIncomplete) end
-clang.codeCompleteGetContainerKind = clang.clang_codeCompleteGetContainerKind
+function clang.codeCompleteGetContainerKind(Results, IsIncomplete) end
+clang.clang_codeCompleteGetContainerKind = clang.codeCompleteGetContainerKind
 
----@param Results c.pointer<CXCodeCompleteResults>?
+---@param Results CXCodeCompleteResults*?
 ---@return CXString
-function clang.clang_codeCompleteGetContainerUSR(Results) end
-clang.codeCompleteGetContainerUSR = clang.clang_codeCompleteGetContainerUSR
+function clang.codeCompleteGetContainerUSR(Results) end
+clang.clang_codeCompleteGetContainerUSR = clang.codeCompleteGetContainerUSR
 
----@param Results c.pointer<CXCodeCompleteResults>?
+---@param Results CXCodeCompleteResults*?
 ---@return CXString
-function clang.clang_codeCompleteGetObjCSelector(Results) end
-clang.codeCompleteGetObjCSelector = clang.clang_codeCompleteGetObjCSelector
+function clang.codeCompleteGetObjCSelector(Results) end
+clang.clang_codeCompleteGetObjCSelector = clang.codeCompleteGetObjCSelector
 
 ---@return CXString
-function clang.clang_getClangVersion() end
-clang.getClangVersion = clang.clang_getClangVersion
+function clang.getClangVersion() end
+clang.clang_getClangVersion = clang.getClangVersion
 
 ---@param isEnabled integer
 ---@return nil
-function clang.clang_toggleCrashRecovery(isEnabled) end
-clang.toggleCrashRecovery = clang.clang_toggleCrashRecovery
+function clang.toggleCrashRecovery(isEnabled) end
+clang.clang_toggleCrashRecovery = clang.toggleCrashRecovery
 
----@alias CXInclusionVisitor fun(arg_0: CXFile, arg_1: c.pointer<CXSourceLocation>?, arg_2: integer, arg_3: CXClientData): nil
+---@alias CXInclusionVisitor fun(arg_0: CXFile, arg_1: CXSourceLocation*?, arg_2: integer, arg_3: CXClientData): nil
 
 ---@param tu CXTranslationUnit
 ---@param visitor CXInclusionVisitor
 ---@param client_data CXClientData
 ---@return nil
-function clang.clang_getInclusions(tu, visitor, client_data) end
-clang.getInclusions = clang.clang_getInclusions
+function clang.getInclusions(tu, visitor, client_data) end
+clang.clang_getInclusions = clang.getInclusions
 
 ---@enum CXEvalResultKind
 local CXEvalResultKind = {
@@ -3439,85 +3533,83 @@ clang.CXEval_CFStr = CXEvalResultKind.CXEval_CFStr
 clang.CXEval_Other = CXEvalResultKind.CXEval_Other
 clang.CXEval_UnExposed = CXEvalResultKind.CXEval_UnExposed
 
----@alias CXEvalResultKind CXEvalResultKind
-
 ---@alias CXEvalResult ffi.cdata*
 
 ---@param C CXCursor
 ---@return CXEvalResult
-function clang.clang_Cursor_Evaluate(C) end
-clang.Cursor_Evaluate = clang.clang_Cursor_Evaluate
+function clang.Cursor_Evaluate(C) end
+clang.clang_Cursor_Evaluate = clang.Cursor_Evaluate
 
 ---@param E CXEvalResult
 ---@return CXEvalResultKind
-function clang.clang_EvalResult_getKind(E) end
-clang.EvalResult_getKind = clang.clang_EvalResult_getKind
+function clang.EvalResult_getKind(E) end
+clang.clang_EvalResult_getKind = clang.EvalResult_getKind
 
 ---@param E CXEvalResult
 ---@return integer
-function clang.clang_EvalResult_getAsInt(E) end
-clang.EvalResult_getAsInt = clang.clang_EvalResult_getAsInt
+function clang.EvalResult_getAsInt(E) end
+clang.clang_EvalResult_getAsInt = clang.EvalResult_getAsInt
 
 ---@param E CXEvalResult
 ---@return integer
-function clang.clang_EvalResult_getAsLongLong(E) end
-clang.EvalResult_getAsLongLong = clang.clang_EvalResult_getAsLongLong
+function clang.EvalResult_getAsLongLong(E) end
+clang.clang_EvalResult_getAsLongLong = clang.EvalResult_getAsLongLong
 
 ---@param E CXEvalResult
 ---@return integer
-function clang.clang_EvalResult_isUnsignedInt(E) end
-clang.EvalResult_isUnsignedInt = clang.clang_EvalResult_isUnsignedInt
+function clang.EvalResult_isUnsignedInt(E) end
+clang.clang_EvalResult_isUnsignedInt = clang.EvalResult_isUnsignedInt
 
 ---@param E CXEvalResult
 ---@return integer
-function clang.clang_EvalResult_getAsUnsigned(E) end
-clang.EvalResult_getAsUnsigned = clang.clang_EvalResult_getAsUnsigned
+function clang.EvalResult_getAsUnsigned(E) end
+clang.clang_EvalResult_getAsUnsigned = clang.EvalResult_getAsUnsigned
 
 ---@param E CXEvalResult
 ---@return number
-function clang.clang_EvalResult_getAsDouble(E) end
-clang.EvalResult_getAsDouble = clang.clang_EvalResult_getAsDouble
+function clang.EvalResult_getAsDouble(E) end
+clang.clang_EvalResult_getAsDouble = clang.EvalResult_getAsDouble
 
 ---@param E CXEvalResult
 ---@return string
-function clang.clang_EvalResult_getAsStr(E) end
-clang.EvalResult_getAsStr = clang.clang_EvalResult_getAsStr
+function clang.EvalResult_getAsStr(E) end
+clang.clang_EvalResult_getAsStr = clang.EvalResult_getAsStr
 
 ---@param E CXEvalResult
 ---@return nil
-function clang.clang_EvalResult_dispose(E) end
-clang.EvalResult_dispose = clang.clang_EvalResult_dispose
+function clang.EvalResult_dispose(E) end
+clang.clang_EvalResult_dispose = clang.EvalResult_dispose
 
 ---@alias CXRemapping ffi.cdata*
 
 ---@param path string
 ---@return CXRemapping
-function clang.clang_getRemappings(path) end
-clang.getRemappings = clang.clang_getRemappings
+function clang.getRemappings(path) end
+clang.clang_getRemappings = clang.getRemappings
 
----@param filePaths c.pointer<string>?
+---@param filePaths string*?
 ---@param numFiles integer
 ---@return CXRemapping
-function clang.clang_getRemappingsFromFileList(filePaths, numFiles) end
-clang.getRemappingsFromFileList = clang.clang_getRemappingsFromFileList
+function clang.getRemappingsFromFileList(filePaths, numFiles) end
+clang.clang_getRemappingsFromFileList = clang.getRemappingsFromFileList
 
 ---@param arg_1 CXRemapping
 ---@return integer
-function clang.clang_remap_getNumFiles(arg_1) end
-clang.remap_getNumFiles = clang.clang_remap_getNumFiles
+function clang.remap_getNumFiles(arg_1) end
+clang.clang_remap_getNumFiles = clang.remap_getNumFiles
 
 ---@param arg_1 CXRemapping
 ---@param index integer
----@param original c.pointer<CXString>?
----@param transformed c.pointer<CXString>?
+---@param original CXString*?
+---@param transformed CXString*?
 ---@return nil
-function clang.clang_remap_getFilenames(arg_1, index, original, transformed) end
-clang.remap_getFilenames = clang.clang_remap_getFilenames
+function clang.remap_getFilenames(arg_1, index, original, transformed) end
+clang.clang_remap_getFilenames = clang.remap_getFilenames
 
 ---@param arg_1 CXRemapping
 ---@return nil
-function clang.clang_remap_dispose(arg_1) end
-clang.remap_dispose = clang.clang_remap_dispose
+function clang.remap_dispose(arg_1) end
+clang.clang_remap_dispose = clang.remap_dispose
 
 ---@enum CXVisitorResult
 local CXVisitorResult = {
@@ -3532,7 +3624,11 @@ clang.CXVisit_Continue = CXVisitorResult.CXVisit_Continue
 ---@field context ffi.cdata*
 ---@field visit fun(arg_0: ffi.cdata*, arg_1: CXCursor, arg_2: CXSourceRange): CXVisitorResult
 
----@alias CXCursorAndRangeVisitor CXCursorAndRangeVisitor
+---@class CXCursorAndRangeVisitor*
+---@field [integer] CXCursorAndRangeVisitor
+
+---@class CXCursorAndRangeVisitor**
+---@field [integer] CXCursorAndRangeVisitor*
 
 ---@enum CXResult
 local CXResult = {
@@ -3545,39 +3641,43 @@ clang.CXResult_Success = CXResult.CXResult_Success
 clang.CXResult_Invalid = CXResult.CXResult_Invalid
 clang.CXResult_VisitBreak = CXResult.CXResult_VisitBreak
 
----@alias CXResult CXResult
-
 ---@param cursor CXCursor
 ---@param file CXFile
 ---@param visitor CXCursorAndRangeVisitor
 ---@return CXResult
-function clang.clang_findReferencesInFile(cursor, file, visitor) end
-clang.findReferencesInFile = clang.clang_findReferencesInFile
+function clang.findReferencesInFile(cursor, file, visitor) end
+clang.clang_findReferencesInFile = clang.findReferencesInFile
 
 ---@param TU CXTranslationUnit
 ---@param file CXFile
 ---@param visitor CXCursorAndRangeVisitor
 ---@return CXResult
-function clang.clang_findIncludesInFile(TU, file, visitor) end
-clang.findIncludesInFile = clang.clang_findIncludesInFile
+function clang.findIncludesInFile(TU, file, visitor) end
+clang.clang_findIncludesInFile = clang.findIncludesInFile
 
 ---@class _CXCursorAndRangeVisitorBlock
 
----@alias CXCursorAndRangeVisitorBlock c.pointer<_CXCursorAndRangeVisitorBlock>?
+---@class _CXCursorAndRangeVisitorBlock*
+---@field [integer] _CXCursorAndRangeVisitorBlock
+
+---@class _CXCursorAndRangeVisitorBlock**
+---@field [integer] _CXCursorAndRangeVisitorBlock*
+
+---@alias CXCursorAndRangeVisitorBlock _CXCursorAndRangeVisitorBlock*?
 
 ---@param arg_1 CXCursor
 ---@param arg_2 CXFile
 ---@param arg_3 CXCursorAndRangeVisitorBlock
 ---@return CXResult
-function clang.clang_findReferencesInFileWithBlock(arg_1, arg_2, arg_3) end
-clang.findReferencesInFileWithBlock = clang.clang_findReferencesInFileWithBlock
+function clang.findReferencesInFileWithBlock(arg_1, arg_2, arg_3) end
+clang.clang_findReferencesInFileWithBlock = clang.findReferencesInFileWithBlock
 
 ---@param arg_1 CXTranslationUnit
 ---@param arg_2 CXFile
 ---@param arg_3 CXCursorAndRangeVisitorBlock
 ---@return CXResult
-function clang.clang_findIncludesInFileWithBlock(arg_1, arg_2, arg_3) end
-clang.findIncludesInFileWithBlock = clang.clang_findIncludesInFileWithBlock
+function clang.findIncludesInFileWithBlock(arg_1, arg_2, arg_3) end
+clang.clang_findIncludesInFileWithBlock = clang.findIncludesInFileWithBlock
 
 ---@alias CXIdxClientFile ffi.cdata*
 
@@ -3591,7 +3691,11 @@ clang.findIncludesInFileWithBlock = clang.clang_findIncludesInFileWithBlock
 ---@field ptr_data ffi.cdata*[]
 ---@field int_data integer
 
----@alias CXIdxLoc CXIdxLoc
+---@class CXIdxLoc*
+---@field [integer] CXIdxLoc
+
+---@class CXIdxLoc**
+---@field [integer] CXIdxLoc*
 
 ---@class CXIdxIncludedFileInfo
 ---@field hashLoc CXIdxLoc
@@ -3601,7 +3705,11 @@ clang.findIncludesInFileWithBlock = clang.clang_findIncludesInFileWithBlock
 ---@field isAngled integer
 ---@field isModuleImport integer
 
----@alias CXIdxIncludedFileInfo CXIdxIncludedFileInfo
+---@class CXIdxIncludedFileInfo*
+---@field [integer] CXIdxIncludedFileInfo
+
+---@class CXIdxIncludedFileInfo**
+---@field [integer] CXIdxIncludedFileInfo*
 
 ---@class CXIdxImportedASTFileInfo
 ---@field file CXFile
@@ -3609,7 +3717,11 @@ clang.findIncludesInFileWithBlock = clang.clang_findIncludesInFileWithBlock
 ---@field loc CXIdxLoc
 ---@field isImplicit integer
 
----@alias CXIdxImportedASTFileInfo CXIdxImportedASTFileInfo
+---@class CXIdxImportedASTFileInfo*
+---@field [integer] CXIdxImportedASTFileInfo
+
+---@class CXIdxImportedASTFileInfo**
+---@field [integer] CXIdxImportedASTFileInfo*
 
 ---@enum CXIdxEntityKind
 local CXIdxEntityKind = {
@@ -3672,8 +3784,6 @@ clang.CXIdxEntity_CXXTypeAlias = CXIdxEntityKind.CXIdxEntity_CXXTypeAlias
 clang.CXIdxEntity_CXXInterface = CXIdxEntityKind.CXIdxEntity_CXXInterface
 clang.CXIdxEntity_CXXConcept = CXIdxEntityKind.CXIdxEntity_CXXConcept
 
----@alias CXIdxEntityKind CXIdxEntityKind
-
 ---@enum CXIdxEntityLanguage
 local CXIdxEntityLanguage = {
     CXIdxEntityLang_None = 0,
@@ -3689,8 +3799,6 @@ clang.CXIdxEntityLang_ObjC = CXIdxEntityLanguage.CXIdxEntityLang_ObjC
 clang.CXIdxEntityLang_CXX = CXIdxEntityLanguage.CXIdxEntityLang_CXX
 clang.CXIdxEntityLang_Swift = CXIdxEntityLanguage.CXIdxEntityLang_Swift
 
----@alias CXIdxEntityLanguage CXIdxEntityLanguage
-
 ---@enum CXIdxEntityCXXTemplateKind
 local CXIdxEntityCXXTemplateKind = {
     CXIdxEntity_NonTemplate = 0,
@@ -3703,8 +3811,6 @@ clang.CXIdxEntity_NonTemplate = CXIdxEntityCXXTemplateKind.CXIdxEntity_NonTempla
 clang.CXIdxEntity_Template = CXIdxEntityCXXTemplateKind.CXIdxEntity_Template
 clang.CXIdxEntity_TemplatePartialSpecialization = CXIdxEntityCXXTemplateKind.CXIdxEntity_TemplatePartialSpecialization
 clang.CXIdxEntity_TemplateSpecialization = CXIdxEntityCXXTemplateKind.CXIdxEntity_TemplateSpecialization
-
----@alias CXIdxEntityCXXTemplateKind CXIdxEntityCXXTemplateKind
 
 ---@enum CXIdxAttrKind
 local CXIdxAttrKind = {
@@ -3719,14 +3825,16 @@ clang.CXIdxAttr_IBAction = CXIdxAttrKind.CXIdxAttr_IBAction
 clang.CXIdxAttr_IBOutlet = CXIdxAttrKind.CXIdxAttr_IBOutlet
 clang.CXIdxAttr_IBOutletCollection = CXIdxAttrKind.CXIdxAttr_IBOutletCollection
 
----@alias CXIdxAttrKind CXIdxAttrKind
-
 ---@class CXIdxAttrInfo
 ---@field kind CXIdxAttrKind
 ---@field cursor CXCursor
 ---@field loc CXIdxLoc
 
----@alias CXIdxAttrInfo CXIdxAttrInfo
+---@class CXIdxAttrInfo*
+---@field [integer] CXIdxAttrInfo
+
+---@class CXIdxAttrInfo**
+---@field [integer] CXIdxAttrInfo*
 
 ---@class CXIdxEntityInfo
 ---@field kind CXIdxEntityKind
@@ -3735,23 +3843,35 @@ clang.CXIdxAttr_IBOutletCollection = CXIdxAttrKind.CXIdxAttr_IBOutletCollection
 ---@field name string
 ---@field USR string
 ---@field cursor CXCursor
----@field attributes c.pointer<c.pointer<CXIdxAttrInfo>?>?
+---@field attributes CXIdxAttrInfo*?*?
 ---@field numAttributes integer
 
----@alias CXIdxEntityInfo CXIdxEntityInfo
+---@class CXIdxEntityInfo*
+---@field [integer] CXIdxEntityInfo
+
+---@class CXIdxEntityInfo**
+---@field [integer] CXIdxEntityInfo*
 
 ---@class CXIdxContainerInfo
 ---@field cursor CXCursor
 
----@alias CXIdxContainerInfo CXIdxContainerInfo
+---@class CXIdxContainerInfo*
+---@field [integer] CXIdxContainerInfo
+
+---@class CXIdxContainerInfo**
+---@field [integer] CXIdxContainerInfo*
 
 ---@class CXIdxIBOutletCollectionAttrInfo
----@field attrInfo c.pointer<CXIdxAttrInfo>?
----@field objcClass c.pointer<CXIdxEntityInfo>?
+---@field attrInfo CXIdxAttrInfo*?
+---@field objcClass CXIdxEntityInfo*?
 ---@field classCursor CXCursor
 ---@field classLoc CXIdxLoc
 
----@alias CXIdxIBOutletCollectionAttrInfo CXIdxIBOutletCollectionAttrInfo
+---@class CXIdxIBOutletCollectionAttrInfo*
+---@field [integer] CXIdxIBOutletCollectionAttrInfo
+
+---@class CXIdxIBOutletCollectionAttrInfo**
+---@field [integer] CXIdxIBOutletCollectionAttrInfo*
 
 ---@enum CXIdxDeclInfoFlags
 local CXIdxDeclInfoFlags = {
@@ -3760,24 +3880,26 @@ local CXIdxDeclInfoFlags = {
 
 clang.CXIdxDeclFlag_Skipped = CXIdxDeclInfoFlags.CXIdxDeclFlag_Skipped
 
----@alias CXIdxDeclInfoFlags CXIdxDeclInfoFlags
-
 ---@class CXIdxDeclInfo
----@field entityInfo c.pointer<CXIdxEntityInfo>?
+---@field entityInfo CXIdxEntityInfo*?
 ---@field cursor CXCursor
 ---@field loc CXIdxLoc
----@field semanticContainer c.pointer<CXIdxContainerInfo>?
----@field lexicalContainer c.pointer<CXIdxContainerInfo>?
+---@field semanticContainer CXIdxContainerInfo*?
+---@field lexicalContainer CXIdxContainerInfo*?
 ---@field isRedeclaration integer
 ---@field isDefinition integer
 ---@field isContainer integer
----@field declAsContainer c.pointer<CXIdxContainerInfo>?
+---@field declAsContainer CXIdxContainerInfo*?
 ---@field isImplicit integer
----@field attributes c.pointer<c.pointer<CXIdxAttrInfo>?>?
+---@field attributes CXIdxAttrInfo*?*?
 ---@field numAttributes integer
 ---@field flags integer
 
----@alias CXIdxDeclInfo CXIdxDeclInfo
+---@class CXIdxDeclInfo*
+---@field [integer] CXIdxDeclInfo
+
+---@class CXIdxDeclInfo**
+---@field [integer] CXIdxDeclInfo*
 
 ---@enum CXIdxObjCContainerKind
 local CXIdxObjCContainerKind = {
@@ -3790,63 +3912,93 @@ clang.CXIdxObjCContainer_ForwardRef = CXIdxObjCContainerKind.CXIdxObjCContainer_
 clang.CXIdxObjCContainer_Interface = CXIdxObjCContainerKind.CXIdxObjCContainer_Interface
 clang.CXIdxObjCContainer_Implementation = CXIdxObjCContainerKind.CXIdxObjCContainer_Implementation
 
----@alias CXIdxObjCContainerKind CXIdxObjCContainerKind
-
 ---@class CXIdxObjCContainerDeclInfo
----@field declInfo c.pointer<CXIdxDeclInfo>?
+---@field declInfo CXIdxDeclInfo*?
 ---@field kind CXIdxObjCContainerKind
 
----@alias CXIdxObjCContainerDeclInfo CXIdxObjCContainerDeclInfo
+---@class CXIdxObjCContainerDeclInfo*
+---@field [integer] CXIdxObjCContainerDeclInfo
+
+---@class CXIdxObjCContainerDeclInfo**
+---@field [integer] CXIdxObjCContainerDeclInfo*
 
 ---@class CXIdxBaseClassInfo
----@field base c.pointer<CXIdxEntityInfo>?
+---@field base CXIdxEntityInfo*?
 ---@field cursor CXCursor
 ---@field loc CXIdxLoc
 
----@alias CXIdxBaseClassInfo CXIdxBaseClassInfo
+---@class CXIdxBaseClassInfo*
+---@field [integer] CXIdxBaseClassInfo
+
+---@class CXIdxBaseClassInfo**
+---@field [integer] CXIdxBaseClassInfo*
 
 ---@class CXIdxObjCProtocolRefInfo
----@field protocol c.pointer<CXIdxEntityInfo>?
+---@field protocol CXIdxEntityInfo*?
 ---@field cursor CXCursor
 ---@field loc CXIdxLoc
 
----@alias CXIdxObjCProtocolRefInfo CXIdxObjCProtocolRefInfo
+---@class CXIdxObjCProtocolRefInfo*
+---@field [integer] CXIdxObjCProtocolRefInfo
+
+---@class CXIdxObjCProtocolRefInfo**
+---@field [integer] CXIdxObjCProtocolRefInfo*
 
 ---@class CXIdxObjCProtocolRefListInfo
----@field protocols c.pointer<c.pointer<CXIdxObjCProtocolRefInfo>?>?
+---@field protocols CXIdxObjCProtocolRefInfo*?*?
 ---@field numProtocols integer
 
----@alias CXIdxObjCProtocolRefListInfo CXIdxObjCProtocolRefListInfo
+---@class CXIdxObjCProtocolRefListInfo*
+---@field [integer] CXIdxObjCProtocolRefListInfo
+
+---@class CXIdxObjCProtocolRefListInfo**
+---@field [integer] CXIdxObjCProtocolRefListInfo*
 
 ---@class CXIdxObjCInterfaceDeclInfo
----@field containerInfo c.pointer<CXIdxObjCContainerDeclInfo>?
----@field superInfo c.pointer<CXIdxBaseClassInfo>?
----@field protocols c.pointer<CXIdxObjCProtocolRefListInfo>?
+---@field containerInfo CXIdxObjCContainerDeclInfo*?
+---@field superInfo CXIdxBaseClassInfo*?
+---@field protocols CXIdxObjCProtocolRefListInfo*?
 
----@alias CXIdxObjCInterfaceDeclInfo CXIdxObjCInterfaceDeclInfo
+---@class CXIdxObjCInterfaceDeclInfo*
+---@field [integer] CXIdxObjCInterfaceDeclInfo
+
+---@class CXIdxObjCInterfaceDeclInfo**
+---@field [integer] CXIdxObjCInterfaceDeclInfo*
 
 ---@class CXIdxObjCCategoryDeclInfo
----@field containerInfo c.pointer<CXIdxObjCContainerDeclInfo>?
----@field objcClass c.pointer<CXIdxEntityInfo>?
+---@field containerInfo CXIdxObjCContainerDeclInfo*?
+---@field objcClass CXIdxEntityInfo*?
 ---@field classCursor CXCursor
 ---@field classLoc CXIdxLoc
----@field protocols c.pointer<CXIdxObjCProtocolRefListInfo>?
+---@field protocols CXIdxObjCProtocolRefListInfo*?
 
----@alias CXIdxObjCCategoryDeclInfo CXIdxObjCCategoryDeclInfo
+---@class CXIdxObjCCategoryDeclInfo*
+---@field [integer] CXIdxObjCCategoryDeclInfo
+
+---@class CXIdxObjCCategoryDeclInfo**
+---@field [integer] CXIdxObjCCategoryDeclInfo*
 
 ---@class CXIdxObjCPropertyDeclInfo
----@field declInfo c.pointer<CXIdxDeclInfo>?
----@field getter c.pointer<CXIdxEntityInfo>?
----@field setter c.pointer<CXIdxEntityInfo>?
+---@field declInfo CXIdxDeclInfo*?
+---@field getter CXIdxEntityInfo*?
+---@field setter CXIdxEntityInfo*?
 
----@alias CXIdxObjCPropertyDeclInfo CXIdxObjCPropertyDeclInfo
+---@class CXIdxObjCPropertyDeclInfo*
+---@field [integer] CXIdxObjCPropertyDeclInfo
+
+---@class CXIdxObjCPropertyDeclInfo**
+---@field [integer] CXIdxObjCPropertyDeclInfo*
 
 ---@class CXIdxCXXClassDeclInfo
----@field declInfo c.pointer<CXIdxDeclInfo>?
----@field bases c.pointer<c.pointer<CXIdxBaseClassInfo>?>?
+---@field declInfo CXIdxDeclInfo*?
+---@field bases CXIdxBaseClassInfo*?*?
 ---@field numBases integer
 
----@alias CXIdxCXXClassDeclInfo CXIdxCXXClassDeclInfo
+---@class CXIdxCXXClassDeclInfo*
+---@field [integer] CXIdxCXXClassDeclInfo
+
+---@class CXIdxCXXClassDeclInfo**
+---@field [integer] CXIdxCXXClassDeclInfo*
 
 ---@enum CXIdxEntityRefKind
 local CXIdxEntityRefKind = {
@@ -3856,8 +4008,6 @@ local CXIdxEntityRefKind = {
 
 clang.CXIdxEntityRef_Direct = CXIdxEntityRefKind.CXIdxEntityRef_Direct
 clang.CXIdxEntityRef_Implicit = CXIdxEntityRefKind.CXIdxEntityRef_Implicit
-
----@alias CXIdxEntityRefKind CXIdxEntityRefKind
 
 ---@enum CXSymbolRole
 local CXSymbolRole = {
@@ -3884,104 +4034,110 @@ clang.CXSymbolRole_Dynamic = CXSymbolRole.CXSymbolRole_Dynamic
 clang.CXSymbolRole_AddressOf = CXSymbolRole.CXSymbolRole_AddressOf
 clang.CXSymbolRole_Implicit = CXSymbolRole.CXSymbolRole_Implicit
 
----@alias CXSymbolRole CXSymbolRole
-
 ---@class CXIdxEntityRefInfo
 ---@field kind CXIdxEntityRefKind
 ---@field cursor CXCursor
 ---@field loc CXIdxLoc
----@field referencedEntity c.pointer<CXIdxEntityInfo>?
----@field parentEntity c.pointer<CXIdxEntityInfo>?
----@field container c.pointer<CXIdxContainerInfo>?
+---@field referencedEntity CXIdxEntityInfo*?
+---@field parentEntity CXIdxEntityInfo*?
+---@field container CXIdxContainerInfo*?
 ---@field role CXSymbolRole
 
----@alias CXIdxEntityRefInfo CXIdxEntityRefInfo
+---@class CXIdxEntityRefInfo*
+---@field [integer] CXIdxEntityRefInfo
+
+---@class CXIdxEntityRefInfo**
+---@field [integer] CXIdxEntityRefInfo*
 
 ---@class IndexerCallbacks
 ---@field abortQuery fun(arg_0: CXClientData, arg_1: ffi.cdata*): integer
 ---@field diagnostic fun(arg_0: CXClientData, arg_1: CXDiagnosticSet, arg_2: ffi.cdata*): nil
 ---@field enteredMainFile fun(arg_0: CXClientData, arg_1: CXFile, arg_2: ffi.cdata*): CXIdxClientFile
----@field ppIncludedFile fun(arg_0: CXClientData, arg_1: c.pointer<CXIdxIncludedFileInfo>?): CXIdxClientFile
----@field importedASTFile fun(arg_0: CXClientData, arg_1: c.pointer<CXIdxImportedASTFileInfo>?): CXIdxClientASTFile
+---@field ppIncludedFile fun(arg_0: CXClientData, arg_1: CXIdxIncludedFileInfo*?): CXIdxClientFile
+---@field importedASTFile fun(arg_0: CXClientData, arg_1: CXIdxImportedASTFileInfo*?): CXIdxClientASTFile
 ---@field startedTranslationUnit fun(arg_0: CXClientData, arg_1: ffi.cdata*): CXIdxClientContainer
----@field indexDeclaration fun(arg_0: CXClientData, arg_1: c.pointer<CXIdxDeclInfo>?): nil
----@field indexEntityReference fun(arg_0: CXClientData, arg_1: c.pointer<CXIdxEntityRefInfo>?): nil
+---@field indexDeclaration fun(arg_0: CXClientData, arg_1: CXIdxDeclInfo*?): nil
+---@field indexEntityReference fun(arg_0: CXClientData, arg_1: CXIdxEntityRefInfo*?): nil
 
----@alias IndexerCallbacks IndexerCallbacks
+---@class IndexerCallbacks*
+---@field [integer] IndexerCallbacks
+
+---@class IndexerCallbacks**
+---@field [integer] IndexerCallbacks*
 
 ---@param arg_1 CXIdxEntityKind
 ---@return integer
-function clang.clang_index_isEntityObjCContainerKind(arg_1) end
-clang.index_isEntityObjCContainerKind = clang.clang_index_isEntityObjCContainerKind
+function clang.index_isEntityObjCContainerKind(arg_1) end
+clang.clang_index_isEntityObjCContainerKind = clang.index_isEntityObjCContainerKind
 
----@param arg_1 c.pointer<CXIdxDeclInfo>?
----@return c.pointer<CXIdxObjCContainerDeclInfo>?
-function clang.clang_index_getObjCContainerDeclInfo(arg_1) end
-clang.index_getObjCContainerDeclInfo = clang.clang_index_getObjCContainerDeclInfo
+---@param arg_1 CXIdxDeclInfo*?
+---@return CXIdxObjCContainerDeclInfo*?
+function clang.index_getObjCContainerDeclInfo(arg_1) end
+clang.clang_index_getObjCContainerDeclInfo = clang.index_getObjCContainerDeclInfo
 
----@param arg_1 c.pointer<CXIdxDeclInfo>?
----@return c.pointer<CXIdxObjCInterfaceDeclInfo>?
-function clang.clang_index_getObjCInterfaceDeclInfo(arg_1) end
-clang.index_getObjCInterfaceDeclInfo = clang.clang_index_getObjCInterfaceDeclInfo
+---@param arg_1 CXIdxDeclInfo*?
+---@return CXIdxObjCInterfaceDeclInfo*?
+function clang.index_getObjCInterfaceDeclInfo(arg_1) end
+clang.clang_index_getObjCInterfaceDeclInfo = clang.index_getObjCInterfaceDeclInfo
 
----@param arg_1 c.pointer<CXIdxDeclInfo>?
----@return c.pointer<CXIdxObjCCategoryDeclInfo>?
-function clang.clang_index_getObjCCategoryDeclInfo(arg_1) end
-clang.index_getObjCCategoryDeclInfo = clang.clang_index_getObjCCategoryDeclInfo
+---@param arg_1 CXIdxDeclInfo*?
+---@return CXIdxObjCCategoryDeclInfo*?
+function clang.index_getObjCCategoryDeclInfo(arg_1) end
+clang.clang_index_getObjCCategoryDeclInfo = clang.index_getObjCCategoryDeclInfo
 
----@param arg_1 c.pointer<CXIdxDeclInfo>?
----@return c.pointer<CXIdxObjCProtocolRefListInfo>?
-function clang.clang_index_getObjCProtocolRefListInfo(arg_1) end
-clang.index_getObjCProtocolRefListInfo = clang.clang_index_getObjCProtocolRefListInfo
+---@param arg_1 CXIdxDeclInfo*?
+---@return CXIdxObjCProtocolRefListInfo*?
+function clang.index_getObjCProtocolRefListInfo(arg_1) end
+clang.clang_index_getObjCProtocolRefListInfo = clang.index_getObjCProtocolRefListInfo
 
----@param arg_1 c.pointer<CXIdxDeclInfo>?
----@return c.pointer<CXIdxObjCPropertyDeclInfo>?
-function clang.clang_index_getObjCPropertyDeclInfo(arg_1) end
-clang.index_getObjCPropertyDeclInfo = clang.clang_index_getObjCPropertyDeclInfo
+---@param arg_1 CXIdxDeclInfo*?
+---@return CXIdxObjCPropertyDeclInfo*?
+function clang.index_getObjCPropertyDeclInfo(arg_1) end
+clang.clang_index_getObjCPropertyDeclInfo = clang.index_getObjCPropertyDeclInfo
 
----@param arg_1 c.pointer<CXIdxAttrInfo>?
----@return c.pointer<CXIdxIBOutletCollectionAttrInfo>?
-function clang.clang_index_getIBOutletCollectionAttrInfo(arg_1) end
-clang.index_getIBOutletCollectionAttrInfo = clang.clang_index_getIBOutletCollectionAttrInfo
+---@param arg_1 CXIdxAttrInfo*?
+---@return CXIdxIBOutletCollectionAttrInfo*?
+function clang.index_getIBOutletCollectionAttrInfo(arg_1) end
+clang.clang_index_getIBOutletCollectionAttrInfo = clang.index_getIBOutletCollectionAttrInfo
 
----@param arg_1 c.pointer<CXIdxDeclInfo>?
----@return c.pointer<CXIdxCXXClassDeclInfo>?
-function clang.clang_index_getCXXClassDeclInfo(arg_1) end
-clang.index_getCXXClassDeclInfo = clang.clang_index_getCXXClassDeclInfo
+---@param arg_1 CXIdxDeclInfo*?
+---@return CXIdxCXXClassDeclInfo*?
+function clang.index_getCXXClassDeclInfo(arg_1) end
+clang.clang_index_getCXXClassDeclInfo = clang.index_getCXXClassDeclInfo
 
----@param arg_1 c.pointer<CXIdxContainerInfo>?
+---@param arg_1 CXIdxContainerInfo*?
 ---@return CXIdxClientContainer
-function clang.clang_index_getClientContainer(arg_1) end
-clang.index_getClientContainer = clang.clang_index_getClientContainer
+function clang.index_getClientContainer(arg_1) end
+clang.clang_index_getClientContainer = clang.index_getClientContainer
 
----@param arg_1 c.pointer<CXIdxContainerInfo>?
+---@param arg_1 CXIdxContainerInfo*?
 ---@param arg_2 CXIdxClientContainer
 ---@return nil
-function clang.clang_index_setClientContainer(arg_1, arg_2) end
-clang.index_setClientContainer = clang.clang_index_setClientContainer
+function clang.index_setClientContainer(arg_1, arg_2) end
+clang.clang_index_setClientContainer = clang.index_setClientContainer
 
----@param arg_1 c.pointer<CXIdxEntityInfo>?
+---@param arg_1 CXIdxEntityInfo*?
 ---@return CXIdxClientEntity
-function clang.clang_index_getClientEntity(arg_1) end
-clang.index_getClientEntity = clang.clang_index_getClientEntity
+function clang.index_getClientEntity(arg_1) end
+clang.clang_index_getClientEntity = clang.index_getClientEntity
 
----@param arg_1 c.pointer<CXIdxEntityInfo>?
+---@param arg_1 CXIdxEntityInfo*?
 ---@param arg_2 CXIdxClientEntity
 ---@return nil
-function clang.clang_index_setClientEntity(arg_1, arg_2) end
-clang.index_setClientEntity = clang.clang_index_setClientEntity
+function clang.index_setClientEntity(arg_1, arg_2) end
+clang.clang_index_setClientEntity = clang.index_setClientEntity
 
 ---@alias CXIndexAction ffi.cdata*
 
 ---@param CIdx CXIndex
 ---@return CXIndexAction
-function clang.clang_IndexAction_create(CIdx) end
-clang.IndexAction_create = clang.clang_IndexAction_create
+function clang.IndexAction_create(CIdx) end
+clang.clang_IndexAction_create = clang.IndexAction_create
 
 ---@param arg_1 CXIndexAction
 ---@return nil
-function clang.clang_IndexAction_dispose(arg_1) end
-clang.IndexAction_dispose = clang.clang_IndexAction_dispose
+function clang.IndexAction_dispose(arg_1) end
+clang.clang_IndexAction_dispose = clang.IndexAction_dispose
 
 ---@enum CXIndexOptFlags
 local CXIndexOptFlags = {
@@ -4000,64 +4156,62 @@ clang.CXIndexOpt_IndexImplicitTemplateInstantiations = CXIndexOptFlags.CXIndexOp
 clang.CXIndexOpt_SuppressWarnings = CXIndexOptFlags.CXIndexOpt_SuppressWarnings
 clang.CXIndexOpt_SkipParsedBodiesInSession = CXIndexOptFlags.CXIndexOpt_SkipParsedBodiesInSession
 
----@alias CXIndexOptFlags CXIndexOptFlags
-
 ---@param arg_1 CXIndexAction
 ---@param client_data CXClientData
----@param index_callbacks c.pointer<IndexerCallbacks>?
+---@param index_callbacks IndexerCallbacks*?
 ---@param index_callbacks_size integer
 ---@param index_options integer
 ---@param source_filename string
----@param command_line_args c.pointer<string>?
+---@param command_line_args string*?
 ---@param num_command_line_args integer
----@param unsaved_files c.pointer<CXUnsavedFile>?
+---@param unsaved_files CXUnsavedFile*?
 ---@param num_unsaved_files integer
----@param out_TU c.pointer<CXTranslationUnit>?
+---@param out_TU CXTranslationUnit*?
 ---@param TU_options integer
 ---@return integer
-function clang.clang_indexSourceFile(arg_1, client_data, index_callbacks, index_callbacks_size, index_options, source_filename, command_line_args, num_command_line_args, unsaved_files, num_unsaved_files, out_TU, TU_options) end
-clang.indexSourceFile = clang.clang_indexSourceFile
+function clang.indexSourceFile(arg_1, client_data, index_callbacks, index_callbacks_size, index_options, source_filename, command_line_args, num_command_line_args, unsaved_files, num_unsaved_files, out_TU, TU_options) end
+clang.clang_indexSourceFile = clang.indexSourceFile
 
 ---@param arg_1 CXIndexAction
 ---@param client_data CXClientData
----@param index_callbacks c.pointer<IndexerCallbacks>?
+---@param index_callbacks IndexerCallbacks*?
 ---@param index_callbacks_size integer
 ---@param index_options integer
 ---@param source_filename string
----@param command_line_args c.pointer<string>?
+---@param command_line_args string*?
 ---@param num_command_line_args integer
----@param unsaved_files c.pointer<CXUnsavedFile>?
+---@param unsaved_files CXUnsavedFile*?
 ---@param num_unsaved_files integer
----@param out_TU c.pointer<CXTranslationUnit>?
+---@param out_TU CXTranslationUnit*?
 ---@param TU_options integer
 ---@return integer
-function clang.clang_indexSourceFileFullArgv(arg_1, client_data, index_callbacks, index_callbacks_size, index_options, source_filename, command_line_args, num_command_line_args, unsaved_files, num_unsaved_files, out_TU, TU_options) end
-clang.indexSourceFileFullArgv = clang.clang_indexSourceFileFullArgv
+function clang.indexSourceFileFullArgv(arg_1, client_data, index_callbacks, index_callbacks_size, index_options, source_filename, command_line_args, num_command_line_args, unsaved_files, num_unsaved_files, out_TU, TU_options) end
+clang.clang_indexSourceFileFullArgv = clang.indexSourceFileFullArgv
 
 ---@param arg_1 CXIndexAction
 ---@param client_data CXClientData
----@param index_callbacks c.pointer<IndexerCallbacks>?
+---@param index_callbacks IndexerCallbacks*?
 ---@param index_callbacks_size integer
 ---@param index_options integer
 ---@param arg_6 CXTranslationUnit
 ---@return integer
-function clang.clang_indexTranslationUnit(arg_1, client_data, index_callbacks, index_callbacks_size, index_options, arg_6) end
-clang.indexTranslationUnit = clang.clang_indexTranslationUnit
+function clang.indexTranslationUnit(arg_1, client_data, index_callbacks, index_callbacks_size, index_options, arg_6) end
+clang.clang_indexTranslationUnit = clang.indexTranslationUnit
 
 ---@param loc CXIdxLoc
----@param indexFile c.pointer<CXIdxClientFile>?
----@param file c.pointer<CXFile>?
----@param line c.pointer<integer>?
----@param column c.pointer<integer>?
----@param offset c.pointer<integer>?
+---@param indexFile CXIdxClientFile*?
+---@param file CXFile*?
+---@param line integer*?
+---@param column integer*?
+---@param offset integer*?
 ---@return nil
-function clang.clang_indexLoc_getFileLocation(loc, indexFile, file, line, column, offset) end
-clang.indexLoc_getFileLocation = clang.clang_indexLoc_getFileLocation
+function clang.indexLoc_getFileLocation(loc, indexFile, file, line, column, offset) end
+clang.clang_indexLoc_getFileLocation = clang.indexLoc_getFileLocation
 
 ---@param loc CXIdxLoc
 ---@return CXSourceLocation
-function clang.clang_indexLoc_getCXSourceLocation(loc) end
-clang.indexLoc_getCXSourceLocation = clang.clang_indexLoc_getCXSourceLocation
+function clang.indexLoc_getCXSourceLocation(loc) end
+clang.clang_indexLoc_getCXSourceLocation = clang.indexLoc_getCXSourceLocation
 
 ---@alias CXFieldVisitor fun(arg_0: CXCursor, arg_1: CXClientData): CXVisitorResult
 
@@ -4065,8 +4219,8 @@ clang.indexLoc_getCXSourceLocation = clang.clang_indexLoc_getCXSourceLocation
 ---@param visitor CXFieldVisitor
 ---@param client_data CXClientData
 ---@return integer
-function clang.clang_Type_visitFields(T, visitor, client_data) end
-clang.Type_visitFields = clang.clang_Type_visitFields
+function clang.Type_visitFields(T, visitor, client_data) end
+clang.clang_Type_visitFields = clang.Type_visitFields
 
 ---@enum CXBinaryOperatorKind
 local CXBinaryOperatorKind = {
@@ -4143,13 +4297,13 @@ clang.CXBinaryOperator_Comma = CXBinaryOperatorKind.CXBinaryOperator_Comma
 
 ---@param kind CXBinaryOperatorKind
 ---@return CXString
-function clang.clang_getBinaryOperatorKindSpelling(kind) end
-clang.getBinaryOperatorKindSpelling = clang.clang_getBinaryOperatorKindSpelling
+function clang.getBinaryOperatorKindSpelling(kind) end
+clang.clang_getBinaryOperatorKindSpelling = clang.getBinaryOperatorKindSpelling
 
 ---@param cursor CXCursor
 ---@return CXBinaryOperatorKind
-function clang.clang_getCursorBinaryOperatorKind(cursor) end
-clang.getCursorBinaryOperatorKind = clang.clang_getCursorBinaryOperatorKind
+function clang.getCursorBinaryOperatorKind(cursor) end
+clang.clang_getCursorBinaryOperatorKind = clang.getCursorBinaryOperatorKind
 
 ---@enum CXUnaryOperatorKind
 local CXUnaryOperatorKind = {
@@ -4188,12 +4342,12 @@ clang.CXUnaryOperator_Coawait = CXUnaryOperatorKind.CXUnaryOperator_Coawait
 
 ---@param kind CXUnaryOperatorKind
 ---@return CXString
-function clang.clang_getUnaryOperatorKindSpelling(kind) end
-clang.getUnaryOperatorKindSpelling = clang.clang_getUnaryOperatorKindSpelling
+function clang.getUnaryOperatorKindSpelling(kind) end
+clang.clang_getUnaryOperatorKindSpelling = clang.getUnaryOperatorKindSpelling
 
 ---@param cursor CXCursor
 ---@return CXUnaryOperatorKind
-function clang.clang_getCursorUnaryOperatorKind(cursor) end
-clang.getCursorUnaryOperatorKind = clang.clang_getCursorUnaryOperatorKind
+function clang.getCursorUnaryOperatorKind(cursor) end
+clang.clang_getCursorUnaryOperatorKind = clang.getCursorUnaryOperatorKind
 
 return clang

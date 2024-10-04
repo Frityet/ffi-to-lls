@@ -17,7 +17,7 @@ cc $(llvm-config --cflags) utilities.c -shared -o utilities.so -L$(llvm-config -
 
 Then, run the script:
 ```bash
-luajit ffi-to-lls.lua <input defs.h> [-o <output file>] [--remove-prefix <prefix>] [--module-name <name>]
+luajit ffi-to-lls.lua <input header> [-o <output file>] [--remove-prefix <prefix>] [--module-name <module name>] [--pointer-generation-depth <depth>] [--no-auxiliary-types] [-h|--help]
 ```
 
 ### Options
@@ -26,7 +26,8 @@ luajit ffi-to-lls.lua <input defs.h> [-o <output file>] [--remove-prefix <prefix
 - `-o <output file>`: The output file to write the LLS meta file to. If not specified, the output will be written to stdout.
 - `--remove-prefix <prefix>`: Remove the specified prefix from the function names in the output. This is useful when the FFI declarations are prefixed with a common string, such as `lua_` or `lj_`.
 - `--module-name <name>`: The name of the module to be usede in generation
-- `--pointer-generation-depth <count>`: The depth of pointer-classes to be generated. Default: 1
+- `--pointer-generation-depth <count>`: The depth of pointer-classes to be generated. Default: 2
+- `--no-auxiliary-types`: Do not generate auxiliary types such as `string*` and `integer*`, this is useful if you have already generated/supplied your own
 
 ## Example
 
@@ -57,6 +58,53 @@ A file like this would be generated:
 ---Lua language server will autocomplete both with and without the prefix.
 ---@meta mylib
 
+---@class string* : ffi.cdata*
+---@field [integer] ffi.cdata*
+
+---@class integer* : ffi.cdata*
+---@field [integer] integer
+
+---@class number* : ffi.cdata*
+---@field [integer] number
+
+---@class boolean* : ffi.cdata*
+---@field [integer] boolean
+
+---@alias size_t integer
+---@class size_t* : ffi.cdata*
+---@field [integer] size_t
+
+---@alias uint8_t integer
+---@class uint8_t* : ffi.cdata*
+---@field [integer] uint8_t
+
+---@alias uint16_t integer
+---@class uint16_t* : ffi.cdata*
+---@field [integer] uint16_t
+
+---@alias uint32_t integer
+---@class uint32_t* : ffi.cdata*
+---@field [integer] uint32_t
+
+---@alias uint64_t integer
+---@class uint64_t* : ffi.cdata*
+---@field [integer] uint64_t
+
+---@alias int8_t integer
+---@class int8_t* : ffi.cdata*
+---@field [integer] int8_t
+
+---@alias int16_t integer
+---@class int16_t* : ffi.cdata*
+---@field [integer] int16_t
+
+---@alias int32_t integer
+---@class int32_t* : ffi.cdata*
+---@field [integer] int32_t
+
+---@alias int64_t integer
+---@class int64_t* : ffi.cdata*
+---@field [integer] int64_t
 ---@class mylib
 local mylib = {}
 
@@ -64,16 +112,19 @@ local mylib = {}
 ---@field a integer
 ---@field b integer
 
----@class MyStruct*
+---@class MyStruct* : ffi.cdata*
 ---@field [integer] MyStruct
+
+---@class MyStruct** : ffi.cdata*
+---@field [integer] MyStruct*
 
 ---@param a integer
 ---@param b integer
----@return MyStruct*
+---@return MyStruct*?
 function mylib.MyStruct_create(a, b) end
 mylib.mylib_MyStruct_create = mylib.MyStruct_create
 
----@param s MyStruct*
+---@param s MyStruct*?
 ---@return nil
 function mylib.MyStruct_free(s) end
 mylib.mylib_MyStruct_free = mylib.MyStruct_free

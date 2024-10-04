@@ -121,7 +121,7 @@ ffi.metatype("CXString", {
 ---@return boolean
 local function is_valid_identifier(str) return (loadstring(string.format("local %s", str))) ~= nil end
 
-local USAGE_STR = "Usage: ffi-to-lls.lua <input header> [-o <output file>] [--remove-prefix <prefix>] [--module-name <module name>] [--pointer-generation-depth <depth>]"
+local USAGE_STR = "Usage: ffi-to-lls.lua <input header> [-o <output file>] [--remove-prefix <prefix>] [--module-name <module name>] [--pointer-generation-depth <depth>] [--no-auxiliary-types] [-h|--help]"
 
 ---@type string?, string?
 local in_path, out_path = arg[1], nil
@@ -130,11 +130,13 @@ local rm_prefix
 ---@type string?
 local mod_name
 local pointer_gen_depth = 2
+local auxiliary_types = true
 for i = 1, #arg do
     if arg[i] == "-o" or arg[i] == "--output"   then out_path = assert(arg[i+1], "Error: -o requires an argument") end
     if arg[i] == "--remove-prefix"              then rm_prefix = assert(arg[i+1], "Error: --remove-prefix requires an argument") end
     if arg[i] == "--module-name"                then mod_name = assert((arg[i+1] ~= nil and is_valid_identifier(arg[i+1]) and arg[i+1] or nil), "Error: --module-name requires an argument, and it must be a valid Lua identifier") end
-    if arg[i] == "--pointer-generation-depth"          then pointer_gen_depth = assert(tonumber(arg[i+1]), "Error: --pointer-generation-depth requires an argument") end
+    if arg[i] == "--pointer-generation-depth"   then pointer_gen_depth = assert(tonumber(arg[i+1]), "Error: --pointer-generation-depth requires an argument") end
+    if arg[i] == "--no-auxiliary-types"         then auxiliary_types = false end
     if arg[i] == "-h" or arg[i] == "--help" then
         print(USAGE_STR)
         os.exit(0)
@@ -167,6 +169,58 @@ if rm_prefix then
 end
 
 out_f:write(string.format("---@meta %s\n\n", mod_name))
+
+if auxiliary_types then
+    out_f:write [[
+---@class string* : ffi.cdata*
+---@field [integer] ffi.cdata*
+
+---@class integer* : ffi.cdata*
+---@field [integer] integer
+
+---@class number* : ffi.cdata*
+---@field [integer] number
+
+---@class boolean* : ffi.cdata*
+---@field [integer] boolean
+
+---@alias size_t integer
+---@class size_t* : ffi.cdata*
+---@field [integer] size_t
+
+---@alias uint8_t integer
+---@class uint8_t* : ffi.cdata*
+---@field [integer] uint8_t
+
+---@alias uint16_t integer
+---@class uint16_t* : ffi.cdata*
+---@field [integer] uint16_t
+
+---@alias uint32_t integer
+---@class uint32_t* : ffi.cdata*
+---@field [integer] uint32_t
+
+---@alias uint64_t integer
+---@class uint64_t* : ffi.cdata*
+---@field [integer] uint64_t
+
+---@alias int8_t integer
+---@class int8_t* : ffi.cdata*
+---@field [integer] int8_t
+
+---@alias int16_t integer
+---@class int16_t* : ffi.cdata*
+---@field [integer] int16_t
+
+---@alias int32_t integer
+---@class int32_t* : ffi.cdata*
+---@field [integer] int32_t
+
+---@alias int64_t integer
+---@class int64_t* : ffi.cdata*
+---@field [integer] int64_t
+]]
+end
 
 out_f:write(string.format("---@class %s\n", mod_name))
 out_f:write(string.format("local %s = {}\n\n", mod_name))
@@ -242,7 +296,8 @@ local function type_to_lls_type(type)
         elseif  backing_type.kind == cxtype "Char_S" and is_const   then return "string"
         elseif  backing_type.kind == cxtype "Void"                  then return "ffi.cdata*" end
 
-        return string.format("%s*?", type_to_lls_type(backing_type))
+        local btype = type_to_lls_type(backing_type)
+        return string.format("%s*?", btype == "ffi.cdata*" and "ffi.cdata" or btype)
     elseif type.kind == cxtype "Elaborated" then
         return type_to_lls_type(clang.Type_getNamedType(type))
     elseif type.kind == cxtype "Record" then
@@ -304,7 +359,7 @@ visitor[cursortype "StructDecl"] = function (cursor, parent)
     -- out_f:write("---@field [integer] "..name.."\n\n")
 
     for i = 1, pointer_gen_depth do
-        out_f:write(string.format("---@class %s%s\n", name, string.rep("*", i)))
+        out_f:write(string.format("---@class %s%s : ffi.cdata*\n", name, string.rep("*", i)))
         out_f:write(string.format("---@field [integer] %s%s\n\n", name, string.rep("*", i-1)))
     end
 end
@@ -336,6 +391,11 @@ visitor[cursortype "EnumDecl"] = function (cursor, parent)
     end
 
     out_f:write("\n")
+
+    for i = 1, pointer_gen_depth do
+        out_f:write(string.format("---@class %s%s : ffi.cdata*\n", name, string.rep("*", i)))
+        out_f:write(string.format("---@field [integer] %s%s\n\n", name, string.rep("*", i-1)))
+    end
 end
 
 local KW_REPLACE_MAP = {
@@ -391,8 +451,13 @@ visitor[cursortype "FunctionDecl"] = function (cursor, parent)
         params[#params+1] = { name = "...", type = "any" }
     end
 
+    local did_rm = false
     if rm_prefix then
-        name = name:gsub(rm_prefix, "")
+        local n
+        name, n = name:gsub(rm_prefix, "")
+        if n > 0 then
+            did_rm = true
+        end
     end
     for param in pairs(params) do
         out_f:write(string.format("---@param %s %s\n", params[param].name, params[param].type))
@@ -406,7 +471,7 @@ visitor[cursortype "FunctionDecl"] = function (cursor, parent)
 
     out_f:write(") end\n")
 
-    if rm_prefix then
+    if rm_prefix and did_rm then
         out_f:write(string.format("%s.%s = %s.%s\n", mod_name, rm_prefix..name, mod_name, name))
     end
 
@@ -425,6 +490,11 @@ visitor[cursortype "TypedefDecl"] = function (cursor, parent)
 
     if s1 ~= s2 then
         out_f:write(string.format("---@alias %s %s\n\n", s1, s2))
+
+        for i = 1, pointer_gen_depth do
+            out_f:write(string.format("---@class %s%s : ffi.cdata*\n", s1, string.rep("*", i)))
+            out_f:write(string.format("---@field [integer] %s%s\n\n", s1, string.rep("*", i-1)))
+        end
     end
     -- end
 end

@@ -4,10 +4,60 @@
 ---Lua language server will autocomplete both with and without the prefix.
 ---@meta clang
 
+---@class string* : ffi.cdata*
+---@field [integer] ffi.cdata*
+
+---@class integer* : ffi.cdata*
+---@field [integer] integer
+
+---@class number* : ffi.cdata*
+---@field [integer] number
+
+---@class boolean* : ffi.cdata*
+---@field [integer] boolean
+
+---@alias size_t integer
+---@class size_t* : ffi.cdata*
+---@field [integer] size_t
+
+---@alias uint8_t integer
+---@class uint8_t* : ffi.cdata*
+---@field [integer] uint8_t
+
+---@alias uint16_t integer
+---@class uint16_t* : ffi.cdata*
+---@field [integer] uint16_t
+
+---@alias uint32_t integer
+---@class uint32_t* : ffi.cdata*
+---@field [integer] uint32_t
+
+---@alias uint64_t integer
+---@class uint64_t* : ffi.cdata*
+---@field [integer] uint64_t
+
+---@alias int8_t integer
+---@class int8_t* : ffi.cdata*
+---@field [integer] int8_t
+
+---@alias int16_t integer
+---@class int16_t* : ffi.cdata*
+---@field [integer] int16_t
+
+---@alias int32_t integer
+---@class int32_t* : ffi.cdata*
+---@field [integer] int32_t
+
+---@alias int64_t integer
+---@class int64_t* : ffi.cdata*
+---@field [integer] int64_t
 ---@class clang
 local clang = {}
 
 ---@alias time_t integer
+
+---@class time_t* : ffi.cdata*
+---@field [integer] time_t
 
 ---@enum CXErrorCode
 local CXErrorCode = {
@@ -24,25 +74,22 @@ clang.CXError_Crashed = CXErrorCode.CXError_Crashed
 clang.CXError_InvalidArguments = CXErrorCode.CXError_InvalidArguments
 clang.CXError_ASTReadError = CXErrorCode.CXError_ASTReadError
 
+---@class CXErrorCode* : ffi.cdata*
+---@field [integer] CXErrorCode
+
 ---@class CXString
 ---@field data ffi.cdata*
 ---@field private_flags integer
 
----@class CXString*
+---@class CXString* : ffi.cdata*
 ---@field [integer] CXString
-
----@class CXString**
----@field [integer] CXString*
 
 ---@class CXStringSet
 ---@field Strings CXString*?
 ---@field Count integer
 
----@class CXStringSet*
+---@class CXStringSet* : ffi.cdata*
 ---@field [integer] CXStringSet
-
----@class CXStringSet**
----@field [integer] CXStringSet*
 
 ---@param string CXString
 ---@return string
@@ -65,13 +112,13 @@ clang.clang_getBuildSessionTimestamp = clang.getBuildSessionTimestamp
 
 ---@class CXVirtualFileOverlayImpl
 
----@class CXVirtualFileOverlayImpl*
+---@class CXVirtualFileOverlayImpl* : ffi.cdata*
 ---@field [integer] CXVirtualFileOverlayImpl
 
----@class CXVirtualFileOverlayImpl**
----@field [integer] CXVirtualFileOverlayImpl*
-
 ---@alias CXVirtualFileOverlay CXVirtualFileOverlayImpl*?
+
+---@class CXVirtualFileOverlay* : ffi.cdata*
+---@field [integer] CXVirtualFileOverlay
 
 ---@param options integer
 ---@return CXVirtualFileOverlay
@@ -111,13 +158,13 @@ clang.clang_VirtualFileOverlay_dispose = clang.VirtualFileOverlay_dispose
 
 ---@class CXModuleMapDescriptorImpl
 
----@class CXModuleMapDescriptorImpl*
+---@class CXModuleMapDescriptorImpl* : ffi.cdata*
 ---@field [integer] CXModuleMapDescriptorImpl
 
----@class CXModuleMapDescriptorImpl**
----@field [integer] CXModuleMapDescriptorImpl*
-
 ---@alias CXModuleMapDescriptor CXModuleMapDescriptorImpl*?
+
+---@class CXModuleMapDescriptor* : ffi.cdata*
+---@field [integer] CXModuleMapDescriptor
 
 ---@param options integer
 ---@return CXModuleMapDescriptor
@@ -151,6 +198,9 @@ clang.clang_ModuleMapDescriptor_dispose = clang.ModuleMapDescriptor_dispose
 
 ---@alias CXFile ffi.cdata*
 
+---@class CXFile* : ffi.cdata*
+---@field [integer] CXFile
+
 ---@param SFile CXFile
 ---@return CXString
 function clang.getFileName(SFile) end
@@ -164,11 +214,8 @@ clang.clang_getFileTime = clang.getFileTime
 ---@class CXFileUniqueID
 ---@field data integer[]
 
----@class CXFileUniqueID*
+---@class CXFileUniqueID* : ffi.cdata*
 ---@field [integer] CXFileUniqueID
-
----@class CXFileUniqueID**
----@field [integer] CXFileUniqueID*
 
 ---@param file CXFile
 ---@param outID CXFileUniqueID*?
@@ -191,22 +238,16 @@ clang.clang_File_tryGetRealPathName = clang.File_tryGetRealPathName
 ---@field ptr_data ffi.cdata*[]
 ---@field int_data integer
 
----@class CXSourceLocation*
+---@class CXSourceLocation* : ffi.cdata*
 ---@field [integer] CXSourceLocation
-
----@class CXSourceLocation**
----@field [integer] CXSourceLocation*
 
 ---@class CXSourceRange
 ---@field ptr_data ffi.cdata*[]
 ---@field begin_int_data integer
 ---@field end_int_data integer
 
----@class CXSourceRange*
+---@class CXSourceRange* : ffi.cdata*
 ---@field [integer] CXSourceRange
-
----@class CXSourceRange**
----@field [integer] CXSourceRange*
 
 ---@return CXSourceLocation
 function clang.getNullLocation() end
@@ -307,11 +348,8 @@ clang.clang_getRangeEnd = clang.getRangeEnd
 ---@field count integer
 ---@field ranges CXSourceRange*?
 
----@class CXSourceRangeList*
+---@class CXSourceRangeList* : ffi.cdata*
 ---@field [integer] CXSourceRangeList
-
----@class CXSourceRangeList**
----@field [integer] CXSourceRangeList*
 
 ---@param ranges CXSourceRangeList*?
 ---@return nil
@@ -333,9 +371,18 @@ clang.CXDiagnostic_Warning = CXDiagnosticSeverity.CXDiagnostic_Warning
 clang.CXDiagnostic_Error = CXDiagnosticSeverity.CXDiagnostic_Error
 clang.CXDiagnostic_Fatal = CXDiagnosticSeverity.CXDiagnostic_Fatal
 
+---@class CXDiagnosticSeverity* : ffi.cdata*
+---@field [integer] CXDiagnosticSeverity
+
 ---@alias CXDiagnostic ffi.cdata*
 
+---@class CXDiagnostic* : ffi.cdata*
+---@field [integer] CXDiagnostic
+
 ---@alias CXDiagnosticSet ffi.cdata*
+
+---@class CXDiagnosticSet* : ffi.cdata*
+---@field [integer] CXDiagnosticSet
 
 ---@param Diags CXDiagnosticSet
 ---@return integer
@@ -360,6 +407,9 @@ clang.CXLoadDiag_None = CXLoadDiag_Error.CXLoadDiag_None
 clang.CXLoadDiag_Unknown = CXLoadDiag_Error.CXLoadDiag_Unknown
 clang.CXLoadDiag_CannotLoad = CXLoadDiag_Error.CXLoadDiag_CannotLoad
 clang.CXLoadDiag_InvalidFile = CXLoadDiag_Error.CXLoadDiag_InvalidFile
+
+---@class CXLoadDiag_Error* : ffi.cdata*
+---@field [integer] CXLoadDiag_Error
 
 ---@param file string
 ---@param error CXLoadDiag_Error*?
@@ -399,6 +449,9 @@ clang.CXDiagnostic_DisplaySourceRanges = CXDiagnosticDisplayOptions.CXDiagnostic
 clang.CXDiagnostic_DisplayOption = CXDiagnosticDisplayOptions.CXDiagnostic_DisplayOption
 clang.CXDiagnostic_DisplayCategoryId = CXDiagnosticDisplayOptions.CXDiagnostic_DisplayCategoryId
 clang.CXDiagnostic_DisplayCategoryName = CXDiagnosticDisplayOptions.CXDiagnostic_DisplayCategoryName
+
+---@class CXDiagnosticDisplayOptions* : ffi.cdata*
+---@field [integer] CXDiagnosticDisplayOptions
 
 ---@param Diagnostic CXDiagnostic
 ---@param Options integer
@@ -471,38 +524,41 @@ clang.clang_getDiagnosticFixIt = clang.getDiagnosticFixIt
 
 ---@alias CXIndex ffi.cdata*
 
+---@class CXIndex* : ffi.cdata*
+---@field [integer] CXIndex
+
 ---@class CXTargetInfoImpl
 
----@class CXTargetInfoImpl*
+---@class CXTargetInfoImpl* : ffi.cdata*
 ---@field [integer] CXTargetInfoImpl
-
----@class CXTargetInfoImpl**
----@field [integer] CXTargetInfoImpl*
 
 ---@alias CXTargetInfo CXTargetInfoImpl*?
 
+---@class CXTargetInfo* : ffi.cdata*
+---@field [integer] CXTargetInfo
+
 ---@class CXTranslationUnitImpl
 
----@class CXTranslationUnitImpl*
+---@class CXTranslationUnitImpl* : ffi.cdata*
 ---@field [integer] CXTranslationUnitImpl
-
----@class CXTranslationUnitImpl**
----@field [integer] CXTranslationUnitImpl*
 
 ---@alias CXTranslationUnit CXTranslationUnitImpl*?
 
+---@class CXTranslationUnit* : ffi.cdata*
+---@field [integer] CXTranslationUnit
+
 ---@alias CXClientData ffi.cdata*
+
+---@class CXClientData* : ffi.cdata*
+---@field [integer] CXClientData
 
 ---@class CXUnsavedFile
 ---@field Filename string
 ---@field Contents string
 ---@field Length integer
 
----@class CXUnsavedFile*
+---@class CXUnsavedFile* : ffi.cdata*
 ---@field [integer] CXUnsavedFile
-
----@class CXUnsavedFile**
----@field [integer] CXUnsavedFile*
 
 ---@enum CXAvailabilityKind
 local CXAvailabilityKind = {
@@ -517,16 +573,16 @@ clang.CXAvailability_Deprecated = CXAvailabilityKind.CXAvailability_Deprecated
 clang.CXAvailability_NotAvailable = CXAvailabilityKind.CXAvailability_NotAvailable
 clang.CXAvailability_NotAccessible = CXAvailabilityKind.CXAvailability_NotAccessible
 
+---@class CXAvailabilityKind* : ffi.cdata*
+---@field [integer] CXAvailabilityKind
+
 ---@class CXVersion
 ---@field Major integer
 ---@field Minor integer
 ---@field Subminor integer
 
----@class CXVersion*
+---@class CXVersion* : ffi.cdata*
 ---@field [integer] CXVersion
-
----@class CXVersion**
----@field [integer] CXVersion*
 
 ---@enum CXCursor_ExceptionSpecificationKind
 local CXCursor_ExceptionSpecificationKind = {
@@ -553,6 +609,9 @@ clang.CXCursor_ExceptionSpecificationKind_Uninstantiated = CXCursor_ExceptionSpe
 clang.CXCursor_ExceptionSpecificationKind_Unparsed = CXCursor_ExceptionSpecificationKind.CXCursor_ExceptionSpecificationKind_Unparsed
 clang.CXCursor_ExceptionSpecificationKind_NoThrow = CXCursor_ExceptionSpecificationKind.CXCursor_ExceptionSpecificationKind_NoThrow
 
+---@class CXCursor_ExceptionSpecificationKind* : ffi.cdata*
+---@field [integer] CXCursor_ExceptionSpecificationKind
+
 ---@param excludeDeclarationsFromPCH integer
 ---@param displayDiagnostics integer
 ---@return CXIndex
@@ -575,6 +634,9 @@ clang.CXChoice_Default = CXChoice.CXChoice_Default
 clang.CXChoice_Enabled = CXChoice.CXChoice_Enabled
 clang.CXChoice_Disabled = CXChoice.CXChoice_Disabled
 
+---@class CXChoice* : ffi.cdata*
+---@field [integer] CXChoice
+
 ---@enum CXGlobalOptFlags
 local CXGlobalOptFlags = {
     CXGlobalOpt_None = 0,
@@ -588,6 +650,9 @@ clang.CXGlobalOpt_ThreadBackgroundPriorityForIndexing = CXGlobalOptFlags.CXGloba
 clang.CXGlobalOpt_ThreadBackgroundPriorityForEditing = CXGlobalOptFlags.CXGlobalOpt_ThreadBackgroundPriorityForEditing
 clang.CXGlobalOpt_ThreadBackgroundPriorityForAll = CXGlobalOptFlags.CXGlobalOpt_ThreadBackgroundPriorityForAll
 
+---@class CXGlobalOptFlags* : ffi.cdata*
+---@field [integer] CXGlobalOptFlags
+
 ---@class CXIndexOptions
 ---@field Size integer
 ---@field ThreadBackgroundPriorityForIndexing integer
@@ -599,11 +664,8 @@ clang.CXGlobalOpt_ThreadBackgroundPriorityForAll = CXGlobalOptFlags.CXGlobalOpt_
 ---@field PreambleStoragePath string
 ---@field InvocationEmissionPath string
 
----@class CXIndexOptions*
+---@class CXIndexOptions* : ffi.cdata*
 ---@field [integer] CXIndexOptions
-
----@class CXIndexOptions**
----@field [integer] CXIndexOptions*
 
 ---@param options CXIndexOptions*?
 ---@return CXIndex
@@ -755,6 +817,9 @@ clang.CXTranslationUnit_VisitImplicitAttributes = CXTranslationUnit_Flags.CXTran
 clang.CXTranslationUnit_IgnoreNonErrorsFromIncludedFiles = CXTranslationUnit_Flags.CXTranslationUnit_IgnoreNonErrorsFromIncludedFiles
 clang.CXTranslationUnit_RetainExcludedConditionalBlocks = CXTranslationUnit_Flags.CXTranslationUnit_RetainExcludedConditionalBlocks
 
+---@class CXTranslationUnit_Flags* : ffi.cdata*
+---@field [integer] CXTranslationUnit_Flags
+
 ---@return integer
 function clang.defaultEditingTranslationUnitOptions() end
 clang.clang_defaultEditingTranslationUnitOptions = clang.defaultEditingTranslationUnitOptions
@@ -801,6 +866,9 @@ local CXSaveTranslationUnit_Flags = {
 
 clang.CXSaveTranslationUnit_None = CXSaveTranslationUnit_Flags.CXSaveTranslationUnit_None
 
+---@class CXSaveTranslationUnit_Flags* : ffi.cdata*
+---@field [integer] CXSaveTranslationUnit_Flags
+
 ---@param TU CXTranslationUnit
 ---@return integer
 function clang.defaultSaveOptions(TU) end
@@ -818,6 +886,9 @@ clang.CXSaveError_None = CXSaveError.CXSaveError_None
 clang.CXSaveError_Unknown = CXSaveError.CXSaveError_Unknown
 clang.CXSaveError_TranslationErrors = CXSaveError.CXSaveError_TranslationErrors
 clang.CXSaveError_InvalidTU = CXSaveError.CXSaveError_InvalidTU
+
+---@class CXSaveError* : ffi.cdata*
+---@field [integer] CXSaveError
 
 ---@param TU CXTranslationUnit
 ---@param FileName string
@@ -842,6 +913,9 @@ local CXReparse_Flags = {
 }
 
 clang.CXReparse_None = CXReparse_Flags.CXReparse_None
+
+---@class CXReparse_Flags* : ffi.cdata*
+---@field [integer] CXReparse_Flags
 
 ---@param TU CXTranslationUnit
 ---@return integer
@@ -897,6 +971,9 @@ clang.CXTUResourceUsage_MEMORY_IN_BYTES_END = CXTUResourceUsageKind.CXTUResource
 clang.CXTUResourceUsage_First = CXTUResourceUsageKind.CXTUResourceUsage_First
 clang.CXTUResourceUsage_Last = CXTUResourceUsageKind.CXTUResourceUsage_Last
 
+---@class CXTUResourceUsageKind* : ffi.cdata*
+---@field [integer] CXTUResourceUsageKind
+
 ---@param kind CXTUResourceUsageKind
 ---@return string
 function clang.getTUResourceUsageName(kind) end
@@ -906,22 +983,16 @@ clang.clang_getTUResourceUsageName = clang.getTUResourceUsageName
 ---@field kind CXTUResourceUsageKind
 ---@field amount integer
 
----@class CXTUResourceUsageEntry*
+---@class CXTUResourceUsageEntry* : ffi.cdata*
 ---@field [integer] CXTUResourceUsageEntry
-
----@class CXTUResourceUsageEntry**
----@field [integer] CXTUResourceUsageEntry*
 
 ---@class CXTUResourceUsage
 ---@field data ffi.cdata*
 ---@field numEntries integer
 ---@field entries CXTUResourceUsageEntry*?
 
----@class CXTUResourceUsage*
+---@class CXTUResourceUsage* : ffi.cdata*
 ---@field [integer] CXTUResourceUsage
-
----@class CXTUResourceUsage**
----@field [integer] CXTUResourceUsage*
 
 ---@param TU CXTranslationUnit
 ---@return CXTUResourceUsage
@@ -1534,16 +1605,16 @@ clang.CXCursor_FirstExtraDecl = CXCursorKind.CXCursor_FirstExtraDecl
 clang.CXCursor_LastExtraDecl = CXCursorKind.CXCursor_LastExtraDecl
 clang.CXCursor_OverloadCandidate = CXCursorKind.CXCursor_OverloadCandidate
 
+---@class CXCursorKind* : ffi.cdata*
+---@field [integer] CXCursorKind
+
 ---@class CXCursor
 ---@field kind CXCursorKind
 ---@field xdata integer
 ---@field data ffi.cdata*[]
 
----@class CXCursor*
+---@class CXCursor* : ffi.cdata*
 ---@field [integer] CXCursor
-
----@class CXCursor**
----@field [integer] CXCursor*
 
 ---@return CXCursor
 function clang.getNullCursor() end
@@ -1645,6 +1716,9 @@ clang.CXLinkage_Internal = CXLinkageKind.CXLinkage_Internal
 clang.CXLinkage_UniqueExternal = CXLinkageKind.CXLinkage_UniqueExternal
 clang.CXLinkage_External = CXLinkageKind.CXLinkage_External
 
+---@class CXLinkageKind* : ffi.cdata*
+---@field [integer] CXLinkageKind
+
 ---@param cursor CXCursor
 ---@return CXLinkageKind
 function clang.getCursorLinkage(cursor) end
@@ -1662,6 +1736,9 @@ clang.CXVisibility_Invalid = CXVisibilityKind.CXVisibility_Invalid
 clang.CXVisibility_Hidden = CXVisibilityKind.CXVisibility_Hidden
 clang.CXVisibility_Protected = CXVisibilityKind.CXVisibility_Protected
 clang.CXVisibility_Default = CXVisibilityKind.CXVisibility_Default
+
+---@class CXVisibilityKind* : ffi.cdata*
+---@field [integer] CXVisibilityKind
 
 ---@param cursor CXCursor
 ---@return CXVisibilityKind
@@ -1681,11 +1758,8 @@ clang.clang_getCursorAvailability = clang.getCursorAvailability
 ---@field Unavailable integer
 ---@field Message CXString
 
----@class CXPlatformAvailability*
+---@class CXPlatformAvailability* : ffi.cdata*
 ---@field [integer] CXPlatformAvailability
-
----@class CXPlatformAvailability**
----@field [integer] CXPlatformAvailability*
 
 ---@param cursor CXCursor
 ---@param always_deprecated integer*?
@@ -1731,6 +1805,9 @@ clang.CXLanguage_C = CXLanguageKind.CXLanguage_C
 clang.CXLanguage_ObjC = CXLanguageKind.CXLanguage_ObjC
 clang.CXLanguage_CPlusPlus = CXLanguageKind.CXLanguage_CPlusPlus
 
+---@class CXLanguageKind* : ffi.cdata*
+---@field [integer] CXLanguageKind
+
 ---@param cursor CXCursor
 ---@return CXLanguageKind
 function clang.getCursorLanguage(cursor) end
@@ -1747,6 +1824,9 @@ clang.CXTLS_None = CXTLSKind.CXTLS_None
 clang.CXTLS_Dynamic = CXTLSKind.CXTLS_Dynamic
 clang.CXTLS_Static = CXTLSKind.CXTLS_Static
 
+---@class CXTLSKind* : ffi.cdata*
+---@field [integer] CXTLSKind
+
 ---@param cursor CXCursor
 ---@return CXTLSKind
 function clang.getCursorTLSKind(cursor) end
@@ -1759,13 +1839,13 @@ clang.clang_Cursor_getTranslationUnit = clang.Cursor_getTranslationUnit
 
 ---@class CXCursorSetImpl
 
----@class CXCursorSetImpl*
+---@class CXCursorSetImpl* : ffi.cdata*
 ---@field [integer] CXCursorSetImpl
 
----@class CXCursorSetImpl**
----@field [integer] CXCursorSetImpl*
-
 ---@alias CXCursorSet CXCursorSetImpl*?
+
+---@class CXCursorSet* : ffi.cdata*
+---@field [integer] CXCursorSet
 
 ---@return CXCursorSet
 function clang.createCXCursorSet() end
@@ -2088,6 +2168,9 @@ clang.CXType_ExtVector = CXTypeKind.CXType_ExtVector
 clang.CXType_Atomic = CXTypeKind.CXType_Atomic
 clang.CXType_BTFTagAttributed = CXTypeKind.CXType_BTFTagAttributed
 
+---@class CXTypeKind* : ffi.cdata*
+---@field [integer] CXTypeKind
+
 ---@enum CXCallingConv
 local CXCallingConv = {
     CXCallingConv_Default = 0,
@@ -2139,15 +2222,15 @@ clang.CXCallingConv_M68kRTD = CXCallingConv.CXCallingConv_M68kRTD
 clang.CXCallingConv_Invalid = CXCallingConv.CXCallingConv_Invalid
 clang.CXCallingConv_Unexposed = CXCallingConv.CXCallingConv_Unexposed
 
+---@class CXCallingConv* : ffi.cdata*
+---@field [integer] CXCallingConv
+
 ---@class CXType
 ---@field kind CXTypeKind
 ---@field data ffi.cdata*[]
 
----@class CXType*
+---@class CXType* : ffi.cdata*
 ---@field [integer] CXType
-
----@class CXType**
----@field [integer] CXType*
 
 ---@param C CXCursor
 ---@return CXType
@@ -2224,6 +2307,9 @@ clang.CXTemplateArgumentKind_TemplateExpansion = CXTemplateArgumentKind.CXTempla
 clang.CXTemplateArgumentKind_Expression = CXTemplateArgumentKind.CXTemplateArgumentKind_Expression
 clang.CXTemplateArgumentKind_Pack = CXTemplateArgumentKind.CXTemplateArgumentKind_Pack
 clang.CXTemplateArgumentKind_Invalid = CXTemplateArgumentKind.CXTemplateArgumentKind_Invalid
+
+---@class CXTemplateArgumentKind* : ffi.cdata*
+---@field [integer] CXTemplateArgumentKind
 
 ---@param C CXCursor
 ---@return integer
@@ -2458,6 +2544,9 @@ clang.CXTypeNullability_Unspecified = CXTypeNullabilityKind.CXTypeNullability_Un
 clang.CXTypeNullability_Invalid = CXTypeNullabilityKind.CXTypeNullability_Invalid
 clang.CXTypeNullability_NullableResult = CXTypeNullabilityKind.CXTypeNullability_NullableResult
 
+---@class CXTypeNullabilityKind* : ffi.cdata*
+---@field [integer] CXTypeNullabilityKind
+
 ---@param T CXType
 ---@return CXTypeNullabilityKind
 function clang.Type_getNullability(T) end
@@ -2479,6 +2568,9 @@ clang.CXTypeLayoutError_Dependent = CXTypeLayoutError.CXTypeLayoutError_Dependen
 clang.CXTypeLayoutError_NotConstantSize = CXTypeLayoutError.CXTypeLayoutError_NotConstantSize
 clang.CXTypeLayoutError_InvalidFieldName = CXTypeLayoutError.CXTypeLayoutError_InvalidFieldName
 clang.CXTypeLayoutError_Undeduced = CXTypeLayoutError.CXTypeLayoutError_Undeduced
+
+---@class CXTypeLayoutError* : ffi.cdata*
+---@field [integer] CXTypeLayoutError
 
 ---@param T CXType
 ---@return integer
@@ -2542,6 +2634,9 @@ clang.CXRefQualifier_None = CXRefQualifierKind.CXRefQualifier_None
 clang.CXRefQualifier_LValue = CXRefQualifierKind.CXRefQualifier_LValue
 clang.CXRefQualifier_RValue = CXRefQualifierKind.CXRefQualifier_RValue
 
+---@class CXRefQualifierKind* : ffi.cdata*
+---@field [integer] CXRefQualifierKind
+
 ---@param T CXType
 ---@return integer
 function clang.Type_getNumTemplateArguments(T) end
@@ -2576,6 +2671,9 @@ clang.CX_CXXPublic = CX_CXXAccessSpecifier.CX_CXXPublic
 clang.CX_CXXProtected = CX_CXXAccessSpecifier.CX_CXXProtected
 clang.CX_CXXPrivate = CX_CXXAccessSpecifier.CX_CXXPrivate
 
+---@class CX_CXXAccessSpecifier* : ffi.cdata*
+---@field [integer] CX_CXXAccessSpecifier
+
 ---@param arg_1 CXCursor
 ---@return CX_CXXAccessSpecifier
 function clang.getCXXAccessSpecifier(arg_1) end
@@ -2601,6 +2699,9 @@ clang.CX_SC_PrivateExtern = CX_StorageClass.CX_SC_PrivateExtern
 clang.CX_SC_OpenCLWorkGroupLocal = CX_StorageClass.CX_SC_OpenCLWorkGroupLocal
 clang.CX_SC_Auto = CX_StorageClass.CX_SC_Auto
 clang.CX_SC_Register = CX_StorageClass.CX_SC_Register
+
+---@class CX_StorageClass* : ffi.cdata*
+---@field [integer] CX_StorageClass
 
 ---@param arg_1 CXCursor
 ---@return CX_StorageClass
@@ -2634,7 +2735,13 @@ clang.CXChildVisit_Break = CXChildVisitResult.CXChildVisit_Break
 clang.CXChildVisit_Continue = CXChildVisitResult.CXChildVisit_Continue
 clang.CXChildVisit_Recurse = CXChildVisitResult.CXChildVisit_Recurse
 
+---@class CXChildVisitResult* : ffi.cdata*
+---@field [integer] CXChildVisitResult
+
 ---@alias CXCursorVisitor fun(arg_0: CXCursor, arg_1: CXCursor, arg_2: CXClientData): CXChildVisitResult
+
+---@class CXCursorVisitor* : ffi.cdata*
+---@field [integer] CXCursorVisitor
 
 ---@param parent CXCursor
 ---@param visitor CXCursorVisitor
@@ -2645,13 +2752,13 @@ clang.clang_visitChildren = clang.visitChildren
 
 ---@class _CXChildVisitResult
 
----@class _CXChildVisitResult*
+---@class _CXChildVisitResult* : ffi.cdata*
 ---@field [integer] _CXChildVisitResult
 
----@class _CXChildVisitResult**
----@field [integer] _CXChildVisitResult*
-
 ---@alias CXCursorVisitorBlock _CXChildVisitResult*?
+
+---@class CXCursorVisitorBlock* : ffi.cdata*
+---@field [integer] CXCursorVisitorBlock
 
 ---@param parent CXCursor
 ---@param block CXCursorVisitorBlock
@@ -2713,6 +2820,9 @@ clang.clang_Cursor_getSpellingNameRange = clang.Cursor_getSpellingNameRange
 
 ---@alias CXPrintingPolicy ffi.cdata*
 
+---@class CXPrintingPolicy* : ffi.cdata*
+---@field [integer] CXPrintingPolicy
+
 ---@enum CXPrintingPolicyProperty
 local CXPrintingPolicyProperty = {
     CXPrintingPolicy_Indentation = 0,
@@ -2771,6 +2881,9 @@ clang.CXPrintingPolicy_ConstantsAsWritten = CXPrintingPolicyProperty.CXPrintingP
 clang.CXPrintingPolicy_SuppressImplicitBase = CXPrintingPolicyProperty.CXPrintingPolicy_SuppressImplicitBase
 clang.CXPrintingPolicy_FullyQualifiedName = CXPrintingPolicyProperty.CXPrintingPolicy_FullyQualifiedName
 clang.CXPrintingPolicy_LastProperty = CXPrintingPolicyProperty.CXPrintingPolicy_LastProperty
+
+---@class CXPrintingPolicyProperty* : ffi.cdata*
+---@field [integer] CXPrintingPolicyProperty
 
 ---@param Policy CXPrintingPolicy
 ---@param Property CXPrintingPolicyProperty
@@ -2874,6 +2987,9 @@ clang.CXObjCPropertyAttr_strong = CXObjCPropertyAttrKind.CXObjCPropertyAttr_stro
 clang.CXObjCPropertyAttr_unsafe_unretained = CXObjCPropertyAttrKind.CXObjCPropertyAttr_unsafe_unretained
 clang.CXObjCPropertyAttr_class = CXObjCPropertyAttrKind.CXObjCPropertyAttr_class
 
+---@class CXObjCPropertyAttrKind* : ffi.cdata*
+---@field [integer] CXObjCPropertyAttrKind
+
 ---@param C CXCursor
 ---@param reserved integer
 ---@return integer
@@ -2908,6 +3024,9 @@ clang.CXObjCDeclQualifier_Out = CXObjCDeclQualifierKind.CXObjCDeclQualifier_Out
 clang.CXObjCDeclQualifier_Bycopy = CXObjCDeclQualifierKind.CXObjCDeclQualifier_Bycopy
 clang.CXObjCDeclQualifier_Byref = CXObjCDeclQualifierKind.CXObjCDeclQualifier_Byref
 clang.CXObjCDeclQualifier_Oneway = CXObjCDeclQualifierKind.CXObjCDeclQualifier_Oneway
+
+---@class CXObjCDeclQualifierKind* : ffi.cdata*
+---@field [integer] CXObjCDeclQualifierKind
 
 ---@param C CXCursor
 ---@return integer
@@ -2963,6 +3082,9 @@ function clang.Cursor_getObjCManglings(arg_1) end
 clang.clang_Cursor_getObjCManglings = clang.Cursor_getObjCManglings
 
 ---@alias CXModule ffi.cdata*
+
+---@class CXModule* : ffi.cdata*
+---@field [integer] CXModule
 
 ---@param C CXCursor
 ---@return CXModule
@@ -3121,6 +3243,9 @@ clang.CXNameRange_WantQualifier = CXNameRefFlags.CXNameRange_WantQualifier
 clang.CXNameRange_WantTemplateArgs = CXNameRefFlags.CXNameRange_WantTemplateArgs
 clang.CXNameRange_WantSinglePiece = CXNameRefFlags.CXNameRange_WantSinglePiece
 
+---@class CXNameRefFlags* : ffi.cdata*
+---@field [integer] CXNameRefFlags
+
 ---@enum CXTokenKind
 local CXTokenKind = {
     CXToken_Punctuation = 0,
@@ -3136,15 +3261,15 @@ clang.CXToken_Identifier = CXTokenKind.CXToken_Identifier
 clang.CXToken_Literal = CXTokenKind.CXToken_Literal
 clang.CXToken_Comment = CXTokenKind.CXToken_Comment
 
+---@class CXTokenKind* : ffi.cdata*
+---@field [integer] CXTokenKind
+
 ---@class CXToken
 ---@field int_data integer[]
 ---@field ptr_data ffi.cdata*
 
----@class CXToken*
+---@class CXToken* : ffi.cdata*
 ---@field [integer] CXToken
-
----@class CXToken**
----@field [integer] CXToken*
 
 ---@param TU CXTranslationUnit
 ---@param Location CXSourceLocation
@@ -3227,15 +3352,15 @@ clang.clang_executeOnThread = clang.executeOnThread
 
 ---@alias CXCompletionString ffi.cdata*
 
+---@class CXCompletionString* : ffi.cdata*
+---@field [integer] CXCompletionString
+
 ---@class CXCompletionResult
 ---@field CursorKind CXCursorKind
 ---@field CompletionString CXCompletionString
 
----@class CXCompletionResult*
+---@class CXCompletionResult* : ffi.cdata*
 ---@field [integer] CXCompletionResult
-
----@class CXCompletionResult**
----@field [integer] CXCompletionResult*
 
 ---@enum CXCompletionChunkKind
 local CXCompletionChunkKind = {
@@ -3283,6 +3408,9 @@ clang.CXCompletionChunk_SemiColon = CXCompletionChunkKind.CXCompletionChunk_Semi
 clang.CXCompletionChunk_Equal = CXCompletionChunkKind.CXCompletionChunk_Equal
 clang.CXCompletionChunk_HorizontalSpace = CXCompletionChunkKind.CXCompletionChunk_HorizontalSpace
 clang.CXCompletionChunk_VerticalSpace = CXCompletionChunkKind.CXCompletionChunk_VerticalSpace
+
+---@class CXCompletionChunkKind* : ffi.cdata*
+---@field [integer] CXCompletionChunkKind
 
 ---@param completion_string CXCompletionString
 ---@param chunk_number integer
@@ -3348,11 +3476,8 @@ clang.clang_getCursorCompletionString = clang.getCursorCompletionString
 ---@field Results CXCompletionResult*?
 ---@field NumResults integer
 
----@class CXCodeCompleteResults*
+---@class CXCodeCompleteResults* : ffi.cdata*
 ---@field [integer] CXCodeCompleteResults
-
----@class CXCodeCompleteResults**
----@field [integer] CXCodeCompleteResults*
 
 ---@param results CXCodeCompleteResults*?
 ---@param completion_index integer
@@ -3382,6 +3507,9 @@ clang.CXCodeComplete_IncludeCodePatterns = CXCodeComplete_Flags.CXCodeComplete_I
 clang.CXCodeComplete_IncludeBriefComments = CXCodeComplete_Flags.CXCodeComplete_IncludeBriefComments
 clang.CXCodeComplete_SkipPreamble = CXCodeComplete_Flags.CXCodeComplete_SkipPreamble
 clang.CXCodeComplete_IncludeCompletionsWithFixIts = CXCodeComplete_Flags.CXCodeComplete_IncludeCompletionsWithFixIts
+
+---@class CXCodeComplete_Flags* : ffi.cdata*
+---@field [integer] CXCodeComplete_Flags
 
 ---@enum CXCompletionContext
 local CXCompletionContext = {
@@ -3437,6 +3565,9 @@ clang.CXCompletionContext_MacroName = CXCompletionContext.CXCompletionContext_Ma
 clang.CXCompletionContext_NaturalLanguage = CXCompletionContext.CXCompletionContext_NaturalLanguage
 clang.CXCompletionContext_IncludedFile = CXCompletionContext.CXCompletionContext_IncludedFile
 clang.CXCompletionContext_Unknown = CXCompletionContext.CXCompletionContext_Unknown
+
+---@class CXCompletionContext* : ffi.cdata*
+---@field [integer] CXCompletionContext
 
 ---@return integer
 function clang.defaultCodeCompleteOptions() end
@@ -3507,6 +3638,9 @@ clang.clang_toggleCrashRecovery = clang.toggleCrashRecovery
 
 ---@alias CXInclusionVisitor fun(arg_0: CXFile, arg_1: CXSourceLocation*?, arg_2: integer, arg_3: CXClientData): nil
 
+---@class CXInclusionVisitor* : ffi.cdata*
+---@field [integer] CXInclusionVisitor
+
 ---@param tu CXTranslationUnit
 ---@param visitor CXInclusionVisitor
 ---@param client_data CXClientData
@@ -3533,7 +3667,13 @@ clang.CXEval_CFStr = CXEvalResultKind.CXEval_CFStr
 clang.CXEval_Other = CXEvalResultKind.CXEval_Other
 clang.CXEval_UnExposed = CXEvalResultKind.CXEval_UnExposed
 
+---@class CXEvalResultKind* : ffi.cdata*
+---@field [integer] CXEvalResultKind
+
 ---@alias CXEvalResult ffi.cdata*
+
+---@class CXEvalResult* : ffi.cdata*
+---@field [integer] CXEvalResult
 
 ---@param C CXCursor
 ---@return CXEvalResult
@@ -3582,6 +3722,9 @@ clang.clang_EvalResult_dispose = clang.EvalResult_dispose
 
 ---@alias CXRemapping ffi.cdata*
 
+---@class CXRemapping* : ffi.cdata*
+---@field [integer] CXRemapping
+
 ---@param path string
 ---@return CXRemapping
 function clang.getRemappings(path) end
@@ -3620,15 +3763,15 @@ local CXVisitorResult = {
 clang.CXVisit_Break = CXVisitorResult.CXVisit_Break
 clang.CXVisit_Continue = CXVisitorResult.CXVisit_Continue
 
+---@class CXVisitorResult* : ffi.cdata*
+---@field [integer] CXVisitorResult
+
 ---@class CXCursorAndRangeVisitor
 ---@field context ffi.cdata*
 ---@field visit fun(arg_0: ffi.cdata*, arg_1: CXCursor, arg_2: CXSourceRange): CXVisitorResult
 
----@class CXCursorAndRangeVisitor*
+---@class CXCursorAndRangeVisitor* : ffi.cdata*
 ---@field [integer] CXCursorAndRangeVisitor
-
----@class CXCursorAndRangeVisitor**
----@field [integer] CXCursorAndRangeVisitor*
 
 ---@enum CXResult
 local CXResult = {
@@ -3640,6 +3783,9 @@ local CXResult = {
 clang.CXResult_Success = CXResult.CXResult_Success
 clang.CXResult_Invalid = CXResult.CXResult_Invalid
 clang.CXResult_VisitBreak = CXResult.CXResult_VisitBreak
+
+---@class CXResult* : ffi.cdata*
+---@field [integer] CXResult
 
 ---@param cursor CXCursor
 ---@param file CXFile
@@ -3657,13 +3803,13 @@ clang.clang_findIncludesInFile = clang.findIncludesInFile
 
 ---@class _CXCursorAndRangeVisitorBlock
 
----@class _CXCursorAndRangeVisitorBlock*
+---@class _CXCursorAndRangeVisitorBlock* : ffi.cdata*
 ---@field [integer] _CXCursorAndRangeVisitorBlock
 
----@class _CXCursorAndRangeVisitorBlock**
----@field [integer] _CXCursorAndRangeVisitorBlock*
-
 ---@alias CXCursorAndRangeVisitorBlock _CXCursorAndRangeVisitorBlock*?
+
+---@class CXCursorAndRangeVisitorBlock* : ffi.cdata*
+---@field [integer] CXCursorAndRangeVisitorBlock
 
 ---@param arg_1 CXCursor
 ---@param arg_2 CXFile
@@ -3681,21 +3827,30 @@ clang.clang_findIncludesInFileWithBlock = clang.findIncludesInFileWithBlock
 
 ---@alias CXIdxClientFile ffi.cdata*
 
+---@class CXIdxClientFile* : ffi.cdata*
+---@field [integer] CXIdxClientFile
+
 ---@alias CXIdxClientEntity ffi.cdata*
+
+---@class CXIdxClientEntity* : ffi.cdata*
+---@field [integer] CXIdxClientEntity
 
 ---@alias CXIdxClientContainer ffi.cdata*
 
+---@class CXIdxClientContainer* : ffi.cdata*
+---@field [integer] CXIdxClientContainer
+
 ---@alias CXIdxClientASTFile ffi.cdata*
+
+---@class CXIdxClientASTFile* : ffi.cdata*
+---@field [integer] CXIdxClientASTFile
 
 ---@class CXIdxLoc
 ---@field ptr_data ffi.cdata*[]
 ---@field int_data integer
 
----@class CXIdxLoc*
+---@class CXIdxLoc* : ffi.cdata*
 ---@field [integer] CXIdxLoc
-
----@class CXIdxLoc**
----@field [integer] CXIdxLoc*
 
 ---@class CXIdxIncludedFileInfo
 ---@field hashLoc CXIdxLoc
@@ -3705,11 +3860,8 @@ clang.clang_findIncludesInFileWithBlock = clang.findIncludesInFileWithBlock
 ---@field isAngled integer
 ---@field isModuleImport integer
 
----@class CXIdxIncludedFileInfo*
+---@class CXIdxIncludedFileInfo* : ffi.cdata*
 ---@field [integer] CXIdxIncludedFileInfo
-
----@class CXIdxIncludedFileInfo**
----@field [integer] CXIdxIncludedFileInfo*
 
 ---@class CXIdxImportedASTFileInfo
 ---@field file CXFile
@@ -3717,11 +3869,8 @@ clang.clang_findIncludesInFileWithBlock = clang.findIncludesInFileWithBlock
 ---@field loc CXIdxLoc
 ---@field isImplicit integer
 
----@class CXIdxImportedASTFileInfo*
+---@class CXIdxImportedASTFileInfo* : ffi.cdata*
 ---@field [integer] CXIdxImportedASTFileInfo
-
----@class CXIdxImportedASTFileInfo**
----@field [integer] CXIdxImportedASTFileInfo*
 
 ---@enum CXIdxEntityKind
 local CXIdxEntityKind = {
@@ -3784,6 +3933,9 @@ clang.CXIdxEntity_CXXTypeAlias = CXIdxEntityKind.CXIdxEntity_CXXTypeAlias
 clang.CXIdxEntity_CXXInterface = CXIdxEntityKind.CXIdxEntity_CXXInterface
 clang.CXIdxEntity_CXXConcept = CXIdxEntityKind.CXIdxEntity_CXXConcept
 
+---@class CXIdxEntityKind* : ffi.cdata*
+---@field [integer] CXIdxEntityKind
+
 ---@enum CXIdxEntityLanguage
 local CXIdxEntityLanguage = {
     CXIdxEntityLang_None = 0,
@@ -3799,6 +3951,9 @@ clang.CXIdxEntityLang_ObjC = CXIdxEntityLanguage.CXIdxEntityLang_ObjC
 clang.CXIdxEntityLang_CXX = CXIdxEntityLanguage.CXIdxEntityLang_CXX
 clang.CXIdxEntityLang_Swift = CXIdxEntityLanguage.CXIdxEntityLang_Swift
 
+---@class CXIdxEntityLanguage* : ffi.cdata*
+---@field [integer] CXIdxEntityLanguage
+
 ---@enum CXIdxEntityCXXTemplateKind
 local CXIdxEntityCXXTemplateKind = {
     CXIdxEntity_NonTemplate = 0,
@@ -3811,6 +3966,9 @@ clang.CXIdxEntity_NonTemplate = CXIdxEntityCXXTemplateKind.CXIdxEntity_NonTempla
 clang.CXIdxEntity_Template = CXIdxEntityCXXTemplateKind.CXIdxEntity_Template
 clang.CXIdxEntity_TemplatePartialSpecialization = CXIdxEntityCXXTemplateKind.CXIdxEntity_TemplatePartialSpecialization
 clang.CXIdxEntity_TemplateSpecialization = CXIdxEntityCXXTemplateKind.CXIdxEntity_TemplateSpecialization
+
+---@class CXIdxEntityCXXTemplateKind* : ffi.cdata*
+---@field [integer] CXIdxEntityCXXTemplateKind
 
 ---@enum CXIdxAttrKind
 local CXIdxAttrKind = {
@@ -3825,16 +3983,16 @@ clang.CXIdxAttr_IBAction = CXIdxAttrKind.CXIdxAttr_IBAction
 clang.CXIdxAttr_IBOutlet = CXIdxAttrKind.CXIdxAttr_IBOutlet
 clang.CXIdxAttr_IBOutletCollection = CXIdxAttrKind.CXIdxAttr_IBOutletCollection
 
+---@class CXIdxAttrKind* : ffi.cdata*
+---@field [integer] CXIdxAttrKind
+
 ---@class CXIdxAttrInfo
 ---@field kind CXIdxAttrKind
 ---@field cursor CXCursor
 ---@field loc CXIdxLoc
 
----@class CXIdxAttrInfo*
+---@class CXIdxAttrInfo* : ffi.cdata*
 ---@field [integer] CXIdxAttrInfo
-
----@class CXIdxAttrInfo**
----@field [integer] CXIdxAttrInfo*
 
 ---@class CXIdxEntityInfo
 ---@field kind CXIdxEntityKind
@@ -3846,20 +4004,14 @@ clang.CXIdxAttr_IBOutletCollection = CXIdxAttrKind.CXIdxAttr_IBOutletCollection
 ---@field attributes CXIdxAttrInfo*?*?
 ---@field numAttributes integer
 
----@class CXIdxEntityInfo*
+---@class CXIdxEntityInfo* : ffi.cdata*
 ---@field [integer] CXIdxEntityInfo
-
----@class CXIdxEntityInfo**
----@field [integer] CXIdxEntityInfo*
 
 ---@class CXIdxContainerInfo
 ---@field cursor CXCursor
 
----@class CXIdxContainerInfo*
+---@class CXIdxContainerInfo* : ffi.cdata*
 ---@field [integer] CXIdxContainerInfo
-
----@class CXIdxContainerInfo**
----@field [integer] CXIdxContainerInfo*
 
 ---@class CXIdxIBOutletCollectionAttrInfo
 ---@field attrInfo CXIdxAttrInfo*?
@@ -3867,11 +4019,8 @@ clang.CXIdxAttr_IBOutletCollection = CXIdxAttrKind.CXIdxAttr_IBOutletCollection
 ---@field classCursor CXCursor
 ---@field classLoc CXIdxLoc
 
----@class CXIdxIBOutletCollectionAttrInfo*
+---@class CXIdxIBOutletCollectionAttrInfo* : ffi.cdata*
 ---@field [integer] CXIdxIBOutletCollectionAttrInfo
-
----@class CXIdxIBOutletCollectionAttrInfo**
----@field [integer] CXIdxIBOutletCollectionAttrInfo*
 
 ---@enum CXIdxDeclInfoFlags
 local CXIdxDeclInfoFlags = {
@@ -3879,6 +4028,9 @@ local CXIdxDeclInfoFlags = {
 }
 
 clang.CXIdxDeclFlag_Skipped = CXIdxDeclInfoFlags.CXIdxDeclFlag_Skipped
+
+---@class CXIdxDeclInfoFlags* : ffi.cdata*
+---@field [integer] CXIdxDeclInfoFlags
 
 ---@class CXIdxDeclInfo
 ---@field entityInfo CXIdxEntityInfo*?
@@ -3895,11 +4047,8 @@ clang.CXIdxDeclFlag_Skipped = CXIdxDeclInfoFlags.CXIdxDeclFlag_Skipped
 ---@field numAttributes integer
 ---@field flags integer
 
----@class CXIdxDeclInfo*
+---@class CXIdxDeclInfo* : ffi.cdata*
 ---@field [integer] CXIdxDeclInfo
-
----@class CXIdxDeclInfo**
----@field [integer] CXIdxDeclInfo*
 
 ---@enum CXIdxObjCContainerKind
 local CXIdxObjCContainerKind = {
@@ -3912,58 +4061,46 @@ clang.CXIdxObjCContainer_ForwardRef = CXIdxObjCContainerKind.CXIdxObjCContainer_
 clang.CXIdxObjCContainer_Interface = CXIdxObjCContainerKind.CXIdxObjCContainer_Interface
 clang.CXIdxObjCContainer_Implementation = CXIdxObjCContainerKind.CXIdxObjCContainer_Implementation
 
+---@class CXIdxObjCContainerKind* : ffi.cdata*
+---@field [integer] CXIdxObjCContainerKind
+
 ---@class CXIdxObjCContainerDeclInfo
 ---@field declInfo CXIdxDeclInfo*?
 ---@field kind CXIdxObjCContainerKind
 
----@class CXIdxObjCContainerDeclInfo*
+---@class CXIdxObjCContainerDeclInfo* : ffi.cdata*
 ---@field [integer] CXIdxObjCContainerDeclInfo
-
----@class CXIdxObjCContainerDeclInfo**
----@field [integer] CXIdxObjCContainerDeclInfo*
 
 ---@class CXIdxBaseClassInfo
 ---@field base CXIdxEntityInfo*?
 ---@field cursor CXCursor
 ---@field loc CXIdxLoc
 
----@class CXIdxBaseClassInfo*
+---@class CXIdxBaseClassInfo* : ffi.cdata*
 ---@field [integer] CXIdxBaseClassInfo
-
----@class CXIdxBaseClassInfo**
----@field [integer] CXIdxBaseClassInfo*
 
 ---@class CXIdxObjCProtocolRefInfo
 ---@field protocol CXIdxEntityInfo*?
 ---@field cursor CXCursor
 ---@field loc CXIdxLoc
 
----@class CXIdxObjCProtocolRefInfo*
+---@class CXIdxObjCProtocolRefInfo* : ffi.cdata*
 ---@field [integer] CXIdxObjCProtocolRefInfo
-
----@class CXIdxObjCProtocolRefInfo**
----@field [integer] CXIdxObjCProtocolRefInfo*
 
 ---@class CXIdxObjCProtocolRefListInfo
 ---@field protocols CXIdxObjCProtocolRefInfo*?*?
 ---@field numProtocols integer
 
----@class CXIdxObjCProtocolRefListInfo*
+---@class CXIdxObjCProtocolRefListInfo* : ffi.cdata*
 ---@field [integer] CXIdxObjCProtocolRefListInfo
-
----@class CXIdxObjCProtocolRefListInfo**
----@field [integer] CXIdxObjCProtocolRefListInfo*
 
 ---@class CXIdxObjCInterfaceDeclInfo
 ---@field containerInfo CXIdxObjCContainerDeclInfo*?
 ---@field superInfo CXIdxBaseClassInfo*?
 ---@field protocols CXIdxObjCProtocolRefListInfo*?
 
----@class CXIdxObjCInterfaceDeclInfo*
+---@class CXIdxObjCInterfaceDeclInfo* : ffi.cdata*
 ---@field [integer] CXIdxObjCInterfaceDeclInfo
-
----@class CXIdxObjCInterfaceDeclInfo**
----@field [integer] CXIdxObjCInterfaceDeclInfo*
 
 ---@class CXIdxObjCCategoryDeclInfo
 ---@field containerInfo CXIdxObjCContainerDeclInfo*?
@@ -3972,33 +4109,24 @@ clang.CXIdxObjCContainer_Implementation = CXIdxObjCContainerKind.CXIdxObjCContai
 ---@field classLoc CXIdxLoc
 ---@field protocols CXIdxObjCProtocolRefListInfo*?
 
----@class CXIdxObjCCategoryDeclInfo*
+---@class CXIdxObjCCategoryDeclInfo* : ffi.cdata*
 ---@field [integer] CXIdxObjCCategoryDeclInfo
-
----@class CXIdxObjCCategoryDeclInfo**
----@field [integer] CXIdxObjCCategoryDeclInfo*
 
 ---@class CXIdxObjCPropertyDeclInfo
 ---@field declInfo CXIdxDeclInfo*?
 ---@field getter CXIdxEntityInfo*?
 ---@field setter CXIdxEntityInfo*?
 
----@class CXIdxObjCPropertyDeclInfo*
+---@class CXIdxObjCPropertyDeclInfo* : ffi.cdata*
 ---@field [integer] CXIdxObjCPropertyDeclInfo
-
----@class CXIdxObjCPropertyDeclInfo**
----@field [integer] CXIdxObjCPropertyDeclInfo*
 
 ---@class CXIdxCXXClassDeclInfo
 ---@field declInfo CXIdxDeclInfo*?
 ---@field bases CXIdxBaseClassInfo*?*?
 ---@field numBases integer
 
----@class CXIdxCXXClassDeclInfo*
+---@class CXIdxCXXClassDeclInfo* : ffi.cdata*
 ---@field [integer] CXIdxCXXClassDeclInfo
-
----@class CXIdxCXXClassDeclInfo**
----@field [integer] CXIdxCXXClassDeclInfo*
 
 ---@enum CXIdxEntityRefKind
 local CXIdxEntityRefKind = {
@@ -4008,6 +4136,9 @@ local CXIdxEntityRefKind = {
 
 clang.CXIdxEntityRef_Direct = CXIdxEntityRefKind.CXIdxEntityRef_Direct
 clang.CXIdxEntityRef_Implicit = CXIdxEntityRefKind.CXIdxEntityRef_Implicit
+
+---@class CXIdxEntityRefKind* : ffi.cdata*
+---@field [integer] CXIdxEntityRefKind
 
 ---@enum CXSymbolRole
 local CXSymbolRole = {
@@ -4034,6 +4165,9 @@ clang.CXSymbolRole_Dynamic = CXSymbolRole.CXSymbolRole_Dynamic
 clang.CXSymbolRole_AddressOf = CXSymbolRole.CXSymbolRole_AddressOf
 clang.CXSymbolRole_Implicit = CXSymbolRole.CXSymbolRole_Implicit
 
+---@class CXSymbolRole* : ffi.cdata*
+---@field [integer] CXSymbolRole
+
 ---@class CXIdxEntityRefInfo
 ---@field kind CXIdxEntityRefKind
 ---@field cursor CXCursor
@@ -4043,11 +4177,8 @@ clang.CXSymbolRole_Implicit = CXSymbolRole.CXSymbolRole_Implicit
 ---@field container CXIdxContainerInfo*?
 ---@field role CXSymbolRole
 
----@class CXIdxEntityRefInfo*
+---@class CXIdxEntityRefInfo* : ffi.cdata*
 ---@field [integer] CXIdxEntityRefInfo
-
----@class CXIdxEntityRefInfo**
----@field [integer] CXIdxEntityRefInfo*
 
 ---@class IndexerCallbacks
 ---@field abortQuery fun(arg_0: CXClientData, arg_1: ffi.cdata*): integer
@@ -4059,11 +4190,8 @@ clang.CXSymbolRole_Implicit = CXSymbolRole.CXSymbolRole_Implicit
 ---@field indexDeclaration fun(arg_0: CXClientData, arg_1: CXIdxDeclInfo*?): nil
 ---@field indexEntityReference fun(arg_0: CXClientData, arg_1: CXIdxEntityRefInfo*?): nil
 
----@class IndexerCallbacks*
+---@class IndexerCallbacks* : ffi.cdata*
 ---@field [integer] IndexerCallbacks
-
----@class IndexerCallbacks**
----@field [integer] IndexerCallbacks*
 
 ---@param arg_1 CXIdxEntityKind
 ---@return integer
@@ -4129,6 +4257,9 @@ clang.clang_index_setClientEntity = clang.index_setClientEntity
 
 ---@alias CXIndexAction ffi.cdata*
 
+---@class CXIndexAction* : ffi.cdata*
+---@field [integer] CXIndexAction
+
 ---@param CIdx CXIndex
 ---@return CXIndexAction
 function clang.IndexAction_create(CIdx) end
@@ -4155,6 +4286,9 @@ clang.CXIndexOpt_IndexFunctionLocalSymbols = CXIndexOptFlags.CXIndexOpt_IndexFun
 clang.CXIndexOpt_IndexImplicitTemplateInstantiations = CXIndexOptFlags.CXIndexOpt_IndexImplicitTemplateInstantiations
 clang.CXIndexOpt_SuppressWarnings = CXIndexOptFlags.CXIndexOpt_SuppressWarnings
 clang.CXIndexOpt_SkipParsedBodiesInSession = CXIndexOptFlags.CXIndexOpt_SkipParsedBodiesInSession
+
+---@class CXIndexOptFlags* : ffi.cdata*
+---@field [integer] CXIndexOptFlags
 
 ---@param arg_1 CXIndexAction
 ---@param client_data CXClientData
@@ -4214,6 +4348,9 @@ function clang.indexLoc_getCXSourceLocation(loc) end
 clang.clang_indexLoc_getCXSourceLocation = clang.indexLoc_getCXSourceLocation
 
 ---@alias CXFieldVisitor fun(arg_0: CXCursor, arg_1: CXClientData): CXVisitorResult
+
+---@class CXFieldVisitor* : ffi.cdata*
+---@field [integer] CXFieldVisitor
 
 ---@param T CXType
 ---@param visitor CXFieldVisitor
@@ -4295,6 +4432,9 @@ clang.CXBinaryOperator_XorAssign = CXBinaryOperatorKind.CXBinaryOperator_XorAssi
 clang.CXBinaryOperator_OrAssign = CXBinaryOperatorKind.CXBinaryOperator_OrAssign
 clang.CXBinaryOperator_Comma = CXBinaryOperatorKind.CXBinaryOperator_Comma
 
+---@class CXBinaryOperatorKind* : ffi.cdata*
+---@field [integer] CXBinaryOperatorKind
+
 ---@param kind CXBinaryOperatorKind
 ---@return CXString
 function clang.getBinaryOperatorKindSpelling(kind) end
@@ -4339,6 +4479,9 @@ clang.CXUnaryOperator_Real = CXUnaryOperatorKind.CXUnaryOperator_Real
 clang.CXUnaryOperator_Imag = CXUnaryOperatorKind.CXUnaryOperator_Imag
 clang.CXUnaryOperator_Extension = CXUnaryOperatorKind.CXUnaryOperator_Extension
 clang.CXUnaryOperator_Coawait = CXUnaryOperatorKind.CXUnaryOperator_Coawait
+
+---@class CXUnaryOperatorKind* : ffi.cdata*
+---@field [integer] CXUnaryOperatorKind
 
 ---@param kind CXUnaryOperatorKind
 ---@return CXString
